@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1200 360" width="1200" height="360" fill="none" role="img" aria-label="Sihoon Cho - Software Engineer, Backend Cloud DevOps">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="360" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#4158d0"/>
+      <stop offset="0.5" stop-color="#c850c0"/>
+      <stop offset="1" stop-color="#ffcc70"/>
+    </linearGradient>
+    <linearGradient id="waveTop" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.20"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.40"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="7"/>
+    </filter>
+    <filter id="starGlow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="1.4" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <!-- 8-point diffraction star: long thin cardinals + short diagonals + small core -->
+    <g id="spark">
+      <path d="M0,-1.8 L0.04,0 L0,1.8 L-0.04,0 Z"/>
+      <path d="M-1.8,0 L0,0.04 L1.8,0 L0,-0.04 Z"/>
+      <path d="M0.5,-0.5 L0.03,0.03 L-0.5,0.5 L-0.03,-0.03 Z"/>
+      <path d="M-0.5,-0.5 L0.03,-0.03 L0.5,0.5 L-0.03,0.03 Z"/>
+    </g>
+  </defs>
+
+  <!-- background gradient -->
+  <rect width="1200" height="360" fill="url(#bg)"/>
+
+  <!-- ambient glow blobs -->
+  <circle cx="210" cy="70" r="180" fill="url(#glow)"/>
+  <circle cx="1010" cy="290" r="220" fill="url(#glow)"/>
+  <circle cx="640" cy="120" r="120" fill="url(#glow)" opacity="0.6"/>
+
+  <!-- bright stars: 8-point diffraction spikes -->
+  <g fill="#ffffff" filter="url(#starGlow)">
+    <use xlink:href="#spark" transform="translate(120,55) scale(8)" opacity="0.85"/>
+    <use xlink:href="#spark" transform="translate(1090,60) scale(8)" opacity="0.85"/>
+    <use xlink:href="#spark" transform="translate(330,42) scale(6)" opacity="0.75"/>
+    <use xlink:href="#spark" transform="translate(900,42) scale(6)" opacity="0.75"/>
+    <use xlink:href="#spark" transform="translate(70,150) scale(6)" opacity="0.7"/>
+    <use xlink:href="#spark" transform="translate(1140,160) scale(6)" opacity="0.7"/>
+  </g>
+
+  <!-- faint star dots -->
+  <g fill="#ffffff" filter="url(#starGlow)">
+    <circle cx="220" cy="95" r="1.4" opacity="0.5"/>
+    <circle cx="1000" cy="100" r="1.2" opacity="0.5"/>
+    <circle cx="180" cy="215" r="1.2" opacity="0.45"/>
+    <circle cx="1050" cy="215" r="1.1" opacity="0.45"/>
+    <circle cx="450" cy="40" r="1.2" opacity="0.5"/>
+    <circle cx="720" cy="46" r="1.3" opacity="0.5"/>
+  </g>
+
+  <!-- layered waves at the bottom -->
+  <path d="M0,305 C200,265 400,345 600,305 C800,265 1000,345 1200,300 L1200,360 L0,360 Z" fill="url(#waveTop)"/>
+  <path d="M0,332 C250,297 450,365 700,330 C900,303 1060,355 1200,330 L1200,360 L0,360 Z" fill="#ffffff" fill-opacity="0.13"/>
+  <path d="M0,350 C300,332 500,368 760,348 C960,332 1080,362 1200,349 L1200,360 L0,360 Z" fill="#ffffff" fill-opacity="0.10"/>
+
+  <!-- name (glow layer + solid layer) -->
+  <text x="600" y="115" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="66" font-weight="800" fill="#ffffff" opacity="0.55" filter="url(#soft)">Sihoon Cho</text>
+  <text x="600" y="115" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="66" font-weight="800" fill="#ffffff">Sihoon Cho</text>
+
+  <!-- accent divider -->
+  <rect x="380" y="135" width="440" height="3" rx="1.5" fill="#ffffff" opacity="0.85"/>
+
+  <!-- title (line 1) + specialties (line 2) -->
+  <text x="600" y="170" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="22" font-weight="600" letter-spacing="6" fill="#ffffff" opacity="0.95">SOFTWARE ENGINEER</text>
+  <text x="600" y="197" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="500" letter-spacing="4" fill="#ffffff" opacity="0.82">BACKEND &#183; CLOUD &#183; DEVOPS</text>
+
+  <!-- Leonardo da Vinci quote, cursive -->
+  <text x="600" y="256" text-anchor="middle" font-family="'Segoe Script', 'Brush Script MT', 'Snell Roundhand', 'Lucida Handwriting', cursive" font-style="italic" font-size="30" fill="#ffffff" opacity="0.6" filter="url(#soft)">Simplicity is the ultimate sophistication.</text>
+  <text x="600" y="256" text-anchor="middle" font-family="'Segoe Script', 'Brush Script MT', 'Snell Roundhand', 'Lucida Handwriting', cursive" font-style="italic" font-size="30" fill="#ffffff">Simplicity is the ultimate sophistication.</text>
+  <text x="600" y="292" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="500" letter-spacing="2" fill="#ffffff" opacity="0.85">- Leonardo da Vinci -</text>
+</svg>

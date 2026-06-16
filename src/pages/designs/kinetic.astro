@@ -1,0 +1,1267 @@
+---
+import Base from '../../layouts/Base.astro';
+import { site, about, stack, learning } from '../../data/site';
+import { getTech, techLogo } from '../../data/tech';
+
+// 브랜드 hex 의 상대 휘도를 계산해 "어두운 색"인지 판별 (다크 배경 대비 처리용)
+function isDarkColor(hex: string): boolean {
+  const h = hex.replace('#', '');
+  if (h.length !== 6) return false;
+  const r = parseInt(h.slice(0, 2), 16) / 255;
+  const g = parseInt(h.slice(2, 4), 16) / 255;
+  const b = parseInt(h.slice(4, 6), 16) / 255;
+  const lin = (c: number) => (c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4));
+  const lum = 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
+  return lum < 0.16;
+}
+
+const year = 2026;
+const navLinks = [
+  { href: '#about', label: 'About' },
+  { href: '#stack', label: 'Stack' },
+  { href: '#learning', label: 'Learning' },
+  { href: '#contact', label: 'Contact' },
+];
+const stats = [
+  { value: 8, label: 'Stack domains', suffix: '' },
+  { value: 30, label: 'Tools & frameworks', suffix: '+' },
+  { value: 100, label: 'Ship to prod', suffix: '%' },
+];
+---
+
+<Base title="Sihoon Cho — Kinetic Minimal">
+  <div class="kx" data-kx>
+    <!-- scroll progress -->
+    <div class="kx-progress" aria-hidden="true"><span data-progress></span></div>
+
+    <!-- scroll-driven ambient background (faint grid + parallax glow) -->
+    <div class="kx-bg" data-bg aria-hidden="true">
+      <span class="kx-bg__grid" data-bg-grid></span>
+      <span class="kx-bg__glow kx-bg__glow--a" data-bg-glow-a></span>
+      <span class="kx-bg__glow kx-bg__glow--b" data-bg-glow-b></span>
+    </div>
+
+    <!-- ambient hero glow (single, very subtle) -->
+    <div class="kx-ambient" aria-hidden="true"></div>
+
+    <!-- ───────── header ───────── -->
+    <header class="kx-header" data-header role="banner">
+      <div class="kx-header__inner">
+        <a class="kx-brand" href="#top" aria-label="Sihoon Cho — top">
+          <span class="kx-brand__mark" aria-hidden="true"></span>
+          <span class="kx-brand__name">{site.name}</span>
+          <span class="kx-brand__ko" aria-hidden="true">{site.nameKo}</span>
+        </a>
+        <nav class="kx-nav" aria-label="Primary">
+          {navLinks.map((l) => <a href={l.href}>{l.label}</a>)}
+        </nav>
+        <a class="kx-btn kx-btn--ghost" data-magnetic href="#contact">
+          <span data-magnetic-inner>Get in touch</span>
+        </a>
+      </div>
+    </header>
+
+    <main id="top">
+      <!-- ───────── hero ───────── -->
+      <section class="kx-hero" aria-labelledby="hero-title">
+        <div class="kx-shell">
+          <p class="kx-eyebrow reveal">
+            <span class="kx-dot" aria-hidden="true"></span>
+            <span class="kx-mono">{site.role}</span>
+          </p>
+          <h1 id="hero-title" class="kx-hero__title reveal">
+            <span class="kx-line">{site.name}</span>
+            <span class="kx-line kx-grad">Reliable systems,</span>
+            <span class="kx-line">shipped &amp; operated.</span>
+          </h1>
+          <p class="kx-hero__sub reveal">{site.tagline}</p>
+          <p class="kx-hero__sub kx-hero__sub--en reveal">{site.taglineEn}</p>
+          <div class="kx-hero__cta reveal">
+            <a class="kx-btn kx-btn--solid" data-magnetic href="#contact">
+              <span data-magnetic-inner>Contact me</span>
+              <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" class="kx-arrow"
+                ><path
+                  d="M3 8h9M8.5 4l4 4-4 4"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"></path></svg
+              >
+            </a>
+            <a
+              class="kx-btn kx-btn--ghost"
+              data-magnetic
+              href={site.links.github}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span data-magnetic-inner>GitHub ↗</span>
+            </a>
+          </div>
+        </div>
+        <span class="kx-scrollcue" aria-hidden="true">
+          <span class="kx-scrollcue__line"></span>
+          <span class="kx-mono">scroll</span>
+        </span>
+      </section>
+
+      <!-- ───────── about ───────── -->
+      <section class="kx-section" id="about" aria-labelledby="about-title">
+        <div class="kx-shell">
+          <header class="kx-sechead reveal">
+            <span class="kx-label kx-mono">About</span>
+            <h2 id="about-title" class="kx-sectitle">{about.lead}</h2>
+          </header>
+
+          <ul class="kx-stats reveal" aria-label="Highlights">
+            {
+              stats.map((s) => (
+                <li class="kx-stat" data-card>
+                  <span class="kx-card-glow" aria-hidden="true" />
+                  <span class="kx-stat__num">
+                    <span data-count={s.value}>0</span>
+                    {s.suffix}
+                  </span>
+                  <span class="kx-stat__label kx-mono">{s.label}</span>
+                </li>
+              ))
+            }
+          </ul>
+
+          <ul class="kx-highlights">
+            {
+              about.highlights.map((h, i) => (
+                <li class="kx-hl reveal" data-card style={`transition-delay:${i * 70}ms`}>
+                  <span class="kx-card-glow" aria-hidden="true" />
+                  <span class="kx-hl__idx kx-mono" aria-hidden="true">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <span class="kx-hl__text">{h}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </section>
+
+      <!-- ───────── tech stack ───────── -->
+      <section class="kx-section" id="stack" aria-labelledby="stack-title">
+        <div class="kx-shell">
+          <header class="kx-sechead reveal">
+            <span class="kx-label kx-mono">Tech Stack</span>
+            <h2 id="stack-title" class="kx-sectitle kx-sectitle--sm">
+              주력으로 다루는 기술
+            </h2>
+          </header>
+
+          <div class="kx-rows">
+            {
+              stack.map((group, i) => (
+                <article class="kx-row reveal" data-card style={`transition-delay:${i * 50}ms`}>
+                  <span class="kx-card-glow" aria-hidden="true" />
+                  <div class="kx-row__head">
+                    <h3 class="kx-row__cat">{group.category}</h3>
+                    <span class="kx-row__count kx-mono" aria-hidden="true">
+                      {String(group.items.length).padStart(2, '0')}
+                    </span>
+                  </div>
+                  <ul class="kx-chips" aria-label={group.category}>
+                    {group.items.map((name) => {
+                      const { color } = getTech(name);
+                      const dark = isDarkColor(color);
+                      const logo = techLogo(name, dark ? '#e7e7ea' : color);
+                      return (
+                        <li
+                          class="kx-chip"
+                          style={`--bc:${color};--bc-tint:${color}1f`}
+                        >
+                          {logo && (
+                            <span class:list={['kx-chip__tile', { 'is-dark': dark }]}>
+                              <img
+                                src={logo}
+                                alt=""
+                                width="16"
+                                height="16"
+                                loading="lazy"
+                                data-techlogo
+                              />
+                            </span>
+                          )}
+                          <span class="kx-chip__name">{name}</span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </article>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <!-- ───────── learning ───────── -->
+      <section class="kx-section kx-section--muted" id="learning" aria-labelledby="learning-title">
+        <div class="kx-shell">
+          <header class="kx-sechead reveal">
+            <span class="kx-label kx-mono">Learning</span>
+            <h2 id="learning-title" class="kx-sectitle kx-sectitle--sm">
+              탐색하고 익히는 중
+            </h2>
+          </header>
+
+          <div class="kx-learn">
+            {
+              learning.map((group, i) => (
+                <article class="kx-learn__col reveal" style={`transition-delay:${i * 50}ms`}>
+                  <h3 class="kx-learn__cat kx-mono">{group.category}</h3>
+                  <ul class="kx-learn__items">
+                    {group.items.map((name) => {
+                      const { color } = getTech(name);
+                      const dark = isDarkColor(color);
+                      const logo = techLogo(name, dark ? '#e7e7ea' : color);
+                      return (
+                        <li
+                          class="kx-chip kx-chip--learn"
+                          style={`--bc:${color};--bc-tint:${color}1f`}
+                        >
+                          {logo && (
+                            <span class:list={['kx-chip__tile', { 'is-dark': dark }]}>
+                              <img
+                                src={logo}
+                                alt=""
+                                width="16"
+                                height="16"
+                                loading="lazy"
+                                data-techlogo
+                              />
+                            </span>
+                          )}
+                          <span class="kx-chip__name">{name}</span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </article>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <!-- ───────── contact ───────── -->
+      <section class="kx-section" id="contact" aria-labelledby="contact-title">
+        <div class="kx-shell">
+          <div class="kx-contact reveal" data-card>
+            <span class="kx-card-glow" aria-hidden="true"></span>
+            <header class="kx-sechead">
+              <span class="kx-label kx-mono">Contact</span>
+              <h2 id="contact-title" class="kx-sectitle kx-sectitle--sm">
+                같이 만들 거리가 있다면, 편하게 연락 주세요.
+              </h2>
+            </header>
+
+            <div class="kx-mailrow">
+              <a
+                class="kx-btn kx-btn--solid"
+                data-magnetic
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=sihoon.cho.business@gmail.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span data-magnetic-inner>Gmail로 보내기 ↗</span>
+              </a>
+              <button
+                type="button"
+                class="kx-mail"
+                data-copy
+                aria-label={`이메일 주소 복사: ${site.email}`}
+              >
+                <span class="kx-mail__addr kx-mono">{site.email}</span>
+                <span class="kx-mail__hint kx-mono" data-copy-label>복사</span>
+              </button>
+            </div>
+            <p class="kx-copyfeedback kx-mono" data-copy-feedback role="status" aria-live="polite"></p>
+
+            <ul class="kx-social">
+              <li>
+                <a href={site.links.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+              </li>
+              <li>
+                <a href={site.links.linkedin} target="_blank" rel="noopener noreferrer">
+                  LinkedIn ↗
+                </a>
+              </li>
+              <li>
+                <a href={site.links.velog} target="_blank" rel="noopener noreferrer">Velog ↗</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="kx-footer">
+      <div class="kx-shell kx-footer__inner">
+        <span class="kx-mono">© {year} {site.name} · {site.nameKo}</span>
+        <span class="kx-mono kx-footer__dim">{site.role}</span>
+      </div>
+    </footer>
+  </div>
+</Base>
+
+<style>
+  .kx {
+    --bg: #08080a;
+    --surface-1: #111114;
+    --surface-2: #16161a;
+    --line: rgba(255, 255, 255, 0.08);
+    --line-strong: rgba(255, 255, 255, 0.14);
+    --text: #f4f4f5;
+    --muted: #a1a1aa;
+    --faint: #6b6b73;
+    --accent: #7c8cff;
+    --accent-soft: rgba(124, 140, 255, 0.16);
+    --spring: cubic-bezier(0.2, 0.9, 0.2, 1.05);
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+    position: relative;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-family: var(--font-sans);
+    overflow-x: clip;
+  }
+
+  /* ── scroll progress ── */
+  .kx-progress {
+    position: fixed;
+    inset: 0 0 auto 0;
+    height: 2px;
+    z-index: 60;
+    background: transparent;
+    pointer-events: none;
+  }
+  .kx-progress span {
+    display: block;
+    height: 100%;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    background: linear-gradient(90deg, transparent, var(--accent));
+  }
+
+  /* ── ambient glow ── */
+  .kx-ambient {
+    position: absolute;
+    top: -14rem;
+    left: 50%;
+    width: min(72rem, 120vw);
+    height: 44rem;
+    transform: translateX(-50%);
+    background: radial-gradient(
+      55% 50% at 50% 40%,
+      rgba(124, 140, 255, 0.1),
+      transparent 70%
+    );
+    filter: blur(20px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── scroll-driven ambient background ── */
+  .kx-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .kx-bg__grid {
+    --gp: 0px;
+    position: absolute;
+    inset: -20% -20% -20% -20%;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    background-size: 64px 64px;
+    background-position: 0 var(--gp);
+    transform: translateY(var(--gy, 0));
+    -webkit-mask-image: radial-gradient(120% 90% at 50% 8%, #000 35%, transparent 78%);
+    mask-image: radial-gradient(120% 90% at 50% 8%, #000 35%, transparent 78%);
+    will-change: transform, background-position;
+  }
+  .kx-bg__glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+    will-change: transform;
+  }
+  .kx-bg__glow--a {
+    top: 8%;
+    left: 8%;
+    width: 34rem;
+    height: 34rem;
+    background: radial-gradient(circle, rgba(124, 140, 255, 0.09), transparent 68%);
+    transform: translate3d(0, var(--ga, 0), 0);
+  }
+  .kx-bg__glow--b {
+    bottom: 4%;
+    right: 6%;
+    width: 30rem;
+    height: 30rem;
+    background: radial-gradient(circle, rgba(99, 179, 237, 0.06), transparent 68%);
+    transform: translate3d(0, var(--gb, 0), 0);
+  }
+
+  /* ── shell ── */
+  .kx-shell {
+    width: 100%;
+    max-width: 72rem;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 5vw, 3rem);
+    position: relative;
+    z-index: 1;
+  }
+  .kx-mono {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* ── header ── */
+  .kx-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.4s var(--ease), background-color 0.4s var(--ease),
+      backdrop-filter 0.4s var(--ease);
+  }
+  .kx-header.is-scrolled {
+    background: rgba(8, 8, 10, 0.72);
+    backdrop-filter: blur(12px) saturate(140%);
+    border-bottom-color: var(--line);
+  }
+  .kx-header__inner {
+    max-width: 72rem;
+    margin-inline: auto;
+    padding: clamp(0.9rem, 2vw, 1.2rem) clamp(1.25rem, 5vw, 3rem);
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    transition: padding 0.4s var(--ease);
+  }
+  .kx-header.is-scrolled .kx-header__inner {
+    padding-top: 0.65rem;
+    padding-bottom: 0.65rem;
+  }
+  .kx-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    text-decoration: none;
+    color: var(--text);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .kx-brand__mark {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    background: linear-gradient(140deg, #fff, #8b93ff 130%);
+    box-shadow: 0 0 0 1px var(--line-strong), 0 0 14px rgba(124, 140, 255, 0.35);
+    transition: transform 0.5s var(--spring);
+  }
+  .kx-brand:hover .kx-brand__mark {
+    transform: rotate(90deg) scale(1.05);
+  }
+  .kx-brand__ko {
+    color: var(--faint);
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+  .kx-nav {
+    margin-left: auto;
+    display: none;
+    gap: 0.35rem;
+  }
+  .kx-nav a {
+    position: relative;
+    padding: 0.45rem 0.7rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+    text-decoration: none;
+    border-radius: 6px;
+    transition: color 0.25s var(--ease), background-color 0.25s var(--ease);
+  }
+  .kx-nav a:hover {
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.04);
+  }
+  @media (min-width: 820px) {
+    .kx-nav {
+      display: inline-flex;
+    }
+    .kx-brand {
+      margin-right: 0;
+    }
+  }
+
+  /* ── buttons ── */
+  .kx-btn {
+    --pad-x: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.6rem var(--pad-x);
+    font-size: 0.85rem;
+    font-weight: 500;
+    border-radius: 7px;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid var(--line);
+    color: var(--text);
+    background: var(--surface-1);
+    will-change: transform;
+    transition: transform 0.45s var(--spring), border-color 0.3s var(--ease),
+      background-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
+  }
+  .kx-btn:hover {
+    border-color: var(--line-strong);
+    background: var(--surface-2);
+  }
+  .kx-btn--solid {
+    background: #fafafa;
+    color: #09090b;
+    border-color: transparent;
+  }
+  .kx-btn--solid:hover {
+    background: #fff;
+    box-shadow: 0 6px 24px -8px rgba(124, 140, 255, 0.5);
+  }
+  .kx-btn--ghost {
+    margin-left: auto;
+  }
+  @media (min-width: 820px) {
+    .kx-btn--ghost {
+      margin-left: 0;
+    }
+    .kx-nav + .kx-btn--ghost {
+      margin-left: 0;
+    }
+  }
+  .kx-arrow {
+    transition: transform 0.4s var(--spring);
+  }
+  .kx-btn:hover .kx-arrow {
+    transform: translateX(3px);
+  }
+
+  /* ── hero ── */
+  .kx-hero {
+    position: relative;
+    padding: clamp(5rem, 16vh, 11rem) 0 clamp(4rem, 10vh, 8rem);
+    min-height: 86vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .kx-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    color: var(--muted);
+    margin-bottom: 1.6rem;
+  }
+  .kx-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px var(--accent-soft);
+    animation: kx-pulse 2.4s var(--ease) infinite;
+  }
+  @keyframes kx-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+    50% {
+      box-shadow: 0 0 0 7px transparent;
+    }
+  }
+  .kx-hero__title {
+    font-family: var(--font-grotesk);
+    font-weight: 600;
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    font-size: clamp(2.6rem, 8.5vw, 6rem);
+    margin: 0 0 1.8rem;
+  }
+  .kx-line {
+    display: block;
+  }
+  .kx-grad {
+    background: linear-gradient(100deg, #f4f4f5 10%, #9aa2ff 55%, #f4f4f5 90%);
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: kx-sheen 7s linear infinite;
+  }
+  @keyframes kx-sheen {
+    to {
+      background-position: 220% 0;
+    }
+  }
+  .kx-hero__sub {
+    max-width: 40rem;
+    font-size: clamp(1rem, 2.2vw, 1.18rem);
+    line-height: 1.6;
+    color: var(--muted);
+    margin: 0 0 0.4rem;
+  }
+  .kx-hero__sub--en {
+    color: var(--faint);
+    font-size: 0.95rem;
+  }
+  .kx-hero__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 2.4rem;
+  }
+  .kx-scrollcue {
+    position: absolute;
+    bottom: clamp(1.5rem, 5vh, 3rem);
+    left: clamp(1.25rem, 5vw, 3rem);
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    color: var(--faint);
+  }
+  .kx-scrollcue__line {
+    width: 36px;
+    height: 1px;
+    background: linear-gradient(90deg, var(--faint), transparent);
+    position: relative;
+    overflow: hidden;
+  }
+  .kx-scrollcue__line::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    width: 14px;
+    background: var(--accent);
+    animation: kx-slide 2.2s var(--ease) infinite;
+  }
+  @keyframes kx-slide {
+    from {
+      transform: translateX(-14px);
+    }
+    to {
+      transform: translateX(36px);
+    }
+  }
+
+  /* ── sections ── */
+  .kx-section {
+    position: relative;
+    padding: clamp(4rem, 10vh, 7.5rem) 0;
+    border-top: 1px solid var(--line);
+  }
+  .kx-section--muted {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.012), transparent 30%);
+  }
+  .kx-sechead {
+    margin-bottom: 2.6rem;
+    max-width: 52rem;
+  }
+  .kx-label {
+    display: inline-block;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+  .kx-sectitle {
+    font-family: var(--font-grotesk);
+    font-weight: 600;
+    letter-spacing: -0.028em;
+    line-height: 1.12;
+    font-size: clamp(2rem, 5.6vw, 3.4rem);
+    margin: 0;
+    color: var(--text);
+  }
+  .kx-sectitle--sm {
+    font-size: clamp(1.75rem, 4.4vw, 2.7rem);
+  }
+
+  /* ── shared card glow (pointer-tracked) ── */
+  [data-card] {
+    position: relative;
+    isolation: isolate;
+  }
+  .kx-card-glow {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s var(--ease);
+    background: radial-gradient(
+      18rem 18rem at var(--mx, 50%) var(--my, 50%),
+      rgba(124, 140, 255, 0.14),
+      transparent 60%
+    );
+    z-index: -1;
+  }
+  [data-card]:hover .kx-card-glow,
+  [data-card]:focus-within .kx-card-glow {
+    opacity: 1;
+  }
+
+  /* ── stats ── */
+  .kx-stats {
+    list-style: none;
+    margin: 0 0 2.6rem;
+    padding: 0;
+    display: grid;
+    gap: 1px;
+    grid-template-columns: repeat(3, 1fr);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--line);
+  }
+  .kx-stat {
+    background: var(--surface-1);
+    padding: 1.5rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: background-color 0.3s var(--ease);
+  }
+  .kx-stat:hover {
+    background: var(--surface-2);
+  }
+  .kx-stat__num {
+    font-family: var(--font-grotesk);
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .kx-stat__label {
+    color: var(--muted);
+  }
+
+  /* ── highlights ── */
+  .kx-highlights {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 720px) {
+    .kx-highlights {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .kx-hl {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 1.25rem 1.4rem;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--surface-1);
+    transition: border-color 0.3s var(--ease), transform 0.45s var(--spring),
+      background-color 0.3s var(--ease);
+  }
+  .kx-hl:hover {
+    border-color: var(--line-strong);
+    transform: translateY(-2px);
+  }
+  .kx-hl__idx {
+    color: var(--accent);
+    flex-shrink: 0;
+    padding-top: 0.15rem;
+  }
+  .kx-hl__text {
+    color: var(--muted);
+    line-height: 1.55;
+    font-size: 0.95rem;
+  }
+
+  /* ── stack rows ── */
+  .kx-rows {
+    display: grid;
+    gap: 0.75rem;
+  }
+  .kx-row {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--surface-1);
+    padding: 1.35rem 1.5rem;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr;
+    transition: border-color 0.3s var(--ease), background-color 0.3s var(--ease);
+  }
+  @media (min-width: 760px) {
+    .kx-row {
+      grid-template-columns: 13rem 1fr;
+      align-items: start;
+      gap: 1.5rem;
+    }
+  }
+  .kx-row:hover {
+    border-color: var(--line-strong);
+  }
+  .kx-row__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+  .kx-row__cat {
+    font-family: var(--font-grotesk);
+    font-size: 1.05rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin: 0;
+    color: var(--text);
+  }
+  .kx-row__count {
+    color: var(--faint);
+  }
+  .kx-chips {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .kx-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.8rem;
+    font-family: var(--font-mono);
+    letter-spacing: 0.01em;
+    color: var(--muted);
+    padding: 0.3rem 0.62rem 0.3rem 0.34rem;
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    background: rgba(255, 255, 255, 0.015);
+    transition: color 0.22s var(--ease), border-color 0.22s var(--ease),
+      background-color 0.22s var(--ease), box-shadow 0.22s var(--ease),
+      transform 0.4s var(--spring);
+  }
+  .kx-chip:has(.kx-chip__tile) {
+    padding-left: 0.32rem;
+  }
+  .kx-chip:not(:has(.kx-chip__tile)) {
+    padding-left: 0.62rem;
+  }
+  .kx-chip:hover {
+    color: var(--text);
+    border-color: color-mix(in srgb, var(--bc, var(--accent)) 60%, var(--line-strong));
+    background: var(--bc-tint, var(--accent-soft));
+    box-shadow: 0 6px 22px -12px var(--bc, var(--accent));
+    transform: translateY(-2px);
+  }
+  .kx-chip__tile {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 5px;
+    flex-shrink: 0;
+    background: #f4f4f5;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+  }
+  .kx-chip__tile.is-dark {
+    background: #18181b;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+  }
+  .kx-chip__tile img {
+    display: block;
+    width: 16px;
+    height: 16px;
+  }
+  .kx-chip__name {
+    line-height: 1;
+  }
+  .kx-chip--learn {
+    font-size: 0.78rem;
+  }
+
+  /* ── learning ── */
+  .kx-learn {
+    display: grid;
+    gap: 1px;
+    grid-template-columns: repeat(2, 1fr);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--line);
+  }
+  @media (min-width: 760px) {
+    .kx-learn {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .kx-learn__col {
+    background: var(--bg);
+    padding: 1.4rem;
+    transition: background-color 0.3s var(--ease);
+  }
+  .kx-learn__col:hover {
+    background: var(--surface-1);
+  }
+  .kx-learn__cat {
+    color: var(--faint);
+    margin: 0 0 0.9rem;
+  }
+  .kx-learn__items {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  /* ── contact ── */
+  .kx-contact {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--surface-1);
+    padding: clamp(1.6rem, 4vw, 2.8rem);
+  }
+  .kx-mailrow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 0.5rem;
+  }
+  .kx-mail {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.7rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    background: var(--bg);
+    color: var(--text);
+    cursor: pointer;
+    transition: border-color 0.3s var(--ease), background-color 0.3s var(--ease);
+  }
+  .kx-mail:hover {
+    border-color: var(--accent);
+    background: var(--surface-2);
+  }
+  .kx-mail__addr {
+    font-size: 0.85rem;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .kx-mail__hint {
+    color: var(--faint);
+    border-left: 1px solid var(--line);
+    padding-left: 0.9rem;
+  }
+  .kx-copyfeedback {
+    min-height: 1.1rem;
+    margin: 0.9rem 0 0;
+    color: var(--accent);
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+  }
+  .kx-copyfeedback.is-on {
+    opacity: 1;
+    transform: none;
+  }
+  .kx-social {
+    list-style: none;
+    margin: 1.8rem 0 0;
+    padding: 1.6rem 0 0;
+    border-top: 1px solid var(--line);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.6rem;
+  }
+  .kx-social a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    position: relative;
+    transition: color 0.25s var(--ease);
+  }
+  .kx-social a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 100%;
+    height: 1px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    transition: transform 0.35s var(--spring);
+  }
+  .kx-social a:hover {
+    color: var(--text);
+  }
+  .kx-social a:hover::after {
+    transform: scaleX(1);
+  }
+
+  /* ── footer ── */
+  .kx-footer {
+    border-top: 1px solid var(--line);
+    padding: 2.2rem 0;
+  }
+  .kx-footer__inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.8rem;
+    color: var(--faint);
+  }
+  .kx-footer__dim {
+    color: var(--faint);
+  }
+
+  /* ── focus visibility ── */
+  .kx a:focus-visible,
+  .kx button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .kx-dot,
+    .kx-grad,
+    .kx-scrollcue__line::after {
+      animation: none !important;
+    }
+    .kx-grad {
+      -webkit-text-fill-color: var(--text);
+      color: var(--text);
+    }
+    .kx-bg__grid,
+    .kx-bg__glow {
+      transform: none !important;
+      background-position: 0 0 !important;
+    }
+  }
+</style>
+
+<script>
+  (() => {
+    const root = document.querySelector<HTMLElement>('[data-kx]');
+    if (!root) return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // ── sticky header condense ──
+    const header = root.querySelector<HTMLElement>('[data-header]');
+    if (header) {
+      let ticking = false;
+      const update = () => {
+        header.classList.toggle('is-scrolled', window.scrollY > 12);
+        ticking = false;
+      };
+      window.addEventListener(
+        'scroll',
+        () => {
+          if (!ticking) {
+            window.requestAnimationFrame(update);
+            ticking = true;
+          }
+        },
+        { passive: true }
+      );
+      update();
+    }
+
+    // ── scroll progress ──
+    const bar = root.querySelector<HTMLElement>('[data-progress]');
+    if (bar && !reduce) {
+      let ticking = false;
+      const update = () => {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        const p = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
+        bar.style.transform = `scaleX(${p})`;
+        ticking = false;
+      };
+      window.addEventListener(
+        'scroll',
+        () => {
+          if (!ticking) {
+            window.requestAnimationFrame(update);
+            ticking = true;
+          }
+        },
+        { passive: true }
+      );
+      update();
+    }
+
+    // ── scroll-driven ambient background (rAF-throttled parallax) ──
+    const grid = root.querySelector<HTMLElement>('[data-bg-grid]');
+    const glowA = root.querySelector<HTMLElement>('[data-bg-glow-a]');
+    const glowB = root.querySelector<HTMLElement>('[data-bg-glow-b]');
+    if ((grid || glowA || glowB) && !reduce) {
+      let ticking = false;
+      const update = () => {
+        const y = window.scrollY;
+        if (grid) {
+          grid.style.setProperty('--gp', `${(y * 0.15) % 64}px`);
+          grid.style.setProperty('--gy', `${y * -0.03}px`);
+        }
+        if (glowA) glowA.style.setProperty('--ga', `${y * 0.12}px`);
+        if (glowB) glowB.style.setProperty('--gb', `${y * -0.1}px`);
+        ticking = false;
+      };
+      window.addEventListener(
+        'scroll',
+        () => {
+          if (!ticking) {
+            window.requestAnimationFrame(update);
+            ticking = true;
+          }
+        },
+        { passive: true }
+      );
+      update();
+    }
+
+    // ── graceful missing-logo fallback ──
+    document
+      .querySelectorAll('img[data-techlogo]')
+      .forEach((i) => i.addEventListener('error', () => i.remove()));
+
+    // ── magnetic buttons ──
+    if (!reduce) {
+      const mags = root.querySelectorAll<HTMLElement>('[data-magnetic]');
+      mags.forEach((el) => {
+        const inner = el.querySelector<HTMLElement>('[data-magnetic-inner]');
+        const strength = 0.28;
+        el.addEventListener('pointermove', (e) => {
+          const r = el.getBoundingClientRect();
+          const x = e.clientX - r.left - r.width / 2;
+          const y = e.clientY - r.top - r.height / 2;
+          el.style.transform = `translate(${x * strength}px, ${y * strength}px)`;
+          if (inner) inner.style.transform = `translate(${x * strength * 0.4}px, ${y * strength * 0.4}px)`;
+        });
+        const reset = () => {
+          el.style.transform = '';
+          if (inner) inner.style.transform = '';
+        };
+        el.addEventListener('pointerleave', reset);
+        el.addEventListener('blur', reset);
+      });
+    }
+
+    // ── pointer-tracked card glow ──
+    if (!reduce) {
+      const cards = root.querySelectorAll<HTMLElement>('[data-card]');
+      cards.forEach((card) => {
+        card.addEventListener('pointermove', (e) => {
+          const r = card.getBoundingClientRect();
+          card.style.setProperty('--mx', `${e.clientX - r.left}px`);
+          card.style.setProperty('--my', `${e.clientY - r.top}px`);
+        });
+      });
+    }
+
+    // ── count-up stats ──
+    const counters = root.querySelectorAll<HTMLElement>('[data-count]');
+    if (counters.length) {
+      const run = (el: HTMLElement) => {
+        const target = Number(el.getAttribute('data-count')) || 0;
+        if (reduce) {
+          el.textContent = String(target);
+          return;
+        }
+        const dur = 1100;
+        const start = performance.now();
+        const tick = (now: number) => {
+          const t = Math.min((now - start) / dur, 1);
+          const eased = 1 - Math.pow(1 - t, 3);
+          el.textContent = String(Math.round(target * eased));
+          if (t < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      };
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              run(e.target as HTMLElement);
+              io.unobserve(e.target);
+            }
+          }
+        },
+        { threshold: 0.6 }
+      );
+      counters.forEach((c) => io.observe(c));
+    }
+
+    // ── email copy ──
+    const EMAIL = 'sihoon.cho.business@gmail.com';
+    const copyBtn = root.querySelector<HTMLButtonElement>('[data-copy]');
+    const feedback = root.querySelector<HTMLElement>('[data-copy-feedback]');
+    const copyLabel = root.querySelector<HTMLElement>('[data-copy-label]');
+    if (copyBtn && feedback) {
+      let timer: number | undefined;
+      const show = (msg: string) => {
+        feedback.textContent = msg;
+        feedback.classList.add('is-on');
+        if (copyLabel) copyLabel.textContent = '완료';
+        window.clearTimeout(timer);
+        timer = window.setTimeout(() => {
+          feedback.classList.remove('is-on');
+          if (copyLabel) copyLabel.textContent = '복사';
+        }, 2000);
+      };
+      const fallback = () => {
+        try {
+          const ta = document.createElement('textarea');
+          ta.value = EMAIL;
+          ta.setAttribute('readonly', '');
+          ta.style.position = 'absolute';
+          ta.style.left = '-9999px';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+          show('복사되었습니다!');
+        } catch {
+          show('복사에 실패했습니다. 직접 복사해 주세요.');
+        }
+      };
+      copyBtn.addEventListener('click', async () => {
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(EMAIL);
+            show('복사되었습니다!');
+          } else {
+            fallback();
+          }
+        } catch {
+          fallback();
+        }
+      });
+    }
+  })();
+</script>

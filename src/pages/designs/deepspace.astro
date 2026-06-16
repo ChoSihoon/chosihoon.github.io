@@ -1,0 +1,1853 @@
+---
+import Base from '../../layouts/Base.astro';
+import { site, about, stack, learning } from '../../data/site';
+
+// Each "station" gets a scroll window [start, end] within the tall scroll track.
+// Stations: hero, about, stack, learning, contact  (footer is static at the bottom).
+const stations = ['hero', 'about', 'stack', 'learning', 'contact'] as const;
+const year = 2026;
+const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
+---
+
+<Base title="Sihoon Cho — Deep Space">
+  <div class="ds" data-ds>
+    <!-- ── Fixed header / navbar ───────────────────────────────── -->
+    <header class="ds-header" data-header>
+      <a class="ds-brand" href="#top" data-nav data-station-target="0" aria-label={`${site.name} — top`}>
+        <span class="ds-brand__mark" aria-hidden="true">
+          <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
+            <!-- outer orbital ring -->
+            <circle class="ds-mark__ring" cx="22" cy="22" r="19" />
+            <!-- inner reticle ring -->
+            <circle class="ds-mark__inner" cx="22" cy="22" r="11.5" />
+            <!-- orbiting node + faint orbit path -->
+            <ellipse class="ds-mark__orbit" cx="22" cy="22" rx="19" ry="7.4" />
+            <circle class="ds-mark__node" cx="41" cy="22" r="2.1" />
+            <!-- reticle ticks -->
+            <path class="ds-mark__tick" d="M22 1.5V7 M22 37V42.5 M1.5 22H7 M37 22H42.5" />
+            <!-- hex sigil core -->
+            <path class="ds-mark__hex" d="M22 14.5l6.5 3.75v7.5L22 29.5l-6.5-3.75v-7.5L22 14.5z" />
+            <circle class="ds-mark__core" cx="22" cy="22" r="2.4" />
+          </svg>
+        </span>
+        <span class="ds-brand__word">
+          <span class="ds-brand__name">{site.name}</span>
+          <span class="ds-brand__tag" aria-hidden="true">CSH&middot;01 // v2.6</span>
+        </span>
+      </a>
+      <nav class="ds-nav" aria-label="Sections">
+        <a class="ds-nav__link" href="#about" data-nav data-station-target="1">About</a>
+        <a class="ds-nav__link" href="#stack" data-nav data-station-target="2">Stack</a>
+        <a class="ds-nav__link" href="#learning" data-nav data-station-target="3">Learning</a>
+        <a class="ds-nav__link" href="#contact" data-nav data-station-target="4">Contact</a>
+      </nav>
+      <span class="ds-header__spacer" aria-hidden="true"></span>
+    </header>
+
+    <!-- ── Fixed cosmic background ─────────────────────────────── -->
+    <div class="ds-cosmos" aria-hidden="true">
+      <div class="ds-nebula ds-nebula--a"></div>
+      <div class="ds-nebula ds-nebula--b"></div>
+      <div class="ds-nebula ds-nebula--c"></div>
+      <canvas class="ds-canvas" data-canvas></canvas>
+      <div class="ds-vignette"></div>
+      <div class="ds-aberration" data-aberration></div>
+    </div>
+
+    <!-- ── Telemetry: SpaceX-webcast-style bottom full-width bar ─── -->
+    <aside class="ds-tel" data-hud aria-hidden="true">
+      <!-- thin progress line pinned to the very top edge of the bar -->
+      <div class="ds-tel__line" aria-hidden="true">
+        <span class="ds-tel__line-fill" data-progress></span>
+      </div>
+
+      <div class="ds-tel__row">
+        <!-- status (far left) -->
+        <div class="ds-tel__group ds-tel__group--status">
+          <span class="ds-tel__val ds-tel__val--status">
+            <span class="ds-tel__led" data-hud-status></span>
+            <b data-hud-state>NOMINAL</b>
+          </span>
+          <span class="ds-tel__lab">Status</span>
+        </div>
+
+        <span class="ds-tel__div ds-tel__div--status" aria-hidden="true"></span>
+
+        <!-- PRIMARY: speed -->
+        <div class="ds-tel__group ds-tel__group--primary">
+          <span class="ds-tel__val"><b data-hud-speed>0</b><i>km/h</i></span>
+          <span class="ds-tel__lab">Speed</span>
+        </div>
+
+        <span class="ds-tel__div" aria-hidden="true"></span>
+
+        <!-- PRIMARY: distance traveled (우주에는 고도 개념이 없음) -->
+        <div class="ds-tel__group ds-tel__group--primary">
+          <span class="ds-tel__val"><b data-hud-dist>0</b><i>km</i></span>
+          <span class="ds-tel__lab">Distance</span>
+        </div>
+
+        <span class="ds-tel__div" aria-hidden="true"></span>
+
+        <!-- secondary: mission elapsed time -->
+        <div class="ds-tel__group">
+          <span class="ds-tel__val"><b data-hud-time>T+00:00</b></span>
+          <span class="ds-tel__lab">Time</span>
+        </div>
+
+        <span class="ds-tel__div ds-tel__div--opt" aria-hidden="true"></span>
+
+        <!-- secondary: progress % -->
+        <div class="ds-tel__group ds-tel__group--opt">
+          <span class="ds-tel__val"><b data-hud-prog>0.0</b><i>%</i></span>
+          <span class="ds-tel__lab">Progress</span>
+        </div>
+
+        <span class="ds-tel__div ds-tel__div--opt" aria-hidden="true"></span>
+
+        <!-- secondary: coordinates -->
+        <div class="ds-tel__group ds-tel__group--opt ds-tel__group--coord">
+          <span class="ds-tel__val"><b data-hud-coords>X+000 Y+000 Z+000</b></span>
+          <span class="ds-tel__lab">Coord</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ── Cockpit HUD widgets, anchored above the bar corners ─────
+         Decorative ambiance only. Hidden on small screens. -->
+    <!-- LEFT: free-floating 3-axis gyro / orientation sphere (no card).
+         Deep-space appropriate — a free 3D attitude ball with NO horizon line.
+         Matches the right radar's card-less treatment, glow, stroke + labels. -->
+    <div class="ds-gyro" data-instr-left aria-hidden="true">
+      <span class="ds-gyro__label">3-AXIS ATT</span>
+      <div class="ds-gyro__scope">
+        <!-- fixed outer bezel + bearing ticks (same language as radar rim) -->
+        <span class="ds-gyro__rim"></span>
+        <span class="ds-gyro__ticks"></span>
+        <!-- the free-tumbling orientation sphere: yaw spins the meridians,
+             pitch tilts the parallels, roll banks the whole gimbal. -->
+        <div class="ds-gyro__sphere" data-gyro-sphere>
+          <span class="ds-gyro__meridians" data-gyro-yaw>
+            <span class="ds-gyro__merid ds-gyro__merid--1"></span>
+            <span class="ds-gyro__merid ds-gyro__merid--2"></span>
+            <span class="ds-gyro__merid ds-gyro__merid--3"></span>
+          </span>
+          <span class="ds-gyro__parallels" data-gyro-pitch>
+            <span class="ds-gyro__par ds-gyro__par--eq"></span>
+            <span class="ds-gyro__par ds-gyro__par--n"></span>
+            <span class="ds-gyro__par ds-gyro__par--s"></span>
+          </span>
+          <span class="ds-gyro__pole" data-gyro-pole></span>
+        </div>
+        <!-- fixed crosshair reticle locked to the airframe -->
+        <span class="ds-gyro__cross ds-gyro__cross--x"></span>
+        <span class="ds-gyro__cross ds-gyro__cross--y"></span>
+        <span class="ds-gyro__fix"></span>
+        <span class="ds-gyro__core"></span>
+      </div>
+      <span class="ds-gyro__tag">GYRO&middot;STBL // <b data-gyro-r>R+00</b> <b data-gyro-p>P+00</b></span>
+    </div>
+
+    <!-- RIGHT: free-floating cinematic radar (no card) -->
+    <div class="ds-radar" data-instr-right aria-hidden="true">
+      <span class="ds-radar__label ds-radar__label--n">N</span>
+      <div class="ds-radar__scope">
+        <span class="ds-radar__ring ds-radar__ring--1"></span>
+        <span class="ds-radar__ring ds-radar__ring--2"></span>
+        <span class="ds-radar__ring ds-radar__ring--3"></span>
+        <span class="ds-radar__grid"></span>
+        <span class="ds-radar__cross ds-radar__cross--x"></span>
+        <span class="ds-radar__cross ds-radar__cross--y"></span>
+        <span class="ds-radar__ticks"></span>
+        <span class="ds-radar__sweep" data-radar-sweep></span>
+        <span class="ds-radar__blip ds-radar__blip--a"></span>
+        <span class="ds-radar__blip ds-radar__blip--b"></span>
+        <span class="ds-radar__blip ds-radar__blip--c"></span>
+        <span class="ds-radar__core"></span>
+      </div>
+      <span class="ds-radar__tag">SCAN&middot;RDR // 360&deg;</span>
+    </div>
+
+    <!-- screen-reader-only copy feedback -->
+    <p class="ds-sr" role="status" aria-live="polite" data-copy-feedback></p>
+
+    <!-- ── STAGE: fixed viewport that the stations live inside ─── -->
+    <div class="ds-stage" data-stage>
+      <main class="ds-stations" id="top">
+        <!-- HERO ───────────────────────────────────────────────── -->
+        <section
+          class="ds-station ds-station--hero"
+          data-station
+          data-index="0"
+          aria-label="Intro"
+        >
+          <div class="ds-warp" data-warp>
+            <p class="ds-kicker">{site.role}</p>
+            <h1 class="ds-name">
+              <span class="ds-name__en">Software<br />Engineer</span>
+            </h1>
+            <p class="ds-byline">
+              <span class="ds-byline__name">{site.name}</span>
+              <span class="ds-byline__sep" aria-hidden="true">·</span>
+              <span class="ds-byline__ko">{site.nameKo}</span>
+            </p>
+            <p class="ds-tagline" lang="ko">{site.tagline}</p>
+            <p class="ds-tagline ds-tagline--en">{site.taglineEn}</p>
+            <p class="ds-scrollcue" aria-hidden="true">
+              <span>스크롤하여 심우주로</span>
+              <em></em>
+            </p>
+          </div>
+        </section>
+
+        <!-- ABOUT ──────────────────────────────────────────────── -->
+        <section
+          class="ds-station"
+          id="about"
+          data-station
+          data-index="1"
+          aria-label="About"
+        >
+          <div class="ds-warp ds-panel" data-warp>
+            <div class="ds-strip" aria-hidden="true">
+              <span class="ds-strip__led"></span>
+              <span class="ds-strip__chan">// SYS: ABOUT</span>
+              <span class="ds-strip__id">0x2A &middot; CH-02</span>
+            </div>
+            <p class="ds-label">About</p>
+            <p class="ds-lead" lang="ko">{about.lead}</p>
+            <ul class="ds-highlights">
+              {about.highlights.map((h) => (
+                <li><span class="ds-dot" aria-hidden="true"></span>{h}</li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        <!-- TECH STACK ─────────────────────────────────────────── -->
+        <section
+          class="ds-station"
+          id="stack"
+          data-station
+          data-index="2"
+          aria-label="Tech Stack"
+        >
+          <div class="ds-warp ds-panel ds-panel--wide" data-warp>
+            <div class="ds-strip" aria-hidden="true">
+              <span class="ds-strip__led"></span>
+              <span class="ds-strip__chan">// SYS: STACK</span>
+              <span class="ds-strip__id">0x3B &middot; CH-03</span>
+            </div>
+            <p class="ds-label">Tech Stack</p>
+            <div class="ds-grid">
+              {stack.map((g) => (
+                <div class="ds-group">
+                  <h3 class="ds-group__title">{g.category}</h3>
+                  <ul class="ds-tags">
+                    {g.items.map((it) => <li class="ds-tag">{it}</li>)}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <!-- LEARNING ───────────────────────────────────────────── -->
+        <section
+          class="ds-station"
+          id="learning"
+          data-station
+          data-index="3"
+          aria-label="Learning"
+        >
+          <div class="ds-warp ds-panel ds-panel--wide" data-warp>
+            <div class="ds-strip ds-strip--amber" aria-hidden="true">
+              <span class="ds-strip__led"></span>
+              <span class="ds-strip__chan">// SYS: LEARNING</span>
+              <span class="ds-strip__id">0x4C &middot; CH-04</span>
+            </div>
+            <p class="ds-label">Currently Exploring</p>
+            <div class="ds-grid ds-grid--learn">
+              {learning.map((g) => (
+                <div class="ds-group">
+                  <h3 class="ds-group__title">{g.category}</h3>
+                  <ul class="ds-tags">
+                    {g.items.map((it) => <li class="ds-tag ds-tag--ghost">{it}</li>)}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <!-- CONTACT ────────────────────────────────────────────── -->
+        <section
+          class="ds-station"
+          id="contact"
+          data-station
+          data-index="4"
+          aria-label="Contact"
+        >
+          <div class="ds-warp ds-panel" data-warp>
+            <div class="ds-strip" aria-hidden="true">
+              <span class="ds-strip__led"></span>
+              <span class="ds-strip__chan">// SYS: CONTACT</span>
+              <span class="ds-strip__id">0x5D &middot; CH-05</span>
+            </div>
+            <p class="ds-label">Contact</p>
+            <p class="ds-contact-lead" lang="ko">함께 만들 무언가가 있다면 언제든지.</p>
+            <div class="ds-actions">
+              <a
+                class="ds-btn ds-btn--primary"
+                href={gmailHref}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Gmail로 보내기
+              </a>
+              <button class="ds-btn" type="button" data-copy={site.email}>
+                <span data-copy-label>이메일 복사</span>
+              </button>
+            </div>
+            <p class="ds-email" aria-hidden="true">{site.email}</p>
+            <nav class="ds-social" aria-label="Social links">
+              <a href={site.links.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+              <a href={site.links.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+              <a href={site.links.velog} target="_blank" rel="noopener noreferrer">Velog</a>
+            </nav>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- ── Tall scroll track drives everything ─────────────────── -->
+    <div class="ds-track" data-track aria-hidden="true">
+      {stations.map(() => <div class="ds-track__unit"></div>)}
+    </div>
+
+    <!-- ── Footer (static, normal flow at very bottom) ─────────── -->
+    <footer class="ds-footer">
+      <p>© {year} {site.name} · {site.nameKo}</p>
+    </footer>
+  </div>
+
+  <style>
+    .ds {
+      --bg: #03040a;
+      --ink: #eef1ff;
+      --muted: #9aa3c7;
+      --cyan: #5ad1ff;
+      --violet: #8b7dff;
+      /* height of the bottom telemetry bar; stations reserve this space */
+      --tel-h: clamp(58px, 8vh, 76px);
+      position: relative;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-sans);
+    }
+
+    /* ── Cosmic background (fixed, behind all) ───────────────── */
+    .ds-cosmos {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      background:
+        radial-gradient(120% 90% at 50% 50%, #05071a 0%, #03040a 55%, #010108 100%);
+      pointer-events: none;
+    }
+    .ds-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .ds-nebula {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.28;
+      mix-blend-mode: screen;
+      will-change: transform;
+    }
+    .ds-nebula--a {
+      width: 60vmax; height: 60vmax;
+      top: -18vmax; left: -10vmax;
+      background: radial-gradient(circle, rgba(139,125,255,0.55), transparent 65%);
+      animation: ds-drift-a 38s ease-in-out infinite alternate;
+    }
+    .ds-nebula--b {
+      width: 55vmax; height: 55vmax;
+      bottom: -20vmax; right: -12vmax;
+      background: radial-gradient(circle, rgba(90,209,255,0.45), transparent 65%);
+      animation: ds-drift-b 44s ease-in-out infinite alternate;
+    }
+    .ds-nebula--c {
+      width: 40vmax; height: 40vmax;
+      top: 35%; left: 55%;
+      background: radial-gradient(circle, rgba(40,90,150,0.4), transparent 70%);
+      animation: ds-drift-a 52s ease-in-out infinite alternate-reverse;
+    }
+    @keyframes ds-drift-a {
+      from { transform: translate3d(0,0,0) scale(1); }
+      to   { transform: translate3d(6vmax,4vmax,0) scale(1.12); }
+    }
+    @keyframes ds-drift-b {
+      from { transform: translate3d(0,0,0) scale(1.05); }
+      to   { transform: translate3d(-5vmax,-6vmax,0) scale(0.95); }
+    }
+    .ds-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(120% 100% at 50% 50%, transparent 45%, rgba(0,0,0,0.55) 100%);
+    }
+    .ds-aberration {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      mix-blend-mode: screen;
+      background:
+        radial-gradient(80% 60% at 49.6% 50%, rgba(255,0,80,0.06), transparent 60%),
+        radial-gradient(80% 60% at 50.4% 50%, rgba(0,200,255,0.06), transparent 60%);
+      transition: opacity 0.2s linear;
+      will-change: opacity;
+    }
+
+    /* ── Header / navbar ─────────────────────────────────────── */
+    .ds-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 20;
+      /* 3-column grid: brand left · nav centred · spacer right.
+         Equal 1fr flanks keep the auto nav column centred, AND the nav is
+         additionally absolute-centred to the viewport (see .ds-nav) so the
+         menu is mathematically dead-centre even if brand/spacer widths differ. */
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 1rem;
+      padding: clamp(0.7rem, 1.6vw, 1.1rem) clamp(1rem, 4vw, 2.5rem);
+      background: linear-gradient(180deg, rgba(5,7,20,0.78), rgba(5,7,20,0.22));
+      backdrop-filter: blur(12px) saturate(120%);
+      -webkit-backdrop-filter: blur(12px) saturate(120%);
+      border-bottom: 1px solid rgba(139,125,255,0.16);
+    }
+    .ds-brand { justify-self: start; grid-column: 1; }
+    .ds-header__spacer { justify-self: end; grid-column: 3; }
+    .ds-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.62rem;
+      text-decoration: none;
+      color: var(--ink);
+      font-family: var(--font-grotesk);
+      font-weight: 600;
+      font-size: clamp(0.92rem, 1.6vw, 1.05rem);
+      letter-spacing: 0.01em;
+    }
+    /* ── Technical mission-insignia mark (orbital ring + hex sigil) ─── */
+    .ds-brand__mark {
+      width: 30px; height: 30px;
+      flex: none;
+      display: block;
+      filter: drop-shadow(0 0 4px rgba(90,209,255,0.55))
+              drop-shadow(0 0 8px rgba(139,125,255,0.30));
+    }
+    .ds-brand__mark svg { width: 100%; height: 100%; display: block; overflow: visible; }
+    .ds-mark__ring,
+    .ds-mark__inner,
+    .ds-mark__hex,
+    .ds-mark__tick { stroke: var(--cyan); fill: none; }
+    .ds-mark__ring { stroke-width: 1; opacity: 0.85; }
+    .ds-mark__inner { stroke: var(--violet); stroke-width: 0.7; opacity: 0.55; }
+    .ds-mark__hex { stroke: var(--cyan); stroke-width: 0.9; opacity: 0.9; }
+    .ds-mark__tick { stroke: var(--cyan); stroke-width: 1; opacity: 0.7; stroke-linecap: round; }
+    .ds-mark__orbit {
+      stroke: var(--violet); fill: none; stroke-width: 0.6;
+      opacity: 0.4; transform-origin: 22px 22px;
+      animation: ds-mark-orbit 7s linear infinite;
+    }
+    .ds-mark__node {
+      fill: #eaf6ff; transform-origin: 22px 22px;
+      animation: ds-mark-orbit 7s linear infinite;
+      filter: drop-shadow(0 0 3px var(--cyan));
+    }
+    .ds-mark__core {
+      fill: var(--cyan); opacity: 0.95;
+      animation: ds-mark-core 2.6s ease-in-out infinite;
+    }
+    @keyframes ds-mark-orbit { to { transform: rotate(360deg); } }
+    @keyframes ds-mark-core { 0%,100% { opacity: 0.45; } 50% { opacity: 1; } }
+    .ds-brand:hover .ds-brand__mark { filter:
+      drop-shadow(0 0 5px rgba(90,209,255,0.8)) drop-shadow(0 0 12px rgba(139,125,255,0.45)); }
+    /* engineered monospace wordmark + callsign tag */
+    .ds-brand__word { display: inline-flex; flex-direction: column; gap: 0.06rem; line-height: 1; }
+    .ds-brand__name {
+      white-space: nowrap;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      font-size: clamp(0.82rem, 1.45vw, 0.95rem);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #eaf1ff;
+    }
+    .ds-brand__tag {
+      font-family: var(--font-mono);
+      font-size: 0.5rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(120,200,245,0.7);
+      white-space: nowrap;
+    }
+    .ds-nav {
+      /* Absolute-centre to the VIEWPORT so the menu is exactly dead-centre
+         regardless of the brand's or right side's width. The grid column 2
+         still reserves layout space; this lifts the nav onto an absolute
+         layer centred via left:50% + translateX(-50%). */
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(0.4rem, 1.6vw, 1.4rem);
+      white-space: nowrap;
+    }
+    .ds-nav__link {
+      position: relative;
+      text-decoration: none;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.4rem 0.5rem;
+      border-radius: 6px;
+      transition: color 0.2s ease;
+    }
+    .ds-nav__link::after {
+      content: '';
+      position: absolute;
+      left: 0.5rem; right: 0.5rem; bottom: 0.15rem;
+      height: 1px;
+      background: linear-gradient(90deg, var(--cyan), var(--violet));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.25s ease;
+    }
+    .ds-nav__link:hover,
+    .ds-nav__link.is-active { color: var(--ink); }
+    .ds-nav__link:hover::after,
+    .ds-nav__link.is-active::after { transform: scaleX(1); }
+    .ds-brand:focus-visible,
+    .ds-nav__link:focus-visible {
+      outline: 2px solid var(--cyan);
+      outline-offset: 2px;
+      color: var(--ink);
+    }
+    @media (max-width: 560px) {
+      .ds-brand__word { display: none; }
+      .ds-nav__link { font-size: 0.66rem; letter-spacing: 0.08em; padding: 0.4rem 0.3rem; }
+      .ds-nav { gap: clamp(0.2rem, 2.4vw, 0.7rem); }
+      /* Nav stays absolute-centred to the viewport; the brand collapses to
+         just its mark so it never crowds the centred menu. */
+    }
+    @media (max-width: 360px) {
+      .ds-nav__link { font-size: 0.6rem; letter-spacing: 0.05em; padding: 0.35rem 0.22rem; }
+    }
+
+    /* ── Telemetry: SpaceX-webcast-style bottom full-width bar ──── */
+    .ds-tel {
+      --tel-cyan: #6fdcff;
+      --tel-line: rgba(120,150,190,0.18);
+      --tel-dim: rgba(154,176,210,0.62);
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      z-index: 6;
+      /* fixed, predictable height → stations reserve exactly this much room */
+      height: var(--tel-h);
+      font-family: var(--font-mono);
+      color: var(--tel-dim);
+      background:
+        linear-gradient(180deg, rgba(6,9,18,0.55) 0%, rgba(5,7,16,0.9) 38%, rgba(4,6,14,0.96) 100%);
+      border-top: 1px solid var(--tel-line);
+      box-shadow: 0 -14px 40px -24px rgba(0,0,0,0.9);
+      backdrop-filter: blur(10px) saturate(118%);
+      -webkit-backdrop-filter: blur(10px) saturate(118%);
+      pointer-events: none;
+    }
+    /* thin progress line across the very top edge of the bar */
+    .ds-tel__line {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: rgba(255,255,255,0.06);
+      overflow: hidden;
+    }
+    .ds-tel__line-fill {
+      display: block;
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--violet), var(--tel-cyan));
+      box-shadow: 0 0 8px rgba(111,220,255,0.6);
+      will-change: width;
+    }
+    .ds-tel__row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: clamp(0.4rem, 1.4vw, 1.4rem);
+      height: 100%;
+      padding: 0 clamp(0.9rem, 3.5vw, 2.6rem);
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+    .ds-tel__group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.18rem;
+      min-width: 0;
+    }
+    .ds-tel__val {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.18rem;
+      line-height: 1;
+    }
+    .ds-tel__val b {
+      font-weight: 600;
+      color: #eaf3ff;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.04em;
+      font-size: clamp(0.82rem, 1.5vw, 1.05rem);
+    }
+    .ds-tel__val i {
+      font-style: normal;
+      font-size: 0.58rem;
+      letter-spacing: 0.04em;
+      color: var(--tel-cyan);
+      opacity: 0.85;
+    }
+    .ds-tel__lab {
+      font-size: 0.52rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(154,176,210,0.6);
+    }
+    .ds-tel__div {
+      width: 1px;
+      height: 2.1rem;
+      flex: none;
+      background: linear-gradient(180deg, transparent, var(--tel-line), transparent);
+    }
+    .ds-tel__val--status { gap: 0.34rem; }
+    .ds-tel__val--status b {
+      font-size: clamp(0.7rem, 1.3vw, 0.85rem);
+      letter-spacing: 0.16em;
+      color: #6fe0a0;
+    }
+    .ds-tel__led {
+      width: 7px; height: 7px;
+      flex: none;
+      border-radius: 50%;
+      background: #54e08a;
+      box-shadow: 0 0 8px rgba(84,224,138,0.9);
+    }
+    .ds-tel__group--coord .ds-tel__val b { letter-spacing: 0.08em; }
+
+    /* ── responsive: drop optional fields, then wrap cleanly ───── */
+    @media (max-width: 900px) {
+      .ds-tel__group--opt,
+      .ds-tel__div--opt { display: none; }
+    }
+    @media (max-width: 560px) {
+      .ds-tel__row { padding: 0 1rem; gap: 0.6rem; }
+      .ds-tel__group--coord,
+      .ds-tel__group--status,
+      .ds-tel__div--status { display: none; }
+      .ds-tel__div { height: 1.7rem; }
+      .ds-tel__lab { font-size: 0.48rem; letter-spacing: 0.16em; }
+    }
+
+    /* ── Cockpit HUD instrument widgets (decorative ambiance) ───── */
+    /* Shared instrument tokens */
+    .ds-gyro, .ds-radar {
+      --instr-line: rgba(120,160,210,0.34);
+      --instr-cyan: #6fdcff;
+      --instr-amber: #ffc05a;
+      position: fixed;
+      bottom: calc(var(--tel-h) + 0.9rem);
+      z-index: 7;
+      font-family: var(--font-mono);
+      color: rgba(170,195,225,0.85);
+      pointer-events: none;
+    }
+
+    /* ── LEFT: free-floating 3-axis gyro / orientation sphere (no card) ──
+       Card-less twin of the radar: same corner offset, glow, hairline
+       strokes, mono label sizing. A free 3D attitude ball — NO horizon,
+       NO ground/sky — so nothing implies altitude. */
+    .ds-gyro {
+      left: clamp(0.6rem, 2.2vw, 1.6rem);
+      width: 150px;
+      display: flex; flex-direction: column; align-items: center;
+      /* NO box / no background — integrated free-floating element */
+    }
+    .ds-gyro__label {
+      font-size: 0.46rem; letter-spacing: 0.2em; color: rgba(154,176,210,0.7);
+      margin-bottom: 0.15rem;
+    }
+    .ds-gyro__scope {
+      position: relative;
+      width: 150px; height: 150px;
+      border-radius: 50%;
+      filter: drop-shadow(0 0 10px rgba(90,209,255,0.22));
+      perspective: 320px;          /* gives the rings real 3D depth */
+    }
+    /* fixed outer bezel ring (matches radar ring--1) */
+    .ds-gyro__rim {
+      position: absolute; inset: 0; border-radius: 50%;
+      border: 1px solid rgba(120,160,210,0.26);
+      box-shadow: 0 0 10px -2px rgba(90,209,255,0.25),
+                  inset 0 0 18px -6px rgba(0,0,0,0.6);
+    }
+    /* bearing ticks around the rim — identical recipe to the radar's */
+    .ds-gyro__ticks {
+      position: absolute; inset: 0; border-radius: 50%;
+      background:
+        repeating-conic-gradient(from 0deg,
+          rgba(150,190,230,0.5) 0deg 0.6deg, transparent 0.6deg 30deg);
+      -webkit-mask: radial-gradient(closest-side, transparent 88%, #000 90%, #000 100%);
+      mask: radial-gradient(closest-side, transparent 88%, #000 90%, #000 100%);
+    }
+    /* the tumbling sphere lives inside the bezel. No mask here — a CSS mask
+       would flatten preserve-3d; the rings are kept inside the rim by inset. */
+    .ds-gyro__sphere {
+      position: absolute; inset: 14%;
+      transform-style: preserve-3d;
+      transform-origin: 50% 50%;
+      will-change: transform;     /* JS banks (roll) the whole gimbal here */
+    }
+    /* longitude rings — spun by yaw (JS) */
+    .ds-gyro__meridians,
+    .ds-gyro__parallels {
+      position: absolute; inset: 0;
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+    /* base pitch tilt so parallels read as latitude rings (JS overrides) */
+    .ds-gyro__parallels { transform: rotateX(90deg); }
+    .ds-gyro__merid, .ds-gyro__par {
+      position: absolute; inset: 0; border-radius: 50%;
+      border: 1px solid rgba(111,220,255,0.34);
+      transform-style: preserve-3d;
+    }
+    /* three longitude rings rotated about Y → a wireframe globe of meridians */
+    .ds-gyro__merid--1 { transform: rotateY(0deg); }
+    .ds-gyro__merid--2 { transform: rotateY(60deg); border-color: rgba(111,220,255,0.22); }
+    .ds-gyro__merid--3 { transform: rotateY(120deg); border-color: rgba(111,220,255,0.22); }
+    /* equator + two parallels. The PARENT (.ds-gyro__parallels) carries the
+       rotateX pitch tilt (set by JS); each ring just sits at a different
+       latitude (translateZ + scale) within that tilted plane. NO horizon. */
+    .ds-gyro__par--eq {
+      border-color: rgba(139,125,255,0.55);
+      box-shadow: 0 0 8px -2px rgba(139,125,255,0.5);
+    }
+    .ds-gyro__par--n { transform: translateZ(20px) scale(0.7); border-color: rgba(139,125,255,0.28); }
+    .ds-gyro__par--s { transform: translateZ(-20px) scale(0.7); border-color: rgba(139,125,255,0.20); }
+    /* the spin-axis pole marker (free attitude reference, not a horizon) */
+    .ds-gyro__pole {
+      position: absolute; top: 50%; left: 50%; width: 2px; height: 70%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(180deg, transparent, var(--instr-cyan), transparent);
+      box-shadow: 0 0 6px rgba(111,220,255,0.7);
+    }
+    /* fixed airframe reticle locked over the tumbling sphere */
+    .ds-gyro__cross { position: absolute; background: rgba(120,160,210,0.30); }
+    .ds-gyro__cross--x { left: 16%; right: 16%; top: 50%; height: 1px; transform: translateY(-50%); }
+    .ds-gyro__cross--y { top: 16%; bottom: 16%; left: 50%; width: 1px; transform: translateX(-50%); }
+    .ds-gyro__fix {
+      position: absolute; top: 50%; left: 50%; width: 18px; height: 18px;
+      transform: translate(-50%, -50%); border-radius: 50%;
+      border: 1px solid rgba(255,192,90,0.65);
+      box-shadow: 0 0 7px -1px rgba(255,192,90,0.5);
+    }
+    .ds-gyro__core {
+      position: absolute; top: 50%; left: 50%; width: 5px; height: 5px;
+      transform: translate(-50%, -50%); border-radius: 50%;
+      background: var(--instr-amber);
+      box-shadow: 0 0 8px rgba(255,192,90,0.9);
+    }
+    .ds-gyro__tag {
+      margin-top: 0.3rem; font-size: 0.46rem; letter-spacing: 0.14em;
+      color: rgba(120,200,245,0.65); white-space: nowrap;
+    }
+    .ds-gyro__tag b {
+      color: #eaf3ff; font-weight: 600; letter-spacing: 0.04em;
+      font-variant-numeric: tabular-nums;
+    }
+    /* slow idle tumble so the sphere lives even when the user isn't scrolling */
+    .ds-gyro__meridians { animation: ds-gyro-yaw 14s linear infinite; }
+    @keyframes ds-gyro-yaw { to { transform: rotateY(360deg); } }
+
+    /* ── RIGHT: free-floating cinematic radar (no card) ──────────── */
+    .ds-radar {
+      right: clamp(0.6rem, 2.2vw, 1.6rem);
+      width: 150px;
+      display: flex; flex-direction: column; align-items: center;
+      /* NO box / no background — integrated free-floating element */
+    }
+    .ds-radar__label {
+      font-size: 0.46rem; letter-spacing: 0.2em; color: rgba(154,176,210,0.7);
+      margin-bottom: 0.15rem;
+    }
+    .ds-radar__scope {
+      position: relative;
+      width: 150px; height: 150px;
+      border-radius: 50%;
+      filter: drop-shadow(0 0 10px rgba(90,209,255,0.22));
+    }
+    .ds-radar__ring {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%); border-radius: 50%;
+      border: 1px solid rgba(120,160,210,0.26);
+    }
+    .ds-radar__ring--1 { width: 100%; height: 100%; box-shadow: 0 0 10px -2px rgba(90,209,255,0.25); }
+    .ds-radar__ring--2 { width: 66%; height: 66%; }
+    .ds-radar__ring--3 { width: 33%; height: 33%; }
+    .ds-radar__grid {
+      position: absolute; inset: 0; border-radius: 50%;
+      background:
+        repeating-conic-gradient(from 0deg, rgba(120,160,210,0.10) 0deg 1deg, transparent 1deg 30deg);
+      -webkit-mask: radial-gradient(closest-side, transparent 30%, #000 32%, #000 100%);
+      mask: radial-gradient(closest-side, transparent 30%, #000 32%, #000 100%);
+      opacity: 0.6;
+    }
+    .ds-radar__cross { position: absolute; background: rgba(120,160,210,0.22); }
+    .ds-radar__cross--x { left: 0; right: 0; top: 50%; height: 1px; transform: translateY(-50%); }
+    .ds-radar__cross--y { top: 0; bottom: 0; left: 50%; width: 1px; transform: translateX(-50%); }
+    /* bearing ticks around the rim */
+    .ds-radar__ticks {
+      position: absolute; inset: 0; border-radius: 50%;
+      background:
+        repeating-conic-gradient(from 0deg,
+          rgba(150,190,230,0.5) 0deg 0.6deg, transparent 0.6deg 30deg);
+      -webkit-mask: radial-gradient(closest-side, transparent 88%, #000 90%, #000 100%);
+      mask: radial-gradient(closest-side, transparent 88%, #000 90%, #000 100%);
+    }
+    .ds-radar__sweep {
+      position: absolute; inset: 0; border-radius: 50%;
+      background: conic-gradient(
+        from 0deg,
+        rgba(111,220,255,0.50) 0deg,
+        rgba(111,220,255,0.22) 18deg,
+        rgba(111,220,255,0.06) 42deg,
+        transparent 70deg,
+        transparent 360deg
+      );
+      transform-origin: 50% 50%;
+      animation: ds-radar-spin 3.6s linear infinite;
+      will-change: transform;
+      -webkit-mask: radial-gradient(closest-side, #000 0%, #000 100%);
+      mask: radial-gradient(closest-side, #000 0%, #000 100%);
+    }
+    .ds-radar__core {
+      position: absolute; top: 50%; left: 50%; width: 5px; height: 5px;
+      transform: translate(-50%, -50%); border-radius: 50%;
+      background: var(--instr-cyan);
+      box-shadow: 0 0 8px rgba(111,220,255,0.9);
+    }
+    .ds-radar__blip {
+      position: absolute; width: 5px; height: 5px; border-radius: 50%;
+      background: var(--instr-cyan);
+      box-shadow: 0 0 7px rgba(111,220,255,0.95);
+      animation: ds-radar-blip 3.6s ease-in-out infinite;
+    }
+    .ds-radar__blip--a { top: 28%; left: 64%; animation-delay: -0.5s; }
+    .ds-radar__blip--b { top: 62%; left: 40%; animation-delay: -1.9s; }
+    .ds-radar__blip--c { top: 48%; left: 72%; animation-delay: -3.0s; }
+    .ds-radar__tag {
+      margin-top: 0.3rem; font-size: 0.46rem; letter-spacing: 0.16em;
+      color: rgba(120,200,245,0.65); white-space: nowrap;
+    }
+    @keyframes ds-radar-spin { to { transform: rotate(360deg); } }
+    @keyframes ds-radar-blip {
+      0%, 20%, 100% { opacity: 0; }
+      6% { opacity: 1; }
+    }
+
+    /* ambiance only → hide on small screens so they never crowd content */
+    @media (max-width: 900px) {
+      .ds-gyro, .ds-radar { display: none; }
+    }
+
+    .ds-sr {
+      position: fixed;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0 0 0 0);
+      white-space: nowrap; border: 0;
+    }
+
+    /* ── Stage / stations ────────────────────────────────────── */
+    .ds-stage {
+      position: fixed;
+      /* reserve the bottom telemetry bar height (+ small gap) and the fixed
+         header height so centred station content never sits under either. */
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: calc(var(--tel-h) + 0.5rem);
+      z-index: 2;
+      perspective: 1000px;
+      perspective-origin: 50% 50%;
+      pointer-events: none;
+    }
+    .ds-stations { position: absolute; inset: 0; transform-style: preserve-3d; }
+    .ds-station {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: clamp(1.5rem, 5vw, 4rem);
+      transform-style: preserve-3d;
+      will-change: transform, opacity, filter;
+    }
+    /* JS hides non-active stations to save paint; default visible for no-JS */
+    .ds-warp {
+      width: 100%;
+      max-width: 70ch;
+      text-align: center;
+      transform-style: preserve-3d;
+      will-change: transform, opacity, filter;
+      pointer-events: auto;
+    }
+
+    /* ── Hero typography ─────────────────────────────────────── */
+    .ds-kicker {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 1.2rem;
+    }
+    .ds-name {
+      line-height: 0.92;
+      margin: 0;
+      font-family: var(--font-grotesk);
+      font-weight: 600;
+    }
+    .ds-name__en {
+      display: block;
+      font-size: clamp(2.6rem, 10.5vw, 8rem);
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      background: linear-gradient(180deg, #ffffff, #b9c2ff 70%, #7d86c9);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 60px rgba(139,125,255,0.25);
+    }
+    /* identity demoted to a small supporting eyebrow/subline under the title */
+    .ds-byline {
+      display: inline-flex;
+      align-items: baseline;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 1rem auto 0;
+      font-family: var(--font-mono);
+      font-size: clamp(0.78rem, 1.5vw, 0.98rem);
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .ds-byline__name { color: #d6e2ff; font-weight: 600; }
+    .ds-byline__sep { color: var(--cyan); opacity: 0.7; }
+    .ds-byline__ko {
+      font-family: var(--font-sans);
+      letter-spacing: 0.3em;
+      padding-left: 0.1em;
+    }
+    .ds-tagline {
+      color: var(--ink);
+      font-size: clamp(1rem, 2.4vw, 1.35rem);
+      margin: 1.8rem auto 0;
+      max-width: 46ch;
+      line-height: 1.55;
+    }
+    .ds-tagline--en {
+      color: var(--muted);
+      font-size: clamp(0.85rem, 1.6vw, 1rem);
+      font-family: var(--font-grotesk);
+      margin-top: 0.6rem;
+    }
+    .ds-scrollcue {
+      margin-top: 2.6rem;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    .ds-scrollcue em {
+      width: 1px;
+      height: 38px;
+      background: linear-gradient(180deg, var(--cyan), transparent);
+      animation: ds-cue 1.8s ease-in-out infinite;
+    }
+    @keyframes ds-cue {
+      0%, 100% { transform: scaleY(0.3); opacity: 0.4; transform-origin: top; }
+      50%      { transform: scaleY(1); opacity: 1; transform-origin: top; }
+    }
+
+    /* ── Panels: HUD readout frame (sharp, engineered, NOT a card) ─ */
+    /* No border-radius. A thin hairline frame sits inside, and four
+       L-shaped corner brackets (targeting-reticle ticks) are drawn with
+       pseudo-elements + a small SVG-free ::before/::after pair per corner
+       via gradients. Background stays extremely subtle so the starfield
+       reads through; readability is preserved with comfortable padding. */
+    .ds-panel {
+      --alert: var(--cyan);
+      position: relative;
+      background: linear-gradient(160deg, rgba(22,28,52,0.40), rgba(8,11,24,0.28));
+      border: 1px solid rgba(120,224,255,0.75);
+      border-radius: 0;
+      padding: clamp(1.5rem, 3.6vw, 2.6rem);
+      /* frosted glass */
+      backdrop-filter: blur(16px) saturate(1.25);
+      -webkit-backdrop-filter: blur(16px) saturate(1.25);
+      text-align: left;
+      box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.16);
+      /* neon border glow — drop-shadow applies AFTER clip-path so it hugs the keyed edge */
+      filter: drop-shadow(0 0 3px rgba(120,224,255,0.85)) drop-shadow(0 0 10px rgba(90,209,255,0.5));
+      /* keyed/notched corners — same design language as .ds-btn (longer key) */
+      clip-path: polygon(28px 0, 100% 0, 100% calc(100% - 28px), calc(100% - 28px) 100%, 0 100%, 0 28px);
+    }
+    /* incoming-alert "decode/boot" reveal flourish when station activates */
+    .ds-station[style*="visible"] .ds-panel { animation: ds-decode 0.55s ease-out both; }
+    @keyframes ds-decode {
+      0%   { opacity: 0; }
+      100% { opacity: 1; }
+    }
+    /* thin sweeping border "scan" line across the top edge of the panel */
+    .ds-panel .ds-strip::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -1px; height: 1px;
+      width: 38%;
+      background: linear-gradient(90deg, transparent, var(--alert), transparent);
+      box-shadow: 0 0 6px var(--alert);
+      animation: ds-strip-scan 3.4s ease-in-out infinite;
+    }
+    @keyframes ds-strip-scan {
+      0%   { left: -38%; opacity: 0; }
+      20%  { opacity: 1; }
+      80%  { opacity: 1; }
+      100% { left: 100%; opacity: 0; }
+    }
+
+    /* ── System-alert header strip on each station panel ─────────── */
+    .ds-strip {
+      --alert: var(--cyan);
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin: 0 0 1.1rem;
+      padding: 0.34rem 0.6rem;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(170,205,235,0.9);
+      background: linear-gradient(90deg, rgba(90,209,255,0.10), rgba(90,209,255,0.02));
+      box-shadow: inset 0 0 0 1px rgba(120,160,210,0.26);
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 7px 100%, 0 calc(100% - 7px));
+    }
+    .ds-strip--amber { --alert: var(--instr-amber, #ffc05a); }
+    .ds-strip--amber {
+      color: rgba(255,224,170,0.92);
+      background: linear-gradient(90deg, rgba(255,192,90,0.12), rgba(255,192,90,0.02));
+    }
+    .ds-strip__led {
+      width: 7px; height: 7px; flex: none; border-radius: 50%;
+      background: var(--alert);
+      box-shadow: 0 0 8px var(--alert);
+      animation: ds-strip-led 1.5s ease-in-out infinite;
+    }
+    @keyframes ds-strip-led { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+    .ds-strip__chan { font-weight: 600; color: #eaf3ff; }
+    .ds-strip--amber .ds-strip__chan { color: #fff0d6; }
+    .ds-strip__id {
+      margin-left: auto;
+      color: rgba(150,180,215,0.7);
+      letter-spacing: 0.1em;
+    }
+    /* pass the alert accent down so the panel glow tints to match the strip */
+    .ds-panel:has(.ds-strip--amber) { --alert: #ffc05a; }
+    /* Corner brackets: two layered conic/linear "ticks" per corner via
+       a single ::before (top corners) and ::after (bottom corners) using
+       repeating frame strokes. Implemented as four absolutely-positioned
+       L marks generated from a shared utility element set below. */
+    .ds-panel::before,
+    .ds-panel::after {
+      content: none;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: 0;
+      pointer-events: none;
+      /* draw L-brackets with sharp gradients at each corner */
+      background:
+        /* top-left */
+        linear-gradient(90deg, var(--cyan), var(--cyan)) left 0 top 0 / 18px 1.5px no-repeat,
+        linear-gradient(180deg, var(--cyan), var(--cyan)) left 0 top 0 / 1.5px 18px no-repeat,
+        /* top-right */
+        linear-gradient(90deg, var(--cyan), var(--cyan)) right 0 top 0 / 18px 1.5px no-repeat,
+        linear-gradient(180deg, var(--cyan), var(--cyan)) right 0 top 0 / 1.5px 18px no-repeat,
+        /* bottom-left */
+        linear-gradient(90deg, var(--violet), var(--violet)) left 0 bottom 0 / 18px 1.5px no-repeat,
+        linear-gradient(180deg, var(--violet), var(--violet)) left 0 bottom 0 / 1.5px 18px no-repeat,
+        /* bottom-right */
+        linear-gradient(90deg, var(--violet), var(--violet)) right 0 bottom 0 / 18px 1.5px no-repeat,
+        linear-gradient(180deg, var(--violet), var(--violet)) right 0 bottom 0 / 1.5px 18px no-repeat;
+      opacity: 0.72;
+      filter: drop-shadow(0 0 3px rgba(90,209,255,0.4));
+    }
+    /* ::after carries fine crosshair measurement ticks at top & bottom mid */
+    .ds-panel::after {
+      background:
+        linear-gradient(90deg, transparent, var(--hud-line), transparent)
+          center top 0 / 60px 1px no-repeat,
+        linear-gradient(90deg, transparent, var(--hud-line), transparent)
+          center bottom 0 / 60px 1px no-repeat;
+      opacity: 0.6;
+      filter: none;
+    }
+    .ds-panel--wide { max-width: min(92vw, 1100px); }
+
+    .ds-label {
+      font-family: var(--font-mono);
+      font-size: clamp(0.85rem, 1.6vw, 1.05rem);
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin: 0 0 0.7rem;
+    }
+    .ds-lead {
+      font-size: clamp(1.15rem, 2.6vw, 1.7rem);
+      line-height: 1.5;
+      margin: 0 0 1.6rem;
+      letter-spacing: -0.01em;
+    }
+    .ds-highlights { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.9rem; }
+    .ds-highlights li {
+      display: flex;
+      gap: 0.7rem;
+      color: var(--muted);
+      font-size: clamp(0.92rem, 1.6vw, 1.05rem);
+      line-height: 1.5;
+    }
+    .ds-dot {
+      flex: none;
+      width: 7px; height: 7px;
+      margin-top: 0.55em;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 10px var(--cyan);
+    }
+
+    .ds-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+      gap: clamp(1rem, 2.5vw, 1.8rem);
+    }
+    .ds-group__title {
+      font-family: var(--font-grotesk);
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--ink);
+      margin: 0 0 0.7rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .ds-tags { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    /* squared / hairline technical chips — notched corner, no rounded pill */
+    .ds-tag {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      letter-spacing: 0.02em;
+      padding: 0.3rem 0.62rem;
+      border-radius: 0;
+      color: #c8cef0;
+      background: rgba(139,125,255,0.08);
+      border: 1px solid rgba(139,125,255,0.26);
+      white-space: nowrap;
+      /* clip one corner for an engineered, keyed look */
+      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%);
+    }
+    .ds-tag--ghost {
+      color: var(--muted);
+      background: rgba(90,209,255,0.05);
+      border-color: rgba(90,209,255,0.22);
+    }
+
+    /* ── Contact ─────────────────────────────────────────────── */
+    .ds-contact-lead {
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      margin: 0 0 1.8rem;
+      letter-spacing: -0.01em;
+    }
+    .ds-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-bottom: 1.2rem; }
+    .ds-btn {
+      font-family: var(--font-grotesk);
+      font-size: 0.95rem;
+      font-weight: 500;
+      padding: 0.8rem 1.5rem;
+      border-radius: 0;
+      border: 1px solid rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.04);
+      color: var(--ink);
+      cursor: pointer;
+      /* keyed/notched corner to match the HUD chips */
+      clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    }
+    .ds-btn:hover { transform: translateY(-2px); background: rgba(255,255,255,0.09); }
+    .ds-btn--primary {
+      border-color: transparent;
+      background: linear-gradient(120deg, var(--violet), var(--cyan));
+      color: #060814;
+      font-weight: 600;
+      box-shadow: 0 10px 30px -8px rgba(90,209,255,0.5);
+    }
+    .ds-btn--primary:hover { box-shadow: 0 14px 38px -8px rgba(90,209,255,0.7); }
+    .ds-btn.is-copied {
+      border-color: var(--cyan);
+      color: var(--cyan);
+    }
+    .ds-email {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin: 0 0 1.5rem;
+    }
+    .ds-social { display: flex; gap: 1.4rem; flex-wrap: wrap; }
+    .ds-social a {
+      color: var(--muted);
+      text-decoration: none;
+      font-family: var(--font-grotesk);
+      font-size: 0.95rem;
+      position: relative;
+      transition: color 0.2s ease;
+    }
+    .ds-social a::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -3px;
+      width: 100%; height: 1px;
+      background: var(--cyan);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.25s ease;
+    }
+    .ds-social a:hover { color: var(--ink); }
+    .ds-social a:hover::after { transform: scaleX(1); }
+
+    /* ── Track + footer ──────────────────────────────────────── */
+    .ds-track { position: relative; z-index: 1; pointer-events: none; }
+    /* Taller units → more scroll distance per station so the sharp, readable
+       focus band lingers comfortably in view while you read. */
+    .ds-track__unit { height: 150vh; }
+
+    .ds-footer {
+      position: relative;
+      z-index: 3;
+      text-align: center;
+      padding: 2.5rem 1.5rem 3rem;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      background: linear-gradient(180deg, transparent, rgba(1,1,8,0.9));
+    }
+
+    /* ── No-JS / reduced-motion fallback: clean stacked page ──── */
+    /* When JS runs, it adds .ds-enhanced to the root and takes over. */
+    :global(.ds:not(.ds-enhanced)) .ds-stage,
+    :global(.ds:not(.ds-enhanced)) .ds-station {
+      position: static;
+      inset: auto;
+      perspective: none;
+      pointer-events: auto;
+    }
+    :global(.ds:not(.ds-enhanced)) .ds-track,
+    :global(.ds:not(.ds-enhanced)) .ds-tel,
+    :global(.ds:not(.ds-enhanced)) .ds-gyro,
+    :global(.ds:not(.ds-enhanced)) .ds-radar,
+    :global(.ds:not(.ds-enhanced)) .ds-scrollcue { display: none; }
+    /* In fallback, anchors do normal scrolling — offset for the fixed header */
+    :global(.ds:not(.ds-enhanced)) .ds-station { scroll-margin-top: 5rem; }
+    :global(.ds:not(.ds-enhanced)) { scroll-behavior: smooth; }
+    :global(.ds:not(.ds-enhanced)) .ds-stations {
+      position: static;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    :global(.ds:not(.ds-enhanced)) .ds-station {
+      min-height: auto;
+      padding: clamp(3rem, 9vw, 6rem) clamp(1.25rem, 5vw, 3rem);
+    }
+    :global(.ds:not(.ds-enhanced)) .ds-station--hero { padding-top: clamp(5rem, 14vw, 9rem); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .ds-nebula { animation: none; }
+      .ds-scrollcue em { animation: none; }
+      /* Reduced motion → JS bails out, leaving the clean stacked fallback.
+         The telemetry bar is part of the enhanced view, so it stays hidden
+         via the .ds:not(.ds-enhanced) rule above. */
+      .ds-nav__link::after,
+      .ds-social a::after { transition: none; }
+      /* instruments are hidden in the non-enhanced view, but disable their
+         idle animations defensively for reduced-motion users. */
+      .ds-radar__sweep,
+      .ds-radar__blip,
+      .ds-gyro__meridians,
+      .ds-strip__led,
+      .ds-strip::after,
+      .ds-mark__orbit,
+      .ds-mark__node,
+      .ds-mark__core { animation: none; }
+      /* alert reveal flourish off under reduced motion */
+      .ds-station[style*="visible"] .ds-panel { animation: none; }
+      :global(.ds:not(.ds-enhanced)) { scroll-behavior: auto; }
+    }
+  </style>
+
+  <script>
+    (() => {
+      const root = document.querySelector<HTMLElement>('[data-ds]');
+      if (!root) return;
+
+      const reduceMotion =
+        window.matchMedia &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // Reduced motion / no enhancement → keep clean stacked fallback.
+      if (reduceMotion) return;
+
+      root.classList.add('ds-enhanced');
+
+      const stage = root.querySelector<HTMLElement>('[data-stage]');
+      const stationEls = Array.from(
+        root.querySelectorAll<HTMLElement>('[data-station]')
+      );
+      const warps = stationEls.map((s) =>
+        s.querySelector<HTMLElement>('[data-warp]')
+      );
+      const progressBar = root.querySelector<HTMLElement>('[data-progress]');
+      const hudSpeed = root.querySelector<HTMLElement>('[data-hud-speed]');
+      const hudDist = root.querySelector<HTMLElement>('[data-hud-dist]');
+      const hudProg = root.querySelector<HTMLElement>('[data-hud-prog]');
+      const hudTime = root.querySelector<HTMLElement>('[data-hud-time]');
+      const hudCoords = root.querySelector<HTMLElement>('[data-hud-coords]');
+      const aberration = root.querySelector<HTMLElement>('[data-aberration]');
+      const canvas = root.querySelector<HTMLCanvasElement>('[data-canvas]');
+
+      // left cockpit instrument — free-floating 3-axis gyro / orientation
+      // sphere (no horizon). yaw is driven by journey progress, pitch by a
+      // slow progress oscillation, and roll (bank) by smoothed scroll velocity.
+      const gyroSphere = root.querySelector<HTMLElement>('[data-gyro-sphere]');
+      const gyroPitch = root.querySelector<HTMLElement>('[data-gyro-pitch]');
+      const gyroR = root.querySelector<HTMLElement>('[data-gyro-r]');
+      const gyroP = root.querySelector<HTMLElement>('[data-gyro-p]');
+
+      // nav links → scroll to a station's focus position (drives the warp)
+      const navLinks = Array.from(
+        root.querySelectorAll<HTMLAnchorElement>('[data-nav]')
+      );
+
+      const N = stationEls.length; // number of stations
+      if (!N) return;
+
+      // ── Scroll state ──────────────────────────────────────────
+      let scrollY = 0;
+      let lastScrollY = 0;
+      let velocity = 0; // smoothed scroll velocity (px/frame)
+      let maxScroll = 1;
+      let ticking = false;
+
+      const measure = () => {
+        maxScroll = Math.max(
+          1,
+          document.documentElement.scrollHeight - window.innerHeight
+        );
+      };
+
+      const clamp = (v: number, a: number, b: number) =>
+        v < a ? a : v > b ? b : v;
+
+      // ── Per-station scroll windows ────────────────────────────
+      // Station i owns the journey slice [i/N, (i+1)/N]. updateStations()
+      // remaps raw scroll progress p → pe so that p=0 puts station 0 in its
+      // READ phase and p=1 puts the last station in its READ phase. focusFor()
+      // returns the RAW p at which station i is dead-centre/readable, so nav
+      // scrolling and active-link detection stay perfectly in sync with the
+      // remap. (Constants ENTER/EXIT are defined just below.)
+      const focusFor = (i: number) => {
+        if (N <= 1) return 0.5;
+        const W = 1 / N;
+        const readMid = (ENTER + EXIT) / 2;
+        const lo = readMid * W;
+        const hi = (N - 1) * W + readMid * W;
+        const peTarget = i * W + readMid * W;
+        return clamp((peTarget - lo) / (hi - lo), 0, 1);
+      };
+
+      // ── Readability-first sequential windowing ───────────────────
+      // Each station owns a contiguous slice of the journey [0,1]:
+      //   station i window = [ i/N , (i+1)/N ].
+      // Within its window the station goes through phases (t = local 0..1):
+      //   [0 .. ENTER]      EMERGE  — fades IN from starfield (scale 0.8→1)
+      //   [ENTER .. EXIT]   READ    — sharp, opaque, scale 1 (comfortable read)
+      //   [EXIT .. 1]       DEPART  — fades OUT (scale 1→1.2) + hides
+      // The key to NO OVERLAP: a station reaches opacity 0 (and is hidden)
+      // BEFORE its window ends, and the next station does not start becoming
+      // legible until AFTER its own window begins. With a guard gap between
+      // one station's fade-out completion and the next's fade-in start, there
+      // is a brief "starfield only" moment — never two readable blocks at once.
+      //
+      // Within ONE window of width W = 1/N:
+      //   fade-IN  spans  t ∈ [0, ENTER]        → reaches opacity 1 at ENTER
+      //   fade-OUT spans  t ∈ [EXIT, OUT_DONE]  → reaches opacity 0 at OUT_DONE
+      // Because OUT_DONE < 1 and the next window's ENTER starts at its own t=0
+      // (i.e. global = (i+1)/N), the outgoing station is fully gone (since
+      // OUT_DONE < 1) before the incoming one becomes even slightly visible
+      // (it starts from opacity 0 at its t=0). Overlap is therefore impossible.
+      const ENTER = 0.26;     // fade-in completes by 26% into the window
+      const EXIT = 0.72;      // fade-out begins at 72% into the window
+      const OUT_DONE = 0.94;  // fully invisible by 94% → guard gap before next
+      const MAX_BLUR = 6;     // px — only while emerging/departing
+      const smooth = (t: number) => t * t * (3 - 2 * t); // smoothstep
+
+      const updateStations = (p: number) => {
+        // Each station owns window [i*W, (i+1)*W]. We remap the raw journey
+        // progress so that p=0 lands the FIRST station squarely in its READ
+        // phase and p=1 lands the LAST station in its READ phase (otherwise
+        // the extremes would catch a station mid fade-in/out and the hero /
+        // contact would never be fully readable). The remap shifts p by half
+        // a window and rescales, keeping all interior handoffs intact.
+        const W = 1 / N;
+        const readMid = (ENTER + EXIT) / 2; // local-t centre of the READ phase
+        // Desired: at p=0, station0 local t = readMid; at p=1, lastStation
+        // local t = readMid. Solve linear remap pe = a*p + b on global axis.
+        // station0 centre target (global) = 0*W + readMid*W = readMid*W
+        // lastStation centre target (global) = (N-1)*W + readMid*W
+        const lo = readMid * W;
+        const hi = (N - 1) * W + readMid * W;
+        const pe = N > 1 ? lo + p * (hi - lo) : 0.5;
+        for (let i = 0; i < N; i++) {
+          const el = stationEls[i];
+          const warp = warps[i];
+          if (!el || !warp) continue;
+
+          const start = i * W;
+          // local progress 0..1 within this station's window
+          let t = (pe - start) / W;
+
+          // Outside this station's window → not active. Hide hard so it can
+          // neither be read nor overlap the active one.
+          if (t <= 0 || t >= 1) {
+            if (el.style.visibility !== 'hidden') {
+              el.style.visibility = 'hidden';
+              el.style.opacity = '0';
+              el.style.pointerEvents = 'none';
+            }
+            continue;
+          }
+
+          // ── opacity: in during [0,ENTER], full during [ENTER,EXIT],
+          //    out during [EXIT,OUT_DONE], then 0 (hidden) until window end.
+          let opacity: number;
+          if (t < ENTER) {
+            opacity = smooth(t / ENTER);
+          } else if (t <= EXIT) {
+            opacity = 1;
+          } else if (t < OUT_DONE) {
+            opacity = 1 - smooth((t - EXIT) / (OUT_DONE - EXIT));
+          } else {
+            opacity = 0;
+          }
+
+          // Past the fade-out → hide entirely (guard gap = starfield only).
+          if (opacity <= 0.001) {
+            if (el.style.visibility !== 'hidden') {
+              el.style.visibility = 'hidden';
+              el.style.opacity = '0';
+              el.style.pointerEvents = 'none';
+            }
+            continue;
+          }
+
+          // Visible/active station: only one station ever reaches this point
+          // because the windows are disjoint and the fades complete inside them.
+          el.style.visibility = 'visible';
+          el.style.pointerEvents = 'auto';
+
+          // ── scale + depth: emerge 0.8→1 while entering, hold 1 while
+          //    reading, depart 1→1.2 quickly while fading out. Subtle so
+          //    text never balloons while it is legible.
+          let scale: number;
+          let z: number;
+          let blur = 0;
+          if (t < ENTER) {
+            const u = t / ENTER;          // 0..1 emerging
+            scale = 0.8 + 0.2 * u;        // 0.80 → 1.00
+            z = -260 * (1 - u);           // arrive from depth
+            blur = MAX_BLUR * (1 - u);    // sharpen as it arrives
+          } else if (t <= EXIT) {
+            scale = 1;                     // sharp reading band
+            z = 0;
+          } else {
+            const u = clamp((t - EXIT) / (OUT_DONE - EXIT), 0, 1); // 0..1 leaving
+            scale = 1 + 0.2 * u;          // 1.00 → 1.20 (fly past)
+            z = 220 * u;                  // depart toward the viewer
+            blur = MAX_BLUR * u;          // blur out as it leaves
+          }
+
+          el.style.opacity = opacity.toFixed(3);
+          warp.style.transform = `translateZ(${z.toFixed(1)}px) scale(${scale.toFixed(3)})`;
+          warp.style.filter = blur > 0.15 ? `blur(${blur.toFixed(2)}px)` : 'none';
+        }
+      };
+
+      let activeNavIdx = -1;
+      const render = () => {
+        const p = clamp(scrollY / maxScroll, 0, 1);
+
+        // thin progress line across the telemetry bar
+        if (progressBar) progressBar.style.width = (p * 100).toFixed(2) + '%';
+
+        // ── Telemetry bar feeds (SpaceX-webcast style) ──────────────
+        // speedC: 0..0.99 fraction of light speed, driven by scroll velocity.
+        const speedC = Math.min(0.99, Math.abs(velocity) / 60);
+
+        // SPEED — km/h: scale the warp fraction up to a broadcast-scale number
+        // (fraction of c × speed-of-light in km/h), grouped with thousands.
+        if (hudSpeed) {
+          const kmh = Math.round(speedC * 1079252849);
+          hudSpeed.textContent = kmh.toLocaleString('en-US');
+        }
+        // ALTITUDE / DISTANCE — km, driven by journey progress.
+        if (hudDist) {
+          hudDist.textContent = Math.round(p * 420000).toLocaleString('en-US');
+        }
+        // PROGRESS — %
+        if (hudProg) hudProg.textContent = (p * 100).toFixed(1);
+
+        // TIME — mission-elapsed clock derived from journey progress (T+MM:SS).
+        if (hudTime) {
+          const totalSec = Math.round(p * 9 * 60); // 0..9 min across the journey
+          const mm = Math.floor(totalSec / 60);
+          const ss = totalSec % 60;
+          hudTime.textContent =
+            'T+' + String(mm).padStart(2, '0') + ':' + String(ss).padStart(2, '0');
+        }
+
+        // COORD — 3-axis coordinates derived from journey progress + speed.
+        if (hudCoords) {
+          const xC = Math.round(p * 742);
+          const yC = Math.round(p * 388 + speedC * 60);
+          const zC = Math.round(p * 196);
+          hudCoords.textContent =
+            'X+' + String(xC).padStart(3, '0') +
+            ' Y+' + String(yC).padStart(3, '0') +
+            ' Z+' + String(zC).padStart(3, '0');
+        }
+
+        // chromatic aberration — kept very subtle so it never hurts reading
+        if (aberration) {
+          aberration.style.opacity = String(Math.min(0.5, speedC * 0.7));
+        }
+
+        // ── LEFT instrument: 3-axis gyro / orientation sphere ──────
+        // No horizon, no altitude — a free attitude ball. pitch tilts the
+        // parallel rings (slow oscillation over the journey); roll (bank) is
+        // driven by smoothed scroll velocity. yaw idles via CSS animation.
+        // transform/opacity only on the hot path (cheap, GPU-friendly).
+        const pitchDeg = Math.sin(p * Math.PI * 2) * 22; // -22..22 over journey
+        const rollDeg = clamp(velocity * 1.4, -32, 32);  // bank into scroll
+        if (gyroSphere) {
+          // bank the whole gimbal (roll) about the screen-facing Z axis
+          gyroSphere.style.transform = `rotateZ(${rollDeg.toFixed(1)}deg)`;
+        }
+        if (gyroPitch) {
+          // tilt the equator/parallels stack (pitch) about X; +90 base keeps
+          // them edge-on like latitude rings rather than a flat horizon plane.
+          gyroPitch.style.transform = `rotateX(${(90 + pitchDeg).toFixed(1)}deg)`;
+        }
+        if (gyroR) {
+          const rv = Math.round(rollDeg);
+          gyroR.textContent = 'R' + (rv >= 0 ? '+' : '-') + String(Math.abs(rv)).padStart(2, '0');
+        }
+        if (gyroP) {
+          const pv = Math.round(pitchDeg);
+          gyroP.textContent = 'P' + (pv >= 0 ? '+' : '-') + String(Math.abs(pv)).padStart(2, '0');
+        }
+
+        // active nav link = nearest station focus
+        if (navLinks.length) {
+          let nearest = 0;
+          let best = Infinity;
+          for (let i = 0; i < N; i++) {
+            const d = Math.abs(p - focusFor(i));
+            if (d < best) { best = d; nearest = i; }
+          }
+          if (nearest !== activeNavIdx) {
+            activeNavIdx = nearest;
+            navLinks.forEach((a) => {
+              const t = Number(a.getAttribute('data-station-target'));
+              a.classList.toggle('is-active', t === nearest);
+              if (t === nearest) a.setAttribute('aria-current', 'true');
+              else a.removeAttribute('aria-current');
+            });
+          }
+        }
+
+        updateStations(p);
+        ticking = false;
+      };
+
+      const requestRender = () => {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(render);
+        }
+      };
+
+      const onScroll = () => {
+        scrollY = window.scrollY || window.pageYOffset || 0;
+        requestRender();
+      };
+
+      // velocity decay loop (independent of scroll events for smooth idle)
+      const velTick = () => {
+        const inst = scrollY - lastScrollY;
+        lastScrollY = scrollY;
+        // smooth toward instantaneous velocity, decay toward 0
+        velocity += (inst - velocity) * 0.2;
+        if (Math.abs(velocity) < 0.05) velocity = 0;
+        requestAnimationFrame(velTick);
+      };
+
+      // ── Nav: scroll to a station's focus point (plays the warp) ──
+      const scrollToStation = (i: number) => {
+        const idx = clamp(i, 0, N - 1);
+        const target = Math.round(focusFor(idx) * maxScroll);
+        window.scrollTo({ top: target, behavior: 'smooth' });
+      };
+      navLinks.forEach((link) => {
+        link.addEventListener('click', (e) => {
+          const raw = link.getAttribute('data-station-target');
+          if (raw === null) return;
+          e.preventDefault();
+          measure();
+          scrollToStation(Number(raw));
+        });
+      });
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', () => {
+        measure();
+        resizeCanvas();
+        requestRender();
+      });
+      measure();
+      requestAnimationFrame(velTick);
+      requestRender();
+
+      // ───────────────────────────────────────────────────────────
+      // STARFIELD CANVAS — radial warp
+      // ───────────────────────────────────────────────────────────
+      let ctx: CanvasRenderingContext2D | null = null;
+      let cw = 0;
+      let ch = 0;
+      let cx = 0;
+      let cy = 0;
+      let dpr = 1;
+      type Star = { x: number; y: number; z: number; px: number; py: number };
+      let stars: Star[] = [];
+      let STAR_COUNT = 0;
+      let rafId = 0;
+
+      const resizeCanvas = () => {
+        if (!canvas) return;
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        cw = window.innerWidth;
+        ch = window.innerHeight;
+        cx = cw / 2;
+        cy = ch / 2;
+        canvas.width = Math.floor(cw * dpr);
+        canvas.height = Math.floor(ch * dpr);
+        ctx = canvas.getContext('2d');
+        if (ctx) ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+        // cap star count by area for perf
+        const target = Math.round(
+          clamp((cw * ch) / 2400, 220, 520)
+        );
+        if (target !== STAR_COUNT) {
+          STAR_COUNT = target;
+          initStars();
+        }
+      };
+
+      const rand = (a: number, b: number) => a + Math.random() * (b - a);
+      const newStar = (z?: number): Star => {
+        const x = rand(-cw, cw);
+        const y = rand(-ch, ch);
+        const zz = z ?? rand(0.1, 1);
+        return { x, y, z: zz, px: 0, py: 0 };
+      };
+      const initStars = () => {
+        stars = new Array(STAR_COUNT);
+        for (let i = 0; i < STAR_COUNT; i++) stars[i] = newStar();
+      };
+
+      const draw = () => {
+        if (!ctx || !canvas) return;
+        // motion trail fade (darken slightly each frame)
+        ctx.fillStyle = 'rgba(3,4,10,0.32)';
+        ctx.fillRect(0, 0, cw, ch);
+
+        // base + scroll-driven warp speed
+        const warpBoost = Math.min(7, Math.abs(velocity) / 9);
+        const speed = 0.0016 + warpBoost * 0.0026;
+        const streakK = 0.4 + warpBoost * 0.9; // streak length factor
+
+        for (let i = 0; i < STAR_COUNT; i++) {
+          const s = stars[i];
+          const prevZ = s.z;
+          s.z -= speed;
+          if (s.z <= 0.02) {
+            stars[i] = newStar(1);
+            continue;
+          }
+
+          // perspective projection from 3D-ish depth z
+          const px = cx + s.x / s.z;
+          const py = cy + s.y / s.z;
+
+          // previous position (for streak) using slightly larger z
+          const pz = prevZ + speed * streakK;
+          const ox = cx + s.x / pz;
+          const oy = cy + s.y / pz;
+
+          if (px < -50 || px > cw + 50 || py < -50 || py > ch + 50) continue;
+
+          const depth = 1 - s.z; // 0..~1 closeness
+          const size = Math.max(0.4, depth * 2.4);
+          const alpha = clamp(depth * 1.1, 0.06, 1);
+
+          // tint: mostly starwhite, occasional cyan/violet
+          const tint = i % 17 === 0 ? '90,209,255' : i % 23 === 0 ? '139,125,255' : '238,241,255';
+
+          if (warpBoost > 0.6) {
+            ctx.strokeStyle = `rgba(${tint},${alpha})`;
+            ctx.lineWidth = size;
+            ctx.beginPath();
+            ctx.moveTo(ox, oy);
+            ctx.lineTo(px, py);
+            ctx.stroke();
+          } else {
+            ctx.fillStyle = `rgba(${tint},${alpha})`;
+            ctx.beginPath();
+            ctx.arc(px, py, size, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+
+        rafId = requestAnimationFrame(draw);
+      };
+
+      const startCanvas = () => {
+        if (!canvas) return;
+        resizeCanvas();
+        if (!ctx) return;
+        ctx.fillStyle = '#03040a';
+        ctx.fillRect(0, 0, cw, ch);
+        cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(draw);
+      };
+
+      // Pause canvas when tab hidden (perf)
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          cancelAnimationFrame(rafId);
+        } else if (canvas && ctx) {
+          rafId = requestAnimationFrame(draw);
+        }
+      });
+
+      startCanvas();
+
+      // ───────────────────────────────────────────────────────────
+      // COPY-TO-CLIPBOARD (email)
+      // ───────────────────────────────────────────────────────────
+      const copyBtn = root.querySelector<HTMLButtonElement>('[data-copy]');
+      const copyLabel = root.querySelector<HTMLElement>('[data-copy-label]');
+      const feedback = root.querySelector<HTMLElement>('[data-copy-feedback]');
+      if (copyBtn && copyLabel) {
+        const original = copyLabel.textContent || '이메일 복사';
+        const email = copyBtn.getAttribute('data-copy') || '';
+        let timer = 0;
+        const succeed = () => {
+          copyLabel.textContent = '복사되었습니다!';
+          copyBtn.classList.add('is-copied');
+          if (feedback) feedback.textContent = '이메일이 복사되었습니다.';
+          window.clearTimeout(timer);
+          timer = window.setTimeout(() => {
+            copyLabel.textContent = original;
+            copyBtn.classList.remove('is-copied');
+            if (feedback) feedback.textContent = '';
+          }, 2000);
+        };
+        const fallbackCopy = () => {
+          try {
+            const ta = document.createElement('textarea');
+            ta.value = email;
+            ta.setAttribute('readonly', '');
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            succeed();
+          } catch {
+            if (feedback) feedback.textContent = email;
+          }
+        };
+        copyBtn.addEventListener('click', () => {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(email).then(succeed, fallbackCopy);
+          } else {
+            fallbackCopy();
+          }
+        });
+      }
+    })();
+  </script>
+</Base>

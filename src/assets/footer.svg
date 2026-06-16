@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1200 270" width="1200" height="270" fill="none" role="img" aria-label="Footer">
+  <defs>
+    <linearGradient id="fbg" x1="0" y1="0" x2="1200" y2="270" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0d1117"/>
+      <stop offset="0.5" stop-color="#12152b"/>
+      <stop offset="1" stop-color="#0d1117"/>
+    </linearGradient>
+    <radialGradient id="neb1" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#4158d0" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#4158d0" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="neb2" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#c850c0" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#c850c0" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="neb3" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ffcc70" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#ffcc70" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="nebBlur" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="50"/>
+    </filter>
+    <filter id="textGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="5"/>
+    </filter>
+    <filter id="starGlow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="1.4" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <!-- 8-point diffraction star: long thin cardinals + short diagonals + small core -->
+    <g id="spark">
+      <path d="M0,-1.8 L0.04,0 L0,1.8 L-0.04,0 Z"/>
+      <path d="M-1.8,0 L0,0.04 L1.8,0 L0,-0.04 Z"/>
+      <path d="M0.5,-0.5 L0.03,0.03 L-0.5,0.5 L-0.03,-0.03 Z"/>
+      <path d="M-0.5,-0.5 L0.03,-0.03 L0.5,0.5 L-0.03,0.03 Z"/>
+    </g>
+  </defs>
+
+  <!-- dark cosmic base -->
+  <rect width="1200" height="270" fill="url(#fbg)"/>
+
+  <!-- nebula glows -->
+  <g filter="url(#nebBlur)">
+    <ellipse cx="280" cy="74" rx="260" ry="185" fill="url(#neb1)"/>
+    <ellipse cx="910" cy="210" rx="300" ry="195" fill="url(#neb2)"/>
+    <ellipse cx="620" cy="46" rx="190" ry="130" fill="url(#neb3)"/>
+  </g>
+
+  <!-- bright stars: 8-point diffraction spikes -->
+  <g fill="#ffffff" filter="url(#starGlow)">
+    <use xlink:href="#spark" transform="translate(170,68) scale(8)" opacity="0.9"/>
+    <use xlink:href="#spark" transform="translate(950,52) scale(8)" opacity="0.9"/>
+    <use xlink:href="#spark" transform="translate(330,212) scale(7)" opacity="0.85"/>
+    <use xlink:href="#spark" transform="translate(1100,182) scale(7)" opacity="0.85"/>
+    <use xlink:href="#spark" transform="translate(560,44) scale(6)" opacity="0.8"/>
+    <use xlink:href="#spark" transform="translate(820,205) scale(6)" opacity="0.8"/>
+  </g>
+
+  <!-- faint background star dots -->
+  <g fill="#ffffff" filter="url(#starGlow)">
+    <circle cx="70" cy="150" r="1.2" opacity="0.55"/>
+    <circle cx="440" cy="118" r="1" opacity="0.5"/>
+    <circle cx="700" cy="236" r="1.1" opacity="0.5"/>
+    <circle cx="1170" cy="92" r="1" opacity="0.5"/>
+    <circle cx="250" cy="158" r="0.9" opacity="0.45"/>
+    <circle cx="1000" cy="142" r="1" opacity="0.5"/>
+  </g>
+
+  <!-- motivational quote -->
+  <text x="600" y="138" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="30" font-weight="600" fill="#ffffff" opacity="0.45" filter="url(#textGlow)">Theoretically, if you don't give up, there will be no failure.</text>
+  <text x="600" y="138" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="30" font-weight="600" fill="#ffffff">Theoretically, if you don't give up, there will be no failure.</text>
+  <text x="600" y="174" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="500" letter-spacing="2" fill="#ffffff" opacity="0.8">- Unknown -</text>
+</svg>

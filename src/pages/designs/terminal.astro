@@ -1,0 +1,1903 @@
+---
+import Base from '../../layouts/Base.astro';
+import { site, about, stack, learning } from '../../data/site';
+
+const year = 2026;
+const email = 'sihoon.cho.business@gmail.com';
+const gmailCompose = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}`;
+
+// file-tree explorer entries → map to section anchors
+const tree = [
+  { file: 'whoami.sh', id: 'whoami', icon: '$' },
+  { file: 'about.md', id: 'about', icon: 'M' },
+  { file: 'stack.json', id: 'stack', icon: '{}' },
+  { file: 'learning.log', id: 'learning', icon: '*' },
+  { file: 'github.url', id: 'github', icon: '@' },
+  { file: 'contact.sh', id: 'contact', icon: '>' },
+];
+---
+
+<Base title="Sihoon Cho — Terminal">
+  <div class="term-root">
+    <!-- ambient background -->
+    <div class="term-bg" aria-hidden="true"></div>
+
+    <!-- ░░░ command-palette nav ░░░ -->
+    <header class="palette" role="banner">
+      <nav class="palette__win" aria-label="Primary">
+        <button
+          class="palette__trigger"
+          type="button"
+          data-cmdk-open
+          aria-haspopup="dialog"
+          aria-label="Open command palette"
+        >
+          <span class="palette__kbd" aria-hidden="true">⌘K</span>
+          <span class="palette__hint">Search…</span>
+        </button>
+        <a class="palette__brand" href="#whoami">
+          <span class="dot dot--r" aria-hidden="true"></span>
+          <span class="dot dot--y" aria-hidden="true"></span>
+          <span class="dot dot--g" aria-hidden="true"></span>
+          <span class="palette__path">~/sihoon-cho</span>
+        </a>
+        <ul class="palette__links">
+          <li><a href="#about">about</a></li>
+          <li><a href="#stack">stack</a></li>
+          <li><a href="#learning">learning</a></li>
+          <li><a href="#github">github</a></li>
+          <li><a href="#contact">contact</a></li>
+        </ul>
+        <a class="palette__cta" href={gmailCompose} target="_blank" rel="noopener noreferrer">
+          <span aria-hidden="true">$</span> contact
+        </a>
+      </nav>
+    </header>
+
+    <!-- ░░░ command-palette dialog ░░░ -->
+    <div class="cmdk" data-cmdk hidden>
+      <div class="cmdk__scrim" data-cmdk-close aria-hidden="true"></div>
+      <div
+        class="cmdk__panel"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Command palette"
+      >
+        <div class="cmdk__bar">
+          <span class="cmdk__chevron" aria-hidden="true">›</span>
+          <input
+            class="cmdk__input"
+            type="text"
+            placeholder="Type a command or jump to a section…"
+            aria-label="Command palette search"
+            data-cmdk-input
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <kbd class="cmdk__esc" aria-hidden="true">esc</kbd>
+        </div>
+        <ul class="cmdk__list" data-cmdk-list role="listbox" aria-label="Commands">
+          <li role="option" class="cmdk__item" data-go="#whoami" data-keys="whoami home hero">
+            <span class="cmdk__glyph cmdk__glyph--g" aria-hidden="true">$</span>
+            <span class="cmdk__label">whoami</span>
+            <span class="cmdk__meta">jump · home</span>
+          </li>
+          <li role="option" class="cmdk__item" data-go="#about" data-keys="about readme bio">
+            <span class="cmdk__glyph cmdk__glyph--p" aria-hidden="true">#</span>
+            <span class="cmdk__label">cat about.md</span>
+            <span class="cmdk__meta">jump · about</span>
+          </li>
+          <li role="option" class="cmdk__item" data-go="#stack" data-keys="stack tech skills dependencies">
+            <span class="cmdk__glyph cmdk__glyph--b" aria-hidden="true">{'{}'}</span>
+            <span class="cmdk__label">open stack.json</span>
+            <span class="cmdk__meta">jump · stack</span>
+          </li>
+          <li role="option" class="cmdk__item" data-go="#learning" data-keys="learning git branches todo">
+            <span class="cmdk__glyph cmdk__glyph--a" aria-hidden="true">*</span>
+            <span class="cmdk__label">git branch learning/*</span>
+            <span class="cmdk__meta">jump · learning</span>
+          </li>
+          <li role="option" class="cmdk__item" data-go="#github" data-keys="github profile gh repos">
+            <span class="cmdk__glyph cmdk__glyph--b" aria-hidden="true">@</span>
+            <span class="cmdk__label">gh profile open</span>
+            <span class="cmdk__meta">jump · github</span>
+          </li>
+          <li role="option" class="cmdk__item" data-go="#contact" data-keys="contact email reach hire">
+            <span class="cmdk__glyph cmdk__glyph--g" aria-hidden="true">{'>'}</span>
+            <span class="cmdk__label">./contact.sh</span>
+            <span class="cmdk__meta">jump · contact</span>
+          </li>
+          <li
+            role="option"
+            class="cmdk__item"
+            data-href={site.links.github}
+            data-keys="github external open repository"
+          >
+            <span class="cmdk__glyph cmdk__glyph--a" aria-hidden="true">↗</span>
+            <span class="cmdk__label">open github.com/{site.githubUsername}</span>
+            <span class="cmdk__meta">external</span>
+          </li>
+          <li
+            role="option"
+            class="cmdk__item"
+            data-href={gmailCompose}
+            data-keys="email gmail compose write contact"
+          >
+            <span class="cmdk__glyph cmdk__glyph--g" aria-hidden="true">✉</span>
+            <span class="cmdk__label">compose email →</span>
+            <span class="cmdk__meta">gmail</span>
+          </li>
+        </ul>
+        <p class="cmdk__empty" data-cmdk-empty hidden>no matching command</p>
+        <div class="cmdk__foot" aria-hidden="true">
+          <span><kbd>↑</kbd><kbd>↓</kbd> navigate</span>
+          <span><kbd>↵</kbd> select</span>
+          <span><kbd>esc</kbd> close</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ░░░ workbench: sidebar + editor ░░░ -->
+    <div class="workbench">
+      <!-- file-tree sidebar -->
+      <aside class="sidebar" aria-label="Explorer">
+        <p class="sidebar__head">EXPLORER</p>
+        <p class="sidebar__root">
+          <span class="sidebar__chev" aria-hidden="true">▾</span> SIHOON-CHO
+        </p>
+        <ul class="sidebar__tree">
+          {
+            tree.map((t) => (
+              <li>
+                <a class="sidebar__file" href={`#${t.id}`} data-nav={t.id}>
+                  <span class="sidebar__icon" aria-hidden="true">
+                    {t.icon}
+                  </span>
+                  <span class="sidebar__name">{t.file}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </aside>
+
+      <main id="main" class="editor">
+        <!-- ════════════ whoami.sh ════════════ -->
+        <section class="hero" id="whoami" aria-labelledby="hero-title">
+          <div class="win win--hero reveal">
+            <div class="win__bar">
+              <div class="win__lights" aria-hidden="true">
+                <span class="dot dot--r"></span>
+                <span class="dot dot--y"></span>
+                <span class="dot dot--g"></span>
+              </div>
+              <span class="win__title">zsh — sihoon@cloud — 96×26</span>
+              <button
+                class="win__skip"
+                type="button"
+                data-typewriter-skip
+                aria-label="Skip animation"
+              >
+                skip ⏎
+              </button>
+            </div>
+
+            <div class="win__body">
+              <h1 id="hero-title" class="sr-only">
+                {site.name} ({site.nameKo}) — {site.role}
+              </h1>
+
+              <div class="term" data-typewriter>
+                <p class="line">
+                  <span class="prompt">sihoon@cloud</span><span class="punc">:</span><span
+                    class="path">~</span
+                  ><span class="punc">$</span>
+                  <span class="cmd" data-type data-text="whoami --full"></span><span
+                    class="ghost-comp"
+                    aria-hidden="true"
+                    data-ghost
+                    data-full="whoami --full"></span><span
+                    class="caret caret--cmd"
+                    aria-hidden="true"></span>
+                </p>
+
+                <div class="out" data-reveal-group>
+                  <p class="line out__line">
+                    <span class="key">name</span><span class="op"> = </span><span class="str"
+                      >"Sihoon&nbsp;Cho"</span
+                    ><span class="comment">&nbsp;# {site.nameKo}</span>
+                  </p>
+                  <p class="line out__line">
+                    <span class="key">role</span><span class="op"> = </span><span class="str"
+                      >"{site.role}"</span
+                    >
+                  </p>
+                  <p class="line out__line out__line--tag">
+                    <span class="comment">// {site.taglineEn}</span>
+                  </p>
+                  <p class="line out__line out__line--tag-ko">
+                    <span class="comment">// {site.tagline}</span>
+                  </p>
+                  <p class="line out__line out__line--actions">
+                    <a class="ghost" href="#stack"
+                      ><span class="op">→</span> ls ./stack</a
+                    >
+                    <a class="ghost" href="#contact"
+                      ><span class="op">→</span> ./contact.sh</a
+                    >
+                  </p>
+                </div>
+
+                <p class="line line--next">
+                  <span class="prompt">sihoon@cloud</span><span class="punc">:</span><span
+                    class="path">~</span
+                  ><span class="punc">$</span>
+                  <span class="caret caret--idle" aria-hidden="true"></span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <p class="scroll-hint reveal" aria-hidden="true">
+            <span>scroll</span><span class="scroll-hint__bar"></span>
+          </p>
+        </section>
+
+        <!-- ════════════ about.md ════════════ -->
+        <section class="sec" id="about" aria-labelledby="about-title">
+          <div class="win reveal">
+            <div class="win__bar">
+              <div class="win__lights" aria-hidden="true">
+                <span class="dot dot--r"></span><span class="dot dot--y"></span><span
+                  class="dot dot--g"></span>
+              </div>
+              <span class="win__tabs" aria-hidden="true">
+                <span class="tab tab--on"><span class="tab__dot"></span>about.md</span>
+                <span class="tab">readme</span>
+              </span>
+              <span class="win__title">UTF-8 · Markdown</span>
+            </div>
+            <div class="win__body code">
+              <p class="line cl">
+                <span class="prompt">$</span> cat about.md
+              </p>
+              <h2 id="about-title" class="md-h"># whoami, in prose</h2>
+              <p class="md-p">{about.lead}</p>
+
+              <p class="line cl cl--mt">
+                <span class="comment">// highlights[]</span>
+              </p>
+              <ul class="hl">
+                {
+                  about.highlights.map((h, i) => (
+                    <li class="hl__item reveal" style={`--d:${i * 90}ms`}>
+                      <span class="hl__idx">[{i}]</span>
+                      <span class="hl__check" aria-hidden="true">✓</span>
+                      <span class="hl__text">{h}</span>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ════════════ stack.json ════════════ -->
+        <section class="sec" id="stack" aria-labelledby="stack-title">
+          <div class="win reveal">
+            <div class="win__bar">
+              <div class="win__lights" aria-hidden="true">
+                <span class="dot dot--r"></span><span class="dot dot--y"></span><span
+                  class="dot dot--g"></span>
+              </div>
+              <span class="win__tabs" aria-hidden="true">
+                <span class="tab tab--on"><span class="tab__dot tab__dot--b"></span>stack.json</span>
+              </span>
+              <span class="win__title">JSON · {stack.length} groups</span>
+            </div>
+            <div class="win__body code code--gutter">
+              <h2 id="stack-title" class="sr-only">Tech Stack</h2>
+              <p class="line cl cl--head no-num">
+                <span class="comment">// production dependencies — what I ship with</span>
+              </p>
+              <div class="json">
+                <p class="line jl"><span class="punc">{'{'}</span></p>
+                {
+                  stack.map((g, gi) => (
+                    <details class="grp reveal" open={gi < 3} style={`--d:${gi * 50}ms`}>
+                      <summary class="line jl grp__sum">
+                        <span class="tw" aria-hidden="true">▾</span>
+                        <span class="key">"{g.category}"</span><span class="punc">: [</span>
+                        <span class="grp__count">{g.items.length}</span>
+                      </summary>
+                      <div class="grp__items">
+                        {g.items.map((it) => (
+                          <span class="line jl jl--item">
+                            <span class="str">"{it}"</span><span class="punc">,</span>
+                          </span>
+                        ))}
+                      </div>
+                      <p class="line jl"><span class="punc">],</span></p>
+                    </details>
+                  ))
+                }
+                <p class="line jl"><span class="punc">{'}'}</span></p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ════════════ learning.log ════════════ -->
+        <section class="sec" id="learning" aria-labelledby="learning-title">
+          <div class="win reveal">
+            <div class="win__bar">
+              <div class="win__lights" aria-hidden="true">
+                <span class="dot dot--r"></span><span class="dot dot--y"></span><span
+                  class="dot dot--g"></span>
+              </div>
+              <span class="win__tabs" aria-hidden="true">
+                <span class="tab tab--on"><span class="tab__dot tab__dot--a"></span>learning.log</span>
+              </span>
+              <span class="win__title">git — branches</span>
+            </div>
+            <div class="win__body code">
+              <h2 id="learning-title" class="sr-only">Currently Learning</h2>
+              <p class="line cl">
+                <span class="prompt">$</span> git branch --list 'learning/*'
+              </p>
+              <p class="line cl cl--mt">
+                <span class="comment">// currently exploring — TODO before merge to main</span>
+              </p>
+              <div class="branches">
+                {
+                  learning.map((g, gi) => (
+                    <div class="branch reveal" style={`--d:${gi * 60}ms`}>
+                      <p class="branch__head line">
+                        <span class="branch__mark" aria-hidden="true">*</span>
+                        <span class="branch__path">
+                          learning/{g.category.toLowerCase().replace(/[^a-z0-9]+/g, '-')}
+                        </span>
+                      </p>
+                      <ul class="branch__items">
+                        {g.items.map((it) => (
+                          <li class="branch__todo line">
+                            <span class="todo-box" aria-hidden="true">[ ]</span>
+                            <span class="kw">TODO</span>
+                            <span class="todo-txt">{it}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))
+                }
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ════════════ github.url ════════════ -->
+        <section class="sec" id="github" aria-labelledby="github-title">
+          <div class="win reveal">
+            <div class="win__bar">
+              <div class="win__lights" aria-hidden="true">
+                <span class="dot dot--r"></span><span class="dot dot--y"></span><span
+                  class="dot dot--g"></span>
+              </div>
+              <span class="win__tabs" aria-hidden="true">
+                <span class="tab tab--on"><span class="tab__dot tab__dot--b"></span>github.url</span>
+              </span>
+              <span class="win__title">gh — {site.githubUsername}</span>
+            </div>
+            <div class="win__body code">
+              <h2 id="github-title" class="sr-only">GitHub</h2>
+              <p class="line cl">
+                <span class="comment">// github</span>
+              </p>
+              <p class="line gh-line">
+                <span class="prompt">$</span> gh profile open
+                <span class="op"> → </span>
+                <a
+                  class="ghost gh-link"
+                  href={site.links.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {site.links.github.replace('https://', '')}
+                  <span class="gh-ext" aria-hidden="true">↗</span>
+                </a>
+              </p>
+              <p class="line cl cl--mt">
+                <span class="comment"
+                  >// pinned repos, contribution graph &amp; languages live on the profile</span
+                >
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ════════════ contact.sh ════════════ -->
+        <section class="sec sec--last" id="contact" aria-labelledby="contact-title">
+          <div class="win reveal">
+            <div class="win__bar">
+              <div class="win__lights" aria-hidden="true">
+                <span class="dot dot--r"></span><span class="dot dot--y"></span><span
+                  class="dot dot--g"></span>
+              </div>
+              <span class="win__tabs" aria-hidden="true">
+                <span class="tab tab--on"><span class="tab__dot"></span>contact.sh</span>
+              </span>
+              <span class="win__title">bash · executable</span>
+            </div>
+            <div class="win__body code">
+              <h2 id="contact-title" class="sr-only">Contact</h2>
+              <p class="line cl">
+                <span class="prompt">$</span> ./contact.sh --all
+              </p>
+              <p class="line cl cl--mt">
+                <span class="comment">// let's build something reliable together</span>
+              </p>
+
+              <!-- email row: copy + gmail (no mailto) -->
+              <div class="mail">
+                <p class="line mail__lead">
+                  <span class="contact__flag">--email</span>
+                  <span class="str" data-email>{email}</span>
+                </p>
+                <div class="mail__btns">
+                  <a
+                    class="btn btn--gmail"
+                    href={gmailCompose}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span class="btn__ic" aria-hidden="true">✉</span>
+                    <span class="btn__label">Gmail</span>
+                    <span class="gh-ext" aria-hidden="true">↗</span>
+                  </a>
+                  <button class="btn btn--copy" type="button" data-copy={email}>
+                    <span class="btn__ic" aria-hidden="true">⧉</span>
+                    <span class="btn__label">copy</span>
+                  </button>
+                </div>
+                <p class="mail__feedback" data-copy-feedback role="status" aria-live="polite"></p>
+              </div>
+
+              <ul class="contact">
+                <li class="contact__row reveal">
+                  <a
+                    class="contact__link"
+                    href={site.links.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span class="contact__flag">--github</span>
+                    <span class="str">@{site.githubUsername}</span>
+                    <span class="gh-ext" aria-hidden="true">↗</span>
+                  </a>
+                </li>
+                <li class="contact__row reveal" style="--d:60ms">
+                  <a
+                    class="contact__link"
+                    href={site.links.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span class="contact__flag">--linkedin</span>
+                    <span class="str">in/sihoon-cho</span>
+                    <span class="gh-ext" aria-hidden="true">↗</span>
+                  </a>
+                </li>
+                <li class="contact__row reveal" style="--d:120ms">
+                  <a
+                    class="contact__link"
+                    href={site.links.velog}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span class="contact__flag">--velog</span>
+                    <span class="str">@sihoon_cho</span>
+                    <span class="gh-ext" aria-hidden="true">↗</span>
+                  </a>
+                </li>
+              </ul>
+              <p class="line cl cl--mt">
+                <span class="prompt">$</span>
+                <span class="caret caret--idle" aria-hidden="true"></span>
+              </p>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- ░░░ VS Code-style status bar ░░░ -->
+    <footer class="statusbar" role="contentinfo">
+      <div class="statusbar__left">
+        <span class="sb sb--branch" title="git branch">
+          <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M11.75 2.5a.75.75 0 100 1.5.75.75 0 000-1.5zm-2.25.75a2.25 2.25 0 113 2.122V6A2.5 2.5 0 0110 8.5H6a1 1 0 00-1 1v1.128a2.251 2.251 0 11-1.5 0V5.372a2.25 2.25 0 111.5 0v1.836A2.492 2.492 0 016 7h4a1 1 0 001-1v-.628A2.25 2.25 0 019.5 3.25zM4.25 12a.75.75 0 100 1.5.75.75 0 000-1.5zM3.5 3.25a.75.75 0 111.5 0 .75.75 0 01-1.5 0z"
+            ></path>
+          </svg>
+          main
+        </span>
+        <span class="sb sb--file" id="sb-file" title="active section">whoami.sh</span>
+        <span class="sb sb--hide">© {year} Sihoon Cho · 조시훈</span>
+      </div>
+      <div class="statusbar__right">
+        <span class="sb sb--hide">spaces: 2</span>
+        <span class="sb">UTF-8</span>
+        <span class="sb sb--hide">LF</span>
+        <span class="sb" id="sb-pos">Ln 1, Col 1</span>
+        <span class="sb sb--lang">Astro</span>
+        <span class="sb sb--ok"><span class="sb-led" aria-hidden="true"></span> ready</span>
+      </div>
+    </footer>
+  </div>
+</Base>
+
+<style>
+  /* ───────────── tokens ───────────── */
+  .term-root {
+    --bg: #0b0e14;
+    --bg-2: #0d1117;
+    --panel: #11151f;
+    --panel-2: #0e121b;
+    --panel-bar: #161b26;
+    --border: #2a3346;
+    --border-soft: #1d2532;
+    --text: #e6edf3;
+    --text-dim: #c9d4e2;
+    --green: #3fb950;
+    --green-br: #56d364;
+    --blue: #58a6ff;
+    --purple: #bc8cff;
+    --amber: #d29922;
+    --comment: #8b949e;
+    --gutter: #56607a;
+    --red: #ff6b6b;
+
+    position: relative;
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-feature-settings: 'liga' 0, 'calt' 0;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    padding-bottom: 30px; /* status bar */
+    overflow-x: clip;
+  }
+
+  .term-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(900px 520px at 80% -8%, rgba(88, 166, 255, 0.11), transparent 60%),
+      radial-gradient(720px 480px at 6% 14%, rgba(188, 140, 255, 0.085), transparent 60%),
+      radial-gradient(820px 620px at 50% 112%, rgba(63, 185, 80, 0.06), transparent 60%);
+  }
+  .term-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.014) 1px, transparent 1px);
+    background-size: 100% 3px;
+    mix-blend-mode: overlay;
+    opacity: 0.55;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* ───────────── command palette nav ───────────── */
+  .palette {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    padding: 0.7rem clamp(0.75rem, 4vw, 2rem);
+    background: linear-gradient(to bottom, rgba(11, 14, 20, 0.94), rgba(11, 14, 20, 0.6));
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .palette__win {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.5rem, 2vw, 1.1rem);
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0.4rem 0.55rem 0.4rem 0.7rem;
+    background: var(--panel-bar);
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    box-shadow: 0 10px 34px rgba(0, 0, 0, 0.4);
+  }
+  .palette__trigger {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font: inherit;
+    color: var(--comment);
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.3rem 0.55rem;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: border-color 0.18s, color 0.18s, box-shadow 0.18s;
+  }
+  .palette__trigger:hover {
+    color: var(--text);
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.12);
+  }
+  .palette__kbd {
+    font-size: 0.72rem;
+    color: var(--blue);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 0.05rem 0.32rem;
+    background: rgba(88, 166, 255, 0.08);
+  }
+  .palette__hint {
+    font-size: 0.8rem;
+  }
+  .palette__brand {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+  .palette__path {
+    color: var(--blue);
+    font-size: 0.84rem;
+    font-weight: 600;
+    margin-left: 0.3rem;
+  }
+  .palette__links {
+    display: flex;
+    gap: 0.2rem;
+    list-style: none;
+    margin: 0 auto 0 0.5rem;
+    padding: 0;
+  }
+  .palette__links a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 0.85rem;
+    padding: 0.22rem 0.55rem;
+    border-radius: 6px;
+    transition: color 0.18s, background 0.18s;
+  }
+  .palette__links a:hover {
+    color: var(--text);
+    background: rgba(88, 166, 255, 0.12);
+  }
+  .palette__links a::before {
+    content: '/';
+    color: #5b6680;
+    margin-right: 0.15rem;
+  }
+  .palette__cta {
+    flex-shrink: 0;
+    color: var(--green-br);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.3rem 0.75rem;
+    border: 1px solid rgba(63, 185, 80, 0.35);
+    border-radius: 8px;
+    background: rgba(63, 185, 80, 0.08);
+    transition: background 0.18s, box-shadow 0.18s;
+  }
+  .palette__cta:hover {
+    background: rgba(63, 185, 80, 0.16);
+    box-shadow: 0 0 0 1px rgba(63, 185, 80, 0.45), 0 0 18px rgba(63, 185, 80, 0.22);
+  }
+  @media (max-width: 860px) {
+    .palette__links {
+      display: none;
+    }
+    .palette__hint {
+      display: none;
+    }
+  }
+
+  /* ───────────── command palette dialog ───────────── */
+  .cmdk {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: clamp(3rem, 14vh, 9rem) 1rem 1rem;
+  }
+  .cmdk[hidden] {
+    display: none;
+  }
+  .cmdk__scrim {
+    position: absolute;
+    inset: 0;
+    background: rgba(3, 6, 12, 0.66);
+    backdrop-filter: blur(3px);
+    animation: fade 0.16s ease;
+  }
+  .cmdk__panel {
+    position: relative;
+    width: min(620px, 100%);
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.8);
+    overflow: hidden;
+    animation: pop 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+  }
+  @keyframes pop {
+    from {
+      opacity: 0;
+      transform: translateY(-8px) scale(0.985);
+    }
+  }
+  .cmdk__bar {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .cmdk__chevron {
+    color: var(--green);
+    font-weight: 700;
+    font-size: 1.1rem;
+  }
+  .cmdk__input {
+    flex: 1;
+    background: none;
+    border: 0;
+    outline: none;
+    color: var(--text);
+    font: inherit;
+    font-size: 1rem;
+  }
+  .cmdk__input::placeholder {
+    color: var(--comment);
+  }
+  .cmdk__esc {
+    font-size: 0.7rem;
+    color: var(--comment);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 0.1rem 0.4rem;
+  }
+  .cmdk__list {
+    list-style: none;
+    margin: 0;
+    padding: 0.4rem;
+    max-height: 46vh;
+    overflow-y: auto;
+  }
+  .cmdk__item {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.6rem 0.7rem;
+    border-radius: 9px;
+    cursor: pointer;
+    color: var(--text);
+    font-size: 0.92rem;
+  }
+  .cmdk__item[hidden] {
+    display: none;
+  }
+  .cmdk__item.is-active,
+  .cmdk__item:hover {
+    background: rgba(88, 166, 255, 0.12);
+  }
+  .cmdk__glyph {
+    flex-shrink: 0;
+    width: 1.7rem;
+    height: 1.7rem;
+    display: grid;
+    place-items: center;
+    border-radius: 7px;
+    font-size: 0.8rem;
+    background: var(--panel-2);
+    border: 1px solid var(--border-soft);
+  }
+  .cmdk__glyph--g {
+    color: var(--green-br);
+  }
+  .cmdk__glyph--b {
+    color: var(--blue);
+  }
+  .cmdk__glyph--p {
+    color: var(--purple);
+  }
+  .cmdk__glyph--a {
+    color: var(--amber);
+  }
+  .cmdk__label {
+    flex: 1;
+  }
+  .cmdk__meta {
+    color: var(--comment);
+    font-size: 0.74rem;
+  }
+  .cmdk__empty {
+    padding: 1.2rem;
+    text-align: center;
+    color: var(--comment);
+    font-size: 0.88rem;
+    margin: 0;
+  }
+  .cmdk__empty[hidden] {
+    display: none;
+  }
+  .cmdk__foot {
+    display: flex;
+    gap: 1.2rem;
+    padding: 0.6rem 1rem;
+    border-top: 1px solid var(--border-soft);
+    color: var(--comment);
+    font-size: 0.74rem;
+  }
+  .cmdk__foot kbd {
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0 0.3rem;
+    margin-right: 0.15rem;
+    font-family: inherit;
+  }
+
+  /* ───────────── workbench layout ───────────── */
+  .workbench {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 230px minmax(0, 1fr);
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+  .editor {
+    min-width: 0;
+  }
+
+  .sidebar {
+    position: sticky;
+    top: 70px;
+    align-self: start;
+    height: calc(100vh - 100px);
+    padding: 1rem 0.4rem 1rem 0.9rem;
+    border-right: 1px solid var(--border-soft);
+    font-size: 0.82rem;
+    overflow-y: auto;
+  }
+  .sidebar__head {
+    color: var(--comment);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    margin: 0 0 0.7rem;
+    padding-left: 0.2rem;
+  }
+  .sidebar__root {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--text-dim);
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+    margin: 0 0 0.3rem;
+  }
+  .sidebar__chev {
+    color: var(--comment);
+  }
+  .sidebar__tree {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 0.55rem;
+    border-left: 1px solid var(--border-soft);
+  }
+  .sidebar__file {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.34rem 0.5rem;
+    border-radius: 6px;
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+  }
+  .sidebar__file:hover {
+    background: rgba(88, 166, 255, 0.09);
+    color: var(--text);
+  }
+  .sidebar__file.is-active {
+    background: rgba(88, 166, 255, 0.14);
+    color: var(--text);
+    box-shadow: inset 2px 0 0 var(--blue);
+  }
+  .sidebar__icon {
+    flex-shrink: 0;
+    width: 1.1rem;
+    text-align: center;
+    color: var(--amber);
+    font-size: 0.78rem;
+  }
+  .sidebar__file.is-active .sidebar__icon {
+    color: var(--blue);
+  }
+  @media (max-width: 980px) {
+    .workbench {
+      grid-template-columns: 1fr;
+    }
+    .sidebar {
+      display: none;
+    }
+  }
+
+  /* ───────────── window frame ───────────── */
+  .win {
+    max-width: 1080px;
+    margin: 0 auto;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.04) inset,
+      0 26px 64px -22px rgba(0, 0, 0, 0.7);
+  }
+  .win__bar {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.55rem 0.9rem;
+    background: linear-gradient(to bottom, var(--panel-bar), #12161f);
+    border-bottom: 1px solid var(--border);
+  }
+  .win__lights {
+    display: flex;
+    gap: 0.45rem;
+    flex-shrink: 0;
+  }
+  .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .dot--r {
+    background: #ff5f57;
+    box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.2) inset;
+  }
+  .dot--y {
+    background: #febc2e;
+  }
+  .dot--g {
+    background: #28c840;
+  }
+  .win__title {
+    color: var(--comment);
+    font-size: 0.76rem;
+    letter-spacing: 0.02em;
+    margin-left: auto;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-shrink: 1;
+  }
+  .win__skip {
+    margin-left: auto;
+    font: inherit;
+    font-size: 0.72rem;
+    color: var(--comment);
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.15rem 0.5rem;
+    cursor: pointer;
+    transition: color 0.18s, border-color 0.18s, opacity 0.3s;
+  }
+  .win__skip:hover {
+    color: var(--text);
+    border-color: var(--blue);
+  }
+  .term[data-done] ~ * .win__skip,
+  .win--hero[data-done] .win__skip {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .win__tabs {
+    display: flex;
+    align-items: stretch;
+    gap: 0.25rem;
+    flex-shrink: 0;
+  }
+  .tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.74rem;
+    color: var(--comment);
+    padding: 0.22rem 0.6rem;
+    border-radius: 6px;
+    border: 1px solid transparent;
+  }
+  .tab--on {
+    color: var(--text);
+    background: var(--panel);
+    border-color: var(--border);
+  }
+  .tab__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--green);
+  }
+  .tab__dot--b {
+    background: var(--blue);
+  }
+  .tab__dot--a {
+    background: var(--amber);
+  }
+  .win__body {
+    padding: clamp(1.2rem, 3vw, 2.1rem);
+    font-size: clamp(0.92rem, 1.1vw, 1.02rem);
+    line-height: 1.95;
+  }
+
+  /* ───────────── generic terminal text ───────────── */
+  .line {
+    margin: 0;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .prompt {
+    color: var(--green-br);
+    font-weight: 600;
+  }
+  .punc {
+    color: var(--comment);
+  }
+  .path {
+    color: var(--blue);
+  }
+  .cmd {
+    color: var(--text);
+  }
+  .key {
+    color: var(--blue);
+  }
+  .str {
+    color: var(--green-br);
+  }
+  .op {
+    color: var(--purple);
+  }
+  .comment {
+    color: var(--comment);
+    font-style: italic;
+  }
+  .kw {
+    color: var(--purple);
+  }
+
+  /* ───────────── caret + ghost autocomplete ───────────── */
+  .caret {
+    display: inline-block;
+    width: 0.55em;
+    height: 1.1em;
+    background: var(--green-br);
+    vertical-align: -0.2em;
+    margin-left: 0.1em;
+    animation: blink 1.05s steps(1) infinite;
+  }
+  .caret--idle {
+    background: var(--blue);
+  }
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
+  .term[data-done] .caret--cmd {
+    display: none;
+  }
+  .ghost-comp {
+    color: #4d586e;
+  }
+  .term[data-done] .ghost-comp {
+    display: none;
+  }
+
+  /* ───────────── hero ───────────── */
+  .hero {
+    min-height: calc(100vh - 64px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.6rem;
+    padding: clamp(2rem, 6vh, 4rem) clamp(0.75rem, 4vw, 2rem) 2rem;
+  }
+  .win--hero {
+    width: 100%;
+  }
+  .term .out {
+    margin: 0.6rem 0 1rem;
+  }
+  .out__line {
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .term[data-done] .out__line,
+  .out__line.is-on {
+    opacity: 1;
+    transform: none;
+  }
+  .out__line--tag .comment,
+  .out__line--tag-ko .comment {
+    color: #b8c2d2;
+  }
+  .out__line--actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 1.8rem;
+    margin-top: 0.8rem;
+  }
+  .ghost {
+    color: var(--blue);
+    text-decoration: none;
+    border-bottom: 1px dashed transparent;
+    transition: color 0.18s, border-color 0.18s, text-shadow 0.18s;
+  }
+  .ghost .op {
+    color: var(--green-br);
+  }
+  .ghost:hover {
+    color: #8ec5ff;
+    border-bottom-color: rgba(88, 166, 255, 0.5);
+    text-shadow: 0 0 16px rgba(88, 166, 255, 0.4);
+  }
+  .line--next {
+    margin-top: 0.3rem;
+  }
+
+  .scroll-hint {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--comment);
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+  }
+  .scroll-hint__bar {
+    width: 1px;
+    height: 34px;
+    background: linear-gradient(to bottom, var(--green-br), transparent);
+    animation: drop 1.8s ease-in-out infinite;
+  }
+  @keyframes drop {
+    0%,
+    100% {
+      transform: scaleY(0.4);
+      transform-origin: top;
+      opacity: 0.4;
+    }
+    50% {
+      transform: scaleY(1);
+      opacity: 1;
+    }
+  }
+
+  /* ───────────── sections ───────────── */
+  .sec {
+    padding: clamp(2.5rem, 7vw, 5rem) clamp(0.75rem, 4vw, 2rem);
+  }
+  .sec--last {
+    padding-bottom: clamp(3.5rem, 9vw, 6rem);
+  }
+  .code .cl {
+    color: var(--comment);
+  }
+  .cl .prompt {
+    margin-right: 0.4rem;
+  }
+  .cl--mt {
+    margin-top: 1.4rem;
+  }
+  .cl--head {
+    margin-bottom: 0.7rem;
+  }
+
+  /* about */
+  .md-h {
+    color: var(--purple);
+    font-size: clamp(1.2rem, 3vw, 1.55rem);
+    font-weight: 700;
+    margin: 0.9rem 0 0.7rem;
+    line-height: 1.4;
+  }
+  .md-p {
+    color: var(--text);
+    max-width: 70ch;
+    margin: 0;
+    line-height: 2;
+  }
+  .hl {
+    list-style: none;
+    margin: 0.7rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.3rem;
+  }
+  .hl__item {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    gap: 0.65rem;
+    align-items: baseline;
+    padding: 0.5rem 0.65rem;
+    border-radius: 8px;
+    border-left: 2px solid transparent;
+    transition: background 0.18s, border-color 0.18s;
+    transition-delay: var(--d, 0ms);
+  }
+  .hl__item:hover {
+    background: rgba(88, 166, 255, 0.08);
+    border-left-color: var(--blue);
+  }
+  .hl__idx {
+    color: #67738c;
+  }
+  .hl__check {
+    color: var(--green-br);
+  }
+  .hl__text {
+    color: var(--text);
+  }
+
+  /* stack json */
+  .code--gutter .json {
+    counter-reset: ln;
+  }
+  .jl {
+    position: relative;
+    padding-left: 3.4rem;
+  }
+  .code--gutter .jl::before {
+    counter-increment: ln;
+    content: counter(ln);
+    position: absolute;
+    left: 0;
+    width: 2.5rem;
+    text-align: right;
+    color: var(--gutter);
+    user-select: none;
+  }
+  .no-num {
+    padding-left: 0;
+  }
+  .grp {
+    margin: 0;
+  }
+  .grp__sum {
+    cursor: pointer;
+    list-style: none;
+    border-radius: 6px;
+    transition: background 0.15s;
+  }
+  .grp__sum::-webkit-details-marker {
+    display: none;
+  }
+  .grp__sum:hover {
+    background: rgba(255, 255, 255, 0.04);
+  }
+  .tw {
+    color: var(--comment);
+    display: inline-block;
+    transition: transform 0.2s ease;
+    margin-right: 0.2rem;
+  }
+  .grp:not([open]) .tw {
+    transform: rotate(-90deg);
+  }
+  .grp__count {
+    color: var(--gutter);
+    margin-left: 0.5rem;
+    font-size: 0.8em;
+  }
+  .grp:not([open]) .grp__count::after {
+    content: ' …]';
+  }
+  .grp__items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.1rem 0.2rem;
+    padding-left: 1.4rem;
+  }
+  .jl--item {
+    padding-left: 0;
+    border-radius: 5px;
+    padding-inline: 0.32rem;
+    transition: background 0.15s, color 0.15s;
+  }
+  .code--gutter .jl--item::before {
+    content: none;
+    counter-increment: none;
+  }
+  .jl--item:hover {
+    background: rgba(63, 185, 80, 0.12);
+  }
+  .jl--item:hover .str {
+    color: #7ee787;
+  }
+
+  /* learning / branches */
+  .branches {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+    gap: 1.5rem 2rem;
+    margin-top: 1.1rem;
+  }
+  .branch {
+    transition-delay: var(--d, 0ms);
+  }
+  .branch__head {
+    color: var(--text);
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+  }
+  .branch__mark {
+    color: var(--green-br);
+    margin-right: 0.45rem;
+  }
+  .branch__path {
+    color: var(--amber);
+  }
+  .branch__items {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 0.4rem;
+    border-left: 1px solid var(--border);
+  }
+  .branch__todo {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    gap: 0.55rem;
+    align-items: baseline;
+    padding: 0.2rem 0.5rem;
+    border-radius: 6px;
+    transition: background 0.15s;
+  }
+  .branch__todo:hover {
+    background: rgba(210, 153, 34, 0.1);
+  }
+  .todo-box {
+    color: var(--gutter);
+  }
+  .todo-txt {
+    color: var(--text);
+  }
+
+  /* github */
+  .gh-line {
+    margin-top: 0.4rem;
+  }
+  .gh-link {
+    color: var(--amber);
+    font-weight: 600;
+  }
+  .gh-link:hover {
+    color: #e3b341;
+    border-bottom-color: rgba(210, 153, 34, 0.5);
+    text-shadow: 0 0 16px rgba(210, 153, 34, 0.35);
+  }
+  .gh-ext {
+    font-size: 0.78em;
+    opacity: 0.75;
+    margin-left: 0.15em;
+  }
+
+  /* contact: email */
+  .mail {
+    margin-top: 0.9rem;
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--border-soft);
+    border-radius: 10px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
+  }
+  .mail__lead {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    align-items: baseline;
+  }
+  .mail__btns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 0.8rem;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font: inherit;
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 0.45rem 0.9rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.18s, box-shadow 0.18s, transform 0.12s, border-color 0.18s;
+  }
+  .btn:active {
+    transform: translateY(1px);
+  }
+  .btn--copy {
+    color: var(--blue);
+    background: rgba(88, 166, 255, 0.1);
+    border: 1px solid rgba(88, 166, 255, 0.35);
+  }
+  .btn--copy:hover {
+    background: rgba(88, 166, 255, 0.18);
+    box-shadow: 0 0 0 1px rgba(88, 166, 255, 0.45);
+  }
+  .btn--copy.is-copied {
+    color: var(--green-br);
+    background: rgba(63, 185, 80, 0.14);
+    border-color: rgba(63, 185, 80, 0.5);
+  }
+  .btn--gmail {
+    color: var(--green-br);
+    background: rgba(63, 185, 80, 0.1);
+    border: 1px solid rgba(63, 185, 80, 0.35);
+  }
+  .btn--gmail:hover {
+    background: rgba(63, 185, 80, 0.18);
+    box-shadow: 0 0 0 1px rgba(63, 185, 80, 0.45);
+  }
+  .btn__ic {
+    font-size: 0.95em;
+  }
+  .mail__feedback {
+    margin: 0.55rem 0 0;
+    min-height: 1.3em;
+    font-size: 0.85rem;
+    color: var(--green-br);
+    opacity: 0;
+    transform: translateY(-3px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  .mail__feedback.is-on {
+    opacity: 1;
+    transform: none;
+  }
+  .mail__feedback.is-err {
+    color: var(--amber);
+  }
+
+  /* contact links */
+  .contact {
+    list-style: none;
+    margin: 1rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.3rem;
+  }
+  .contact__link {
+    display: grid;
+    grid-template-columns: 7rem 1fr auto;
+    gap: 0.6rem;
+    align-items: baseline;
+    text-decoration: none;
+    padding: 0.58rem 0.7rem;
+    border-radius: 8px;
+    border-left: 2px solid transparent;
+    transition: background 0.18s, border-color 0.18s, transform 0.18s;
+  }
+  .contact__link:hover {
+    background: rgba(63, 185, 80, 0.09);
+    border-left-color: var(--green);
+    transform: translateX(3px);
+  }
+  .contact__flag {
+    color: var(--amber);
+  }
+  .contact__link .gh-ext {
+    color: var(--comment);
+  }
+  .contact__link:hover .str {
+    color: #7ee787;
+    text-shadow: 0 0 16px rgba(63, 185, 80, 0.35);
+  }
+  @media (max-width: 480px) {
+    .contact__link {
+      grid-template-columns: 1fr auto;
+      gap: 0.1rem 0.5rem;
+    }
+    .contact__flag {
+      grid-column: 1 / -1;
+    }
+  }
+
+  /* ───────────── status bar ───────────── */
+  .statusbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 25;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0 0.9rem;
+    font-size: 0.73rem;
+    color: #cdd7e6;
+    background: linear-gradient(to bottom, #11151f, #0c1018);
+    border-top: 1px solid var(--border);
+  }
+  .statusbar__left,
+  .statusbar__right {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    min-width: 0;
+  }
+  .sb {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0 0.5rem;
+    height: 30px;
+    white-space: nowrap;
+  }
+  .sb--branch {
+    background: var(--blue);
+    color: #06121f;
+    font-weight: 600;
+  }
+  .sb--file {
+    color: var(--text-dim);
+  }
+  .sb--lang {
+    color: var(--comment);
+  }
+  .sb--ok {
+    color: var(--green-br);
+  }
+  .sb-led {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--green-br);
+    box-shadow: 0 0 6px var(--green-br);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    50% {
+      opacity: 0.35;
+    }
+  }
+  .statusbar__left .sb--hide {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  @media (max-width: 720px) {
+    .sb--hide,
+    .sb--lang,
+    #sb-pos {
+      display: none;
+    }
+  }
+
+  /* ───────────── reduced motion ───────────── */
+  @media (prefers-reduced-motion: reduce) {
+    .caret,
+    .scroll-hint__bar,
+    .sb-led,
+    .cmdk__scrim,
+    .cmdk__panel {
+      animation: none;
+    }
+    .out__line {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* ───────────── focus ───────────── */
+  .term-root a:focus-visible,
+  .term-root button:focus-visible,
+  .term-root summary:focus-visible,
+  .cmdk__input:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+</style>
+
+<script>
+  (() => {
+    const reduce =
+      typeof window.matchMedia === 'function' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ───────── typewriter (smoother + skippable) ───────── */
+    const term = document.querySelector<HTMLElement>('.term[data-typewriter]');
+    const heroWin = term?.closest<HTMLElement>('.win--hero') ?? null;
+    if (term) {
+      const cmdEl = term.querySelector<HTMLElement>('[data-type]');
+      const ghostEl = term.querySelector<HTMLElement>('[data-ghost]');
+      const outLines = Array.from(term.querySelectorAll<HTMLElement>('.out__line'));
+      const text = cmdEl?.dataset.text ?? '';
+      let done = false;
+      const timers: number[] = [];
+
+      const finish = () => {
+        if (done) return;
+        done = true;
+        timers.forEach((t) => window.clearTimeout(t));
+        if (cmdEl) cmdEl.textContent = text;
+        if (ghostEl) ghostEl.textContent = '';
+        outLines.forEach((l) => l.classList.add('is-on'));
+        term.setAttribute('data-done', '');
+        heroWin?.setAttribute('data-done', '');
+      };
+
+      if (reduce || !cmdEl) {
+        finish();
+      } else {
+        // ghost autocomplete preview, then type over it
+        if (ghostEl) ghostEl.textContent = text;
+        cmdEl.textContent = '';
+        let i = 0;
+        const typeNext = () => {
+          if (done) return;
+          if (i <= text.length) {
+            cmdEl.textContent = text.slice(0, i);
+            if (ghostEl) ghostEl.textContent = text.slice(i);
+            i += 1;
+            timers.push(window.setTimeout(typeNext, 46 + Math.random() * 40));
+          } else {
+            if (ghostEl) ghostEl.textContent = '';
+            outLines.forEach((l, n) => {
+              timers.push(window.setTimeout(() => l.classList.add('is-on'), 130 + n * 150));
+            });
+            timers.push(
+              window.setTimeout(() => {
+                term.setAttribute('data-done', '');
+                heroWin?.setAttribute('data-done', '');
+                done = true;
+              }, 130 + outLines.length * 150)
+            );
+          }
+        };
+        timers.push(window.setTimeout(typeNext, 420));
+
+        const onKey = (e: KeyboardEvent) => {
+          if ((e.key === 'Enter' || e.key === ' ' || e.key === 'Escape') && !done) {
+            // don't hijack typing into the command palette
+            const t = e.target as HTMLElement | null;
+            if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA')) return;
+            finish();
+          }
+        };
+        window.addEventListener('keydown', onKey);
+        term.addEventListener('click', finish, { once: true });
+        const skipBtn = heroWin?.querySelector<HTMLElement>('[data-typewriter-skip]');
+        skipBtn?.addEventListener('click', finish);
+      }
+    }
+
+    /* ───────── command palette (⌘K) ───────── */
+    const cmdk = document.querySelector<HTMLElement>('[data-cmdk]');
+    if (cmdk) {
+      const input = cmdk.querySelector<HTMLInputElement>('[data-cmdk-input]');
+      const items = Array.from(cmdk.querySelectorAll<HTMLElement>('.cmdk__item'));
+      const empty = cmdk.querySelector<HTMLElement>('[data-cmdk-empty]');
+      const openBtn = document.querySelector<HTMLElement>('[data-cmdk-open]');
+      const closeEls = Array.from(cmdk.querySelectorAll<HTMLElement>('[data-cmdk-close]'));
+      let active = 0;
+      let lastFocus: HTMLElement | null = null;
+
+      const visible = () => items.filter((it) => !it.hidden);
+
+      const setActive = (n: number) => {
+        const vis = visible();
+        if (!vis.length) return;
+        active = (n + vis.length) % vis.length;
+        items.forEach((it) => it.classList.remove('is-active'));
+        vis[active].classList.add('is-active');
+        vis[active].scrollIntoView({ block: 'nearest' });
+      };
+
+      const filter = () => {
+        const q = (input?.value ?? '').trim().toLowerCase();
+        items.forEach((it) => {
+          const hay = (it.dataset.keys ?? '') + ' ' + (it.textContent ?? '');
+          it.hidden = q !== '' && !hay.toLowerCase().includes(q);
+          it.classList.remove('is-active');
+        });
+        const vis = visible();
+        if (empty) empty.hidden = vis.length > 0;
+        active = 0;
+        if (vis.length) vis[0].classList.add('is-active');
+      };
+
+      const open = () => {
+        lastFocus = document.activeElement as HTMLElement | null;
+        cmdk.hidden = false;
+        if (input) input.value = '';
+        filter();
+        input?.focus();
+      };
+      const close = () => {
+        cmdk.hidden = true;
+        lastFocus?.focus();
+      };
+
+      const run = (it: HTMLElement) => {
+        const go = it.dataset.go;
+        const href = it.dataset.href;
+        close();
+        if (href) {
+          window.open(href, '_blank', 'noopener,noreferrer');
+        } else if (go) {
+          const target = document.querySelector(go);
+          target?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
+          (target as HTMLElement | null)?.setAttribute('tabindex', '-1');
+          (target as HTMLElement | null)?.focus({ preventScroll: true });
+        }
+      };
+
+      openBtn?.addEventListener('click', open);
+      closeEls.forEach((el) => el.addEventListener('click', close));
+      input?.addEventListener('input', filter);
+      items.forEach((it) => it.addEventListener('click', () => run(it)));
+
+      window.addEventListener('keydown', (e) => {
+        const mod = e.metaKey || e.ctrlKey;
+        if (mod && e.key.toLowerCase() === 'k') {
+          e.preventDefault();
+          cmdk.hidden ? open() : close();
+          return;
+        }
+        if (cmdk.hidden) return;
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          close();
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          setActive(active + 1);
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          setActive(active - 1);
+        } else if (e.key === 'Enter') {
+          e.preventDefault();
+          const vis = visible();
+          if (vis[active]) run(vis[active]);
+        }
+      });
+    }
+
+    /* ───────── copy-to-clipboard email ───────── */
+    const copyBtn = document.querySelector<HTMLButtonElement>('[data-copy]');
+    const feedback = document.querySelector<HTMLElement>('[data-copy-feedback]');
+    if (copyBtn && feedback) {
+      const label = copyBtn.querySelector<HTMLElement>('.btn__label');
+      let resetTimer = 0;
+      const show = (msg: string, err = false) => {
+        feedback.textContent = msg;
+        feedback.classList.toggle('is-err', err);
+        feedback.classList.add('is-on');
+        window.clearTimeout(resetTimer);
+        resetTimer = window.setTimeout(() => {
+          feedback.classList.remove('is-on');
+          copyBtn.classList.remove('is-copied');
+          if (label) label.textContent = 'copy';
+        }, 2200);
+      };
+      copyBtn.addEventListener('click', async () => {
+        const value = copyBtn.dataset.copy ?? '';
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(value);
+          } else {
+            const ta = document.createElement('textarea');
+            ta.value = value;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+          }
+          copyBtn.classList.add('is-copied');
+          if (label) label.textContent = 'copied ✓';
+          show('복사되었습니다! · copied to clipboard');
+        } catch {
+          show(`복사 실패 — ${value}`, true);
+        }
+      });
+    }
+
+    /* ───────── status bar: live Ln/Col + active file ───────── */
+    const pos = document.getElementById('sb-pos');
+    const sbFile = document.getElementById('sb-file');
+    const sideLinks = Array.from(
+      document.querySelectorAll<HTMLElement>('.sidebar__file[data-nav]')
+    );
+    const sections = Array.from(document.querySelectorAll<HTMLElement>('main section[id]'));
+    const fileFor: Record<string, string> = {
+      whoami: 'whoami.sh',
+      about: 'about.md',
+      stack: 'stack.json',
+      learning: 'learning.log',
+      github: 'github.url',
+      contact: 'contact.sh',
+    };
+
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      // Ln/Col from scroll position
+      if (pos) {
+        const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+        const pct = Math.min(1, Math.max(0, window.scrollY / max));
+        const ln = 1 + Math.round(pct * 248);
+        const col = 1 + Math.round((window.scrollY % 60) / 2);
+        pos.textContent = `Ln ${ln}, Col ${col}`;
+      }
+      // active section → sidebar + status file
+      const mid = window.scrollY + window.innerHeight * 0.35;
+      let current = sections[0];
+      for (const s of sections) {
+        if (s.offsetTop <= mid) current = s;
+      }
+      if (current) {
+        const id = current.id;
+        sideLinks.forEach((l) => l.classList.toggle('is-active', l.dataset.nav === id));
+        if (sbFile && fileFor[id]) sbFile.textContent = fileFor[id];
+      }
+    };
+
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (!ticking) {
+          ticking = true;
+          window.requestAnimationFrame(update);
+        }
+      },
+      { passive: true }
+    );
+    window.addEventListener('resize', update, { passive: true });
+    update();
+  })();
+</script>
