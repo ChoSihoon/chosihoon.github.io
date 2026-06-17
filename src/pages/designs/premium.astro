@@ -31,32 +31,32 @@ const marquee = stack.flatMap((g) => g.items);
 ---
 
 <Base title="Sihoon Cho — Premium Editorial">
-  <div class="pe" data-pe>
+  <div class="premium" data-premium>
     <!-- scroll-driven editorial background -->
-    <div class="pe-bg" aria-hidden="true" data-bg>
-      <span class="pe-bg__orb pe-bg__orb--a"></span>
-      <span class="pe-bg__orb pe-bg__orb--b"></span>
-      <span class="pe-bg__grid"></span>
+    <div class="premium-bg" aria-hidden="true" data-bg>
+      <span class="premium-bg__orb premium-bg__orb--a"></span>
+      <span class="premium-bg__orb premium-bg__orb--b"></span>
+      <span class="premium-bg__grid"></span>
     </div>
 
     <!-- thin scroll-progress -->
-    <div class="pe-progress" aria-hidden="true"><span data-progress></span></div>
+    <div class="premium-progress" aria-hidden="true"><span data-progress></span></div>
 
     <!-- aria-live region for copy feedback -->
-    <p class="pe-sr" role="status" aria-live="polite" data-copy-feedback></p>
+    <p class="premium-sr" role="status" aria-live="polite" data-copy-feedback></p>
 
     <!-- ───────── header ───────── -->
-    <header class="pe-header" data-header role="banner">
-      <div class="pe-header__inner">
-        <a class="pe-brand" href="#top" aria-label={`${site.name} — 맨 위로`}>
-          <span class="pe-brand__mark" aria-hidden="true"></span>
-          <span class="pe-brand__name">{site.name}</span>
-          <span class="pe-brand__ko" aria-hidden="true">{site.nameKo}</span>
+    <header class="premium-header" data-header role="banner">
+      <div class="premium-header__inner">
+        <a class="premium-brand" href="#top" aria-label={`${site.name} — 맨 위로`}>
+          <span class="premium-brand__mark" aria-hidden="true"></span>
+          <span class="premium-brand__name">{site.name}</span>
+          <span class="premium-brand__ko" aria-hidden="true">{site.nameKo}</span>
         </a>
-        <nav class="pe-nav" aria-label="Primary">
-          {navLinks.map((l) => <a class="pe-nav__link" href={l.href}>{l.label}</a>)}
+        <nav class="premium-nav" aria-label="Primary">
+          {navLinks.map((l) => <a class="premium-nav__link" href={l.href}>{l.label}</a>)}
         </nav>
-        <a class="pe-cta pe-cta--ghost" href="#contact" data-magnetic>
+        <a class="premium-cta premium-cta--ghost" href="#contact" data-magnetic>
           <span data-magnetic-inner>연락하기</span>
         </a>
       </div>
@@ -64,31 +64,31 @@ const marquee = stack.flatMap((g) => g.items);
 
     <main id="top">
       <!-- ───────── hero ───────── -->
-      <section class="pe-hero" aria-labelledby="hero-title">
-        <div class="pe-shell pe-hero__grid">
-          <div class="pe-hero__main">
-            <p class="pe-eyebrow reveal">
-              <span class="pe-mono">{site.role}</span>
-              <span class="pe-eyebrow__loc pe-mono" aria-hidden="true">— Seoul, KR</span>
+      <section class="premium-hero" aria-labelledby="hero-title">
+        <div class="premium-shell premium-hero__grid">
+          <div class="premium-hero__main">
+            <p class="premium-eyebrow reveal">
+              <span class="premium-mono">{site.role}</span>
+              <span class="premium-eyebrow__loc premium-mono" aria-hidden="true">— Seoul, KR</span>
             </p>
-            <h1 id="hero-title" class="pe-hero__title">
-              <span class="pe-line reveal">Reliable</span>
-              <span class="pe-line reveal" style="transition-delay:80ms">
-                <em class="pe-serif">systems,</em>
+            <h1 id="hero-title" class="premium-hero__title">
+              <span class="premium-line reveal">Reliable</span>
+              <span class="premium-line reveal" style="transition-delay:80ms">
+                <em class="premium-serif">systems,</em>
               </span>
-              <span class="pe-line reveal" style="transition-delay:160ms">shipped</span>
-              <span class="pe-line pe-line--accent reveal" style="transition-delay:240ms">&amp; operated.</span>
+              <span class="premium-line reveal" style="transition-delay:160ms">shipped</span>
+              <span class="premium-line premium-line--accent reveal" style="transition-delay:240ms">&amp; operated.</span>
             </h1>
-            <div class="pe-hero__cta reveal" style="transition-delay:320ms">
-              <a class="pe-cta pe-cta--solid" href="#contact" data-magnetic>
+            <div class="premium-hero__cta reveal" style="transition-delay:320ms">
+              <a class="premium-cta premium-cta--solid" href="#contact" data-magnetic>
                 <span data-magnetic-inner>연락하기</span>
-                <svg class="pe-arrow" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"
+                <svg class="premium-arrow" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"
                   ><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6"
                     stroke-linecap="round" stroke-linejoin="round"></path></svg
                 >
               </a>
               <a
-                class="pe-cta pe-cta--line"
+                class="premium-cta premium-cta--line"
                 href={site.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -99,49 +99,49 @@ const marquee = stack.flatMap((g) => g.items);
             </div>
           </div>
 
-          <aside class="pe-hero__aside reveal" style="transition-delay:200ms" aria-label="소개">
-            <span class="pe-aside__rule" aria-hidden="true"></span>
-            <p class="pe-hero__tagline">{site.tagline}</p>
-            <p class="pe-hero__tagline pe-hero__tagline--en pe-mono">{site.taglineEn}</p>
-            <p class="pe-hero__name-ko pe-mono" aria-hidden="true">{site.nameKo} / {site.name}</p>
+          <aside class="premium-hero__aside reveal" style="transition-delay:200ms" aria-label="소개">
+            <span class="premium-aside__rule" aria-hidden="true"></span>
+            <p class="premium-hero__tagline">{site.tagline}</p>
+            <p class="premium-hero__tagline premium-hero__tagline--en premium-mono">{site.taglineEn}</p>
+            <p class="premium-hero__name-ko premium-mono" aria-hidden="true">{site.name} / {site.nameKo}</p>
           </aside>
         </div>
 
-        <span class="pe-scrollcue pe-mono" aria-hidden="true">
-          <span class="pe-scrollcue__line"></span>scroll
+        <span class="premium-scrollcue premium-mono" aria-hidden="true">
+          <span class="premium-scrollcue__line"></span>scroll
         </span>
       </section>
 
       <!-- ───────── about ───────── -->
-      <section class="pe-section" id="about" aria-labelledby="about-title">
-        <div class="pe-shell">
-          <div class="pe-about__grid">
-            <header class="pe-sechead reveal">
-              <span class="pe-label pe-mono">About</span>
+      <section class="premium-section" id="about" aria-labelledby="about-title">
+        <div class="premium-shell">
+          <div class="premium-about__grid">
+            <header class="premium-sechead reveal">
+              <span class="premium-label premium-mono">About</span>
             </header>
-            <div class="pe-about__body">
-              <h2 id="about-title" class="pe-lead reveal">{about.lead}</h2>
+            <div class="premium-about__body">
+              <h2 id="about-title" class="premium-lead reveal">{about.lead}</h2>
 
-              <ul class="pe-stats reveal" aria-label="Highlights at a glance">
+              <ul class="premium-stats reveal" aria-label="Highlights at a glance">
                 {
                   stats.map((s) => (
-                    <li class="pe-stat">
-                      <span class="pe-stat__num">
+                    <li class="premium-stat">
+                      <span class="premium-stat__num">
                         <span data-count={s.value} data-raw={s.raw ? '1' : '0'}>0</span>
                         {s.suffix}
                       </span>
-                      <span class="pe-stat__label pe-mono">{s.label}</span>
+                      <span class="premium-stat__label premium-mono">{s.label}</span>
                     </li>
                   ))
                 }
               </ul>
 
-              <ol class="pe-highlights" aria-label="Approach">
+              <ol class="premium-highlights" aria-label="Approach">
                 {
                   about.highlights.map((h, i) => (
-                    <li class="pe-hl reveal" style={`transition-delay:${i * 80}ms`}>
-                      <span class="pe-hl__bul pe-mono" aria-hidden="true">→</span>
-                      <span class="pe-hl__text">{h}</span>
+                    <li class="premium-hl reveal" style={`transition-delay:${i * 80}ms`}>
+                      <span class="premium-hl__bul premium-mono" aria-hidden="true">→</span>
+                      <span class="premium-hl__text">{h}</span>
                     </li>
                   ))
                 }
@@ -152,13 +152,13 @@ const marquee = stack.flatMap((g) => g.items);
       </section>
 
       <!-- ───────── marquee ───────── -->
-      <section class="pe-marquee" aria-hidden="true">
-        <div class="pe-marquee__track" data-marquee>
+      <section class="premium-marquee" aria-hidden="true">
+        <div class="premium-marquee__track" data-marquee>
           {
             [...marquee, ...marquee].map((it) => (
-              <span class="pe-marquee__item">
+              <span class="premium-marquee__item">
                 {it}
-                <span class="pe-marquee__sep">/</span>
+                <span class="premium-marquee__sep">/</span>
               </span>
             ))
           }
@@ -166,34 +166,34 @@ const marquee = stack.flatMap((g) => g.items);
       </section>
 
       <!-- ───────── tech stack ───────── -->
-      <section class="pe-section pe-section--top" id="stack" aria-labelledby="stack-title">
-        <div class="pe-shell">
-          <header class="pe-sechead pe-sechead--row reveal">
-            <span class="pe-label pe-mono">Tech Stack</span>
-            <h2 id="stack-title" class="pe-sectitle">주력으로 다루는 기술</h2>
+      <section class="premium-section premium-section--top" id="stack" aria-labelledby="stack-title">
+        <div class="premium-shell">
+          <header class="premium-sechead premium-sechead--row reveal">
+            <span class="premium-label premium-mono">Tech Stack</span>
+            <h2 id="stack-title" class="premium-sectitle">주력으로 다루는 기술</h2>
           </header>
 
-          <div class="pe-stack">
+          <div class="premium-stack">
             {
               stack.map((group, i) => (
-                <article class="pe-stack__row reveal" style={`transition-delay:${(i % 4) * 50}ms`}>
-                  <div class="pe-stack__cat">
-                    <h3 class="pe-stack__catname">{group.category}</h3>
-                    <span class="pe-stack__count pe-mono" aria-hidden="true">
+                <article class="premium-stack__row reveal" style={`transition-delay:${(i % 4) * 50}ms`}>
+                  <div class="premium-stack__cat">
+                    <h3 class="premium-stack__catname">{group.category}</h3>
+                    <span class="premium-stack__count premium-mono" aria-hidden="true">
                       {String(group.items.length).padStart(2, '0')}
                     </span>
                   </div>
-                  <ul class="pe-chips" aria-label={group.category}>
+                  <ul class="premium-chips" aria-label={group.category}>
                     {group.items.map((it) => {
                       const b = badge(it);
                       return (
                         <li
-                          class="pe-chip"
+                          class="premium-chip"
                           style={`--brand:${b.color};background:${b.color}14;border-color:${b.color}40;`}
                         >
                           {b.logo && (
                             <img
-                              class="pe-chip__logo"
+                              class="premium-chip__logo"
                               data-techlogo
                               src={b.logo}
                               alt=""
@@ -202,7 +202,7 @@ const marquee = stack.flatMap((g) => g.items);
                               loading="lazy"
                             />
                           )}
-                          <span class="pe-chip__name">{b.name}</span>
+                          <span class="premium-chip__name">{b.name}</span>
                         </li>
                       );
                     })}
@@ -215,29 +215,29 @@ const marquee = stack.flatMap((g) => g.items);
       </section>
 
       <!-- ───────── learning ───────── -->
-      <section class="pe-section pe-section--muted" id="learning" aria-labelledby="learning-title">
-        <div class="pe-shell">
-          <header class="pe-sechead pe-sechead--row reveal">
-            <span class="pe-label pe-mono">Learning</span>
-            <h2 id="learning-title" class="pe-sectitle pe-sectitle--sm">탐색하고 익히는 중</h2>
+      <section class="premium-section premium-section--muted" id="learning" aria-labelledby="learning-title">
+        <div class="premium-shell">
+          <header class="premium-sechead premium-sechead--row reveal">
+            <span class="premium-label premium-mono">Learning</span>
+            <h2 id="learning-title" class="premium-sectitle premium-sectitle--sm">탐색하고 익히는 중</h2>
           </header>
 
-          <div class="pe-learn">
+          <div class="premium-learn">
             {
               learning.map((group, i) => (
-                <article class="pe-learn__col reveal" style={`transition-delay:${(i % 3) * 60}ms`}>
-                  <h3 class="pe-learn__cat pe-mono">{group.category}</h3>
-                  <ul class="pe-learn__items">
+                <article class="premium-learn__col reveal" style={`transition-delay:${(i % 3) * 60}ms`}>
+                  <h3 class="premium-learn__cat premium-mono">{group.category}</h3>
+                  <ul class="premium-learn__items">
                     {group.items.map((it) => {
                       const b = badge(it);
                       return (
                         <li
-                          class="pe-learn__badge"
+                          class="premium-learn__badge"
                           style={`--brand:${b.color};background:${b.color}14;border-color:${b.color}40;`}
                         >
                           {b.logo && (
                             <img
-                              class="pe-chip__logo"
+                              class="premium-chip__logo"
                               data-techlogo
                               src={b.logo}
                               alt=""
@@ -246,7 +246,7 @@ const marquee = stack.flatMap((g) => g.items);
                               loading="lazy"
                             />
                           )}
-                          <span class="pe-chip__name">{b.name}</span>
+                          <span class="premium-chip__name">{b.name}</span>
                         </li>
                       );
                     })}
@@ -259,21 +259,21 @@ const marquee = stack.flatMap((g) => g.items);
       </section>
 
       <!-- ───────── contact ───────── -->
-      <section class="pe-section pe-section--top" id="contact" aria-labelledby="contact-title">
-        <div class="pe-shell">
-          <div class="pe-contact__grid">
-            <header class="pe-sechead reveal">
-              <span class="pe-label pe-mono">Contact</span>
+      <section class="premium-section premium-section--top" id="contact" aria-labelledby="contact-title">
+        <div class="premium-shell">
+          <div class="premium-contact__grid">
+            <header class="premium-sechead reveal">
+              <span class="premium-label premium-mono">Contact</span>
             </header>
-            <div class="pe-contact__body">
-              <h2 id="contact-title" class="pe-contact__title reveal">
+            <div class="premium-contact__body">
+              <h2 id="contact-title" class="premium-contact__title reveal">
                 같이 만들 거리가 있다면,<br />
-                <em class="pe-serif">편하게</em> 연락 주세요.
+                <em class="premium-serif">편하게</em> 연락 주세요.
               </h2>
 
-              <div class="pe-mailrow reveal">
+              <div class="premium-mailrow reveal">
                 <a
-                  class="pe-cta pe-cta--solid"
+                  class="premium-cta premium-cta--solid"
                   href="https://mail.google.com/mail/?view=cm&fs=1&to=sihoon.cho.business@gmail.com"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -283,28 +283,28 @@ const marquee = stack.flatMap((g) => g.items);
                 </a>
                 <button
                   type="button"
-                  class="pe-mail"
+                  class="premium-mail"
                   data-copy
                   aria-label={`이메일 주소 복사: ${site.email}`}
                 >
-                  <span class="pe-mail__addr pe-mono">{site.email}</span>
-                  <span class="pe-mail__hint pe-mono" data-copy-label>복사</span>
+                  <span class="premium-mail__addr premium-mono">{site.email}</span>
+                  <span class="premium-mail__hint premium-mono" data-copy-label>복사</span>
                 </button>
               </div>
 
-              <ul class="pe-social reveal">
+              <ul class="premium-social reveal">
                 <li>
-                  <a class="pe-ulink" href={site.links.github} target="_blank" rel="noopener noreferrer">
+                  <a class="premium-ulink" href={site.links.github} target="_blank" rel="noopener noreferrer">
                     GitHub <span aria-hidden="true">↗</span>
                   </a>
                 </li>
                 <li>
-                  <a class="pe-ulink" href={site.links.linkedin} target="_blank" rel="noopener noreferrer">
+                  <a class="premium-ulink" href={site.links.linkedin} target="_blank" rel="noopener noreferrer">
                     LinkedIn <span aria-hidden="true">↗</span>
                   </a>
                 </li>
                 <li>
-                  <a class="pe-ulink" href={site.links.velog} target="_blank" rel="noopener noreferrer">
+                  <a class="premium-ulink" href={site.links.velog} target="_blank" rel="noopener noreferrer">
                     Velog <span aria-hidden="true">↗</span>
                   </a>
                 </li>
@@ -315,17 +315,17 @@ const marquee = stack.flatMap((g) => g.items);
       </section>
     </main>
 
-    <footer class="pe-footer">
-      <div class="pe-shell pe-footer__inner">
-        <span class="pe-mono">© {year} {site.name} · {site.nameKo}</span>
-        <span class="pe-mono pe-footer__dim">Built with Astro</span>
+    <footer class="premium-footer">
+      <div class="premium-shell premium-footer__inner">
+        <span class="premium-mono">© {year} {site.name} · {site.nameKo}</span>
+        <span class="premium-mono premium-footer__dim">Built with Astro</span>
       </div>
     </footer>
   </div>
 </Base>
 
 <style>
-  .pe {
+  .premium {
     --bg: #f2f1ef;
     --bg-2: #eceae5;
     --ink: #141414;
@@ -350,21 +350,21 @@ const marquee = stack.flatMap((g) => g.items);
   }
 
   /* ── scroll-driven background ── */
-  .pe-bg {
+  .premium-bg {
     position: fixed;
     inset: 0;
     z-index: 0;
     pointer-events: none;
     overflow: hidden;
   }
-  .pe-bg__orb {
+  .premium-bg__orb {
     position: absolute;
     border-radius: 50%;
     filter: blur(70px);
     opacity: 0.5;
     will-change: transform;
   }
-  .pe-bg__orb--a {
+  .premium-bg__orb--a {
     width: 46vmax;
     height: 46vmax;
     top: -14vmax;
@@ -372,7 +372,7 @@ const marquee = stack.flatMap((g) => g.items);
     background: radial-gradient(circle at 50% 50%, rgba(31, 77, 102, 0.14), transparent 68%);
     transform: translateY(calc(var(--scroll) * -16vh));
   }
-  .pe-bg__orb--b {
+  .premium-bg__orb--b {
     width: 52vmax;
     height: 52vmax;
     bottom: -20vmax;
@@ -381,7 +381,7 @@ const marquee = stack.flatMap((g) => g.items);
     transform: translateY(calc(var(--scroll) * 22vh));
   }
   /* faint editorial grid that drifts + fades as you scroll */
-  .pe-bg__grid {
+  .premium-bg__grid {
     position: absolute;
     inset: -10% -5%;
     background-image: linear-gradient(rgba(20, 20, 20, 0.04) 1px, transparent 1px),
@@ -391,20 +391,16 @@ const marquee = stack.flatMap((g) => g.items);
     transform: translateY(calc(var(--scroll) * -8vh));
   }
   /* keep all real content above the background */
-  .pe-header,
-  .pe main,
-  .pe-footer,
-  .pe-progress,
-  .pe-sr {
+  .premium-header,
+  .premium main,
+  .premium-footer,
+  .premium-progress,
+  .premium-sr {
     position: relative;
     z-index: 1;
   }
-  .pe-header {
-    z-index: 70;
-  }
-
   /* screen-reader-only live region */
-  .pe-sr {
+  .premium-sr {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -416,13 +412,13 @@ const marquee = stack.flatMap((g) => g.items);
     border: 0;
   }
 
-  .pe-mono {
+  .premium-mono {
     font-family: var(--font-mono);
     font-size: 0.7rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
-  .pe-serif {
+  .premium-serif {
     font-family: var(--font-display);
     font-style: italic;
     font-weight: 400;
@@ -430,7 +426,7 @@ const marquee = stack.flatMap((g) => g.items);
   }
 
   /* ── scroll progress ── */
-  .pe-progress {
+  .premium-progress {
     position: fixed;
     inset: 0 0 auto 0;
     height: 2px;
@@ -438,7 +434,7 @@ const marquee = stack.flatMap((g) => g.items);
     background: transparent;
     pointer-events: none;
   }
-  .pe-progress span {
+  .premium-progress span {
     display: block;
     height: 100%;
     width: 100%;
@@ -448,7 +444,7 @@ const marquee = stack.flatMap((g) => g.items);
   }
 
   /* ── shell ── */
-  .pe-shell {
+  .premium-shell {
     width: 100%;
     max-width: 76rem;
     margin-inline: auto;
@@ -457,7 +453,7 @@ const marquee = stack.flatMap((g) => g.items);
   }
 
   /* ── header ── */
-  .pe-header {
+  .premium-header {
     position: sticky;
     top: 0;
     z-index: 70;
@@ -465,12 +461,12 @@ const marquee = stack.flatMap((g) => g.items);
     transition: background-color 0.4s var(--ease), border-color 0.4s var(--ease),
       backdrop-filter 0.4s var(--ease);
   }
-  .pe-header.is-scrolled {
+  .premium-header.is-scrolled {
     background: rgba(242, 241, 239, 0.82);
     backdrop-filter: blur(10px) saturate(120%);
     border-bottom-color: var(--line);
   }
-  .pe-header__inner {
+  .premium-header__inner {
     max-width: 76rem;
     margin-inline: auto;
     padding: clamp(1rem, 2vw, 1.3rem) clamp(1.25rem, 5vw, 3.5rem);
@@ -479,11 +475,11 @@ const marquee = stack.flatMap((g) => g.items);
     gap: 1.5rem;
     transition: padding 0.4s var(--ease);
   }
-  .pe-header.is-scrolled .pe-header__inner {
+  .premium-header.is-scrolled .premium-header__inner {
     padding-top: 0.7rem;
     padding-bottom: 0.7rem;
   }
-  .pe-brand {
+  .premium-brand {
     display: inline-flex;
     align-items: center;
     gap: 0.6rem;
@@ -493,28 +489,28 @@ const marquee = stack.flatMap((g) => g.items);
     font-weight: 600;
     letter-spacing: -0.01em;
   }
-  .pe-brand__mark {
+  .premium-brand__mark {
     width: 12px;
     height: 12px;
     background: var(--accent);
     transition: transform 0.6s var(--spring), background-color 0.3s var(--ease);
   }
-  .pe-brand:hover .pe-brand__mark {
+  .premium-brand:hover .premium-brand__mark {
     transform: rotate(45deg) scale(1.15);
     background: var(--accent-deep);
   }
-  .pe-brand__ko {
+  .premium-brand__ko {
     color: var(--faint);
     font-size: 0.82rem;
     font-weight: 500;
     font-family: var(--font-sans);
   }
-  .pe-nav {
+  .premium-nav {
     margin-left: auto;
     display: none;
     gap: 0.2rem;
   }
-  .pe-nav__link {
+  .premium-nav__link {
     position: relative;
     padding: 0.4rem 0.7rem;
     font-size: 0.82rem;
@@ -522,7 +518,7 @@ const marquee = stack.flatMap((g) => g.items);
     text-decoration: none;
     transition: color 0.25s var(--ease);
   }
-  .pe-nav__link::after {
+  .premium-nav__link::after {
     content: '';
     position: absolute;
     left: 0.7rem;
@@ -534,20 +530,20 @@ const marquee = stack.flatMap((g) => g.items);
     transform-origin: 0 50%;
     transition: transform 0.35s var(--spring);
   }
-  .pe-nav__link:hover {
+  .premium-nav__link:hover {
     color: var(--ink);
   }
-  .pe-nav__link:hover::after {
+  .premium-nav__link:hover::after {
     transform: scaleX(1);
   }
   @media (min-width: 860px) {
-    .pe-nav {
+    .premium-nav {
       display: inline-flex;
     }
   }
 
   /* ── CTAs ── */
-  .pe-cta {
+  .premium-cta {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
@@ -564,42 +560,42 @@ const marquee = stack.flatMap((g) => g.items);
     transition: transform 0.4s var(--spring), background-color 0.3s var(--ease),
       border-color 0.3s var(--ease), color 0.3s var(--ease), box-shadow 0.3s var(--ease);
   }
-  .pe-cta--ghost {
+  .premium-cta--ghost {
     margin-left: auto;
   }
   @media (min-width: 860px) {
-    .pe-cta--ghost {
+    .premium-cta--ghost {
       margin-left: 0;
     }
   }
-  .pe-cta--ghost:hover {
+  .premium-cta--ghost:hover {
     border-color: var(--ink);
     background: var(--ink);
     color: var(--paper);
   }
-  .pe-cta--solid {
+  .premium-cta--solid {
     background: var(--ink);
     color: var(--paper);
     border-color: var(--ink);
   }
-  .pe-cta--solid:hover {
+  .premium-cta--solid:hover {
     background: var(--accent);
     border-color: var(--accent);
     box-shadow: 0 10px 30px -12px rgba(31, 77, 102, 0.6);
   }
-  .pe-cta--line:hover {
+  .premium-cta--line:hover {
     border-color: var(--ink);
     background: var(--paper);
   }
-  .pe-arrow {
+  .premium-arrow {
     transition: transform 0.4s var(--spring);
   }
-  .pe-cta:hover .pe-arrow {
+  .premium-cta:hover .premium-arrow {
     transform: translateX(4px);
   }
 
   /* ── hero ── */
-  .pe-hero {
+  .premium-hero {
     position: relative;
     padding: clamp(4.5rem, 14vh, 9rem) 0 clamp(3.5rem, 9vh, 6rem);
     min-height: 84vh;
@@ -607,18 +603,18 @@ const marquee = stack.flatMap((g) => g.items);
     flex-direction: column;
     justify-content: center;
   }
-  .pe-hero__grid {
+  .premium-hero__grid {
     display: grid;
     gap: clamp(2rem, 5vw, 4rem);
     grid-template-columns: 1fr;
     align-items: end;
   }
   @media (min-width: 900px) {
-    .pe-hero__grid {
+    .premium-hero__grid {
       grid-template-columns: minmax(0, 1.6fr) minmax(15rem, 0.85fr);
     }
   }
-  .pe-eyebrow {
+  .premium-eyebrow {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -626,10 +622,10 @@ const marquee = stack.flatMap((g) => g.items);
     color: var(--accent);
     margin-bottom: clamp(1.4rem, 3vw, 2.2rem);
   }
-  .pe-eyebrow__loc {
+  .premium-eyebrow__loc {
     color: var(--faint);
   }
-  .pe-hero__title {
+  .premium-hero__title {
     font-family: var(--font-grotesk);
     font-weight: 500;
     line-height: 0.96;
@@ -638,50 +634,50 @@ const marquee = stack.flatMap((g) => g.items);
     margin: 0;
     color: var(--ink);
   }
-  .pe-line {
+  .premium-line {
     display: block;
   }
-  .pe-line--accent {
+  .premium-line--accent {
     color: var(--accent);
   }
-  .pe-hero__cta {
+  .premium-hero__cta {
     display: flex;
     flex-wrap: wrap;
     gap: 0.8rem;
     margin-top: clamp(2rem, 4vw, 3rem);
   }
-  .pe-hero__aside {
+  .premium-hero__aside {
     position: relative;
     padding-top: 0.4rem;
   }
-  .pe-aside__rule {
+  .premium-aside__rule {
     display: block;
     width: 2.6rem;
     height: 2px;
     background: var(--accent);
     margin-bottom: 1.3rem;
   }
-  .pe-hero__tagline {
+  .premium-hero__tagline {
     font-size: clamp(1rem, 1.5vw, 1.12rem);
     line-height: 1.62;
     color: var(--ink-soft);
     margin: 0 0 0.9rem;
     max-width: 26rem;
   }
-  .pe-hero__tagline--en {
+  .premium-hero__tagline--en {
     text-transform: none;
     letter-spacing: 0;
     font-size: 0.82rem;
     line-height: 1.55;
     color: var(--muted);
   }
-  .pe-hero__name-ko {
+  .premium-hero__name-ko {
     margin: 1.4rem 0 0;
     color: var(--faint);
     text-transform: none;
     letter-spacing: 0.04em;
   }
-  .pe-scrollcue {
+  .premium-scrollcue {
     margin-top: clamp(2.5rem, 6vh, 4rem);
     display: inline-flex;
     align-items: center;
@@ -689,22 +685,22 @@ const marquee = stack.flatMap((g) => g.items);
     color: var(--faint);
     padding-inline: clamp(1.25rem, 5vw, 3.5rem);
   }
-  .pe-scrollcue__line {
+  .premium-scrollcue__line {
     width: 38px;
     height: 1px;
     background: var(--faint);
     position: relative;
     overflow: hidden;
   }
-  .pe-scrollcue__line::after {
+  .premium-scrollcue__line::after {
     content: '';
     position: absolute;
     inset: 0;
     width: 16px;
     background: var(--accent);
-    animation: pe-slide 2.2s var(--ease) infinite;
+    animation: premium-slide 2.2s var(--ease) infinite;
   }
-  @keyframes pe-slide {
+  @keyframes premium-slide {
     from {
       transform: translateX(-16px);
     }
@@ -714,40 +710,40 @@ const marquee = stack.flatMap((g) => g.items);
   }
 
   /* ── sections ── */
-  .pe-section {
+  .premium-section {
     position: relative;
     padding: clamp(3.5rem, 9vh, 7rem) 0;
   }
-  .pe-section--top {
+  .premium-section--top {
     border-top: 1px solid var(--line);
   }
-  .pe-section--muted {
+  .premium-section--muted {
     background: var(--bg-2);
     border-top: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
   }
-  .pe-sechead {
+  .premium-sechead {
     margin-bottom: 2.4rem;
   }
-  .pe-sechead--row {
+  .premium-sechead--row {
     display: grid;
     gap: 0.7rem 2rem;
     grid-template-columns: 1fr;
     align-items: baseline;
   }
   @media (min-width: 760px) {
-    .pe-sechead--row {
+    .premium-sechead--row {
       grid-template-columns: 11rem 1fr;
       align-items: start;
     }
   }
-  .pe-label {
+  .premium-label {
     display: inline-block;
     color: var(--accent);
     position: relative;
     padding-left: 1.1rem;
   }
-  .pe-label::before {
+  .premium-label::before {
     content: '';
     position: absolute;
     left: 0;
@@ -756,7 +752,7 @@ const marquee = stack.flatMap((g) => g.items);
     height: 0.55rem;
     background: var(--accent);
   }
-  .pe-sectitle {
+  .premium-sectitle {
     font-family: var(--font-grotesk);
     font-weight: 500;
     letter-spacing: -0.03em;
@@ -765,22 +761,22 @@ const marquee = stack.flatMap((g) => g.items);
     margin: 0;
     color: var(--ink);
   }
-  .pe-sectitle--sm {
+  .premium-sectitle--sm {
     font-size: clamp(2rem, 5vw, 3.2rem);
   }
 
   /* ── about ── */
-  .pe-about__grid {
+  .premium-about__grid {
     display: grid;
     gap: 0.8rem 2rem;
     grid-template-columns: 1fr;
   }
   @media (min-width: 860px) {
-    .pe-about__grid {
+    .premium-about__grid {
       grid-template-columns: 11rem 1fr;
     }
   }
-  .pe-lead {
+  .premium-lead {
     font-family: var(--font-grotesk);
     font-weight: 400;
     font-size: clamp(1.5rem, 3.4vw, 2.4rem);
@@ -790,7 +786,7 @@ const marquee = stack.flatMap((g) => g.items);
     color: var(--ink);
     max-width: 32ch;
   }
-  .pe-stats {
+  .premium-stats {
     list-style: none;
     margin: 0 0 clamp(2rem, 4vw, 3rem);
     padding: 0;
@@ -800,11 +796,11 @@ const marquee = stack.flatMap((g) => g.items);
     border-left: 1px solid var(--line);
   }
   @media (max-width: 560px) {
-    .pe-stats {
+    .premium-stats {
       grid-template-columns: 1fr;
     }
   }
-  .pe-stat {
+  .premium-stat {
     padding: 1.3rem 1.2rem;
     border-right: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
@@ -812,7 +808,7 @@ const marquee = stack.flatMap((g) => g.items);
     flex-direction: column;
     gap: 0.4rem;
   }
-  .pe-stat__num {
+  .premium-stat__num {
     font-family: var(--font-grotesk);
     font-size: clamp(1.9rem, 5vw, 2.8rem);
     font-weight: 500;
@@ -820,17 +816,17 @@ const marquee = stack.flatMap((g) => g.items);
     line-height: 1;
     color: var(--accent);
   }
-  .pe-stat__label {
+  .premium-stat__label {
     color: var(--muted);
   }
-  .pe-highlights {
+  .premium-highlights {
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
     gap: 0;
   }
-  .pe-hl {
+  .premium-hl {
     display: flex;
     gap: 1rem;
     align-items: baseline;
@@ -838,45 +834,45 @@ const marquee = stack.flatMap((g) => g.items);
     border-top: 1px solid var(--line-soft);
     transition: padding-left 0.4s var(--spring);
   }
-  .pe-hl:last-child {
+  .premium-hl:last-child {
     border-bottom: 1px solid var(--line-soft);
   }
-  .pe-hl:hover {
+  .premium-hl:hover {
     padding-left: 0.6rem;
   }
-  .pe-hl__bul {
+  .premium-hl__bul {
     color: var(--accent);
     flex-shrink: 0;
     font-size: 0.8rem;
     transition: transform 0.4s var(--spring);
   }
-  .pe-hl:hover .pe-hl__bul {
+  .premium-hl:hover .premium-hl__bul {
     transform: translateX(3px);
   }
-  .pe-hl__text {
+  .premium-hl__text {
     color: var(--ink-soft);
     line-height: 1.55;
     font-size: clamp(0.95rem, 1.4vw, 1.05rem);
   }
 
   /* ── marquee ── */
-  .pe-marquee {
+  .premium-marquee {
     border-top: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
     padding: clamp(0.9rem, 2vw, 1.3rem) 0;
     overflow: hidden;
     background: var(--bg);
   }
-  .pe-marquee__track {
+  .premium-marquee__track {
     display: inline-flex;
     white-space: nowrap;
     will-change: transform;
-    animation: pe-marquee 60s linear infinite;
+    animation: premium-marquee 60s linear infinite;
   }
-  .pe-marquee:hover .pe-marquee__track {
+  .premium-marquee:hover .premium-marquee__track {
     animation-play-state: paused;
   }
-  @keyframes pe-marquee {
+  @keyframes premium-marquee {
     from {
       transform: translateX(0);
     }
@@ -884,7 +880,7 @@ const marquee = stack.flatMap((g) => g.items);
       transform: translateX(-50%);
     }
   }
-  .pe-marquee__item {
+  .premium-marquee__item {
     display: inline-flex;
     align-items: center;
     gap: 1.6rem;
@@ -895,17 +891,17 @@ const marquee = stack.flatMap((g) => g.items);
     color: var(--ink);
     padding-inline: 0.8rem;
   }
-  .pe-marquee__sep {
+  .premium-marquee__sep {
     color: var(--accent);
     font-family: var(--font-mono);
     font-size: 0.9em;
   }
 
   /* ── stack ── */
-  .pe-stack {
+  .premium-stack {
     border-top: 1px solid var(--line);
   }
-  .pe-stack__row {
+  .premium-stack__row {
     display: grid;
     gap: 0.8rem 2rem;
     grid-template-columns: 1fr;
@@ -914,27 +910,27 @@ const marquee = stack.flatMap((g) => g.items);
     transition: background-color 0.3s var(--ease);
   }
   @media (min-width: 760px) {
-    .pe-stack__row {
+    .premium-stack__row {
       grid-template-columns: 13rem 1fr;
       align-items: start;
     }
   }
-  .pe-stack__row:hover {
+  .premium-stack__row:hover {
     background: linear-gradient(90deg, rgba(31, 77, 102, 0.04), transparent 70%);
   }
-  .pe-stack__cat {
+  .premium-stack__cat {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
     gap: 0.7rem;
   }
   @media (min-width: 760px) {
-    .pe-stack__cat {
+    .premium-stack__cat {
       justify-content: flex-start;
       gap: 0.9rem;
     }
   }
-  .pe-stack__catname {
+  .premium-stack__catname {
     font-family: var(--font-grotesk);
     font-size: 1.05rem;
     font-weight: 500;
@@ -942,10 +938,10 @@ const marquee = stack.flatMap((g) => g.items);
     margin: 0;
     color: var(--ink);
   }
-  .pe-stack__count {
+  .premium-stack__count {
     color: var(--faint);
   }
-  .pe-chips {
+  .premium-chips {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -953,7 +949,7 @@ const marquee = stack.flatMap((g) => g.items);
     flex-wrap: wrap;
     gap: 0.45rem;
   }
-  .pe-chip {
+  .premium-chip {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
@@ -965,54 +961,57 @@ const marquee = stack.flatMap((g) => g.items);
     padding: 0.32rem 0.62rem;
     border: 1px solid var(--line);
     border-bottom: 2px solid var(--brand, var(--accent));
-    border-radius: 3px;
+    border-radius: 0;
     background: var(--paper);
+    /* 양각(raised) 입체감: 윗면 하이라이트 + 바닥 그림자 */
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 1px 2px rgba(20, 20, 20, 0.07);
     transition: border-color 0.22s var(--ease), background-color 0.22s var(--ease),
       box-shadow 0.22s var(--ease), transform 0.35s var(--spring);
   }
-  .pe-chip__logo {
+  .premium-chip__logo {
     display: block;
     flex-shrink: 0;
     width: 16px;
     height: 16px;
     object-fit: contain;
   }
-  .pe-chip__name {
+  .premium-chip__name {
     line-height: 1;
   }
-  .pe-chip:hover {
+  .premium-chip:hover {
     transform: translateY(-2px);
     /* brand-tinted lift; inline style already provides --brand background/border */
-    box-shadow: 0 6px 18px -10px var(--brand, var(--accent));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      0 6px 18px -10px var(--brand, var(--accent));
   }
 
   /* ── learning ── */
-  .pe-learn {
+  .premium-learn {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     border-top: 1px solid var(--line);
     border-left: 1px solid var(--line);
   }
   @media (min-width: 760px) {
-    .pe-learn {
+    .premium-learn {
       grid-template-columns: repeat(3, 1fr);
     }
   }
-  .pe-learn__col {
+  .premium-learn__col {
     padding: 1.3rem 1.4rem;
     border-right: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
     background: transparent;
     transition: background-color 0.3s var(--ease);
   }
-  .pe-learn__col:hover {
+  .premium-learn__col:hover {
     background: var(--paper);
   }
-  .pe-learn__cat {
+  .premium-learn__cat {
     color: var(--accent);
     margin: 0 0 0.9rem;
   }
-  .pe-learn__items {
+  .premium-learn__items {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -1020,7 +1019,7 @@ const marquee = stack.flatMap((g) => g.items);
     flex-wrap: wrap;
     gap: 0.45rem;
   }
-  .pe-learn__badge {
+  .premium-learn__badge {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
@@ -1031,29 +1030,32 @@ const marquee = stack.flatMap((g) => g.items);
     color: var(--ink);
     padding: 0.3rem 0.58rem;
     border: 1px solid var(--line);
-    border-left: 2px solid var(--brand, var(--accent));
-    border-radius: 3px;
+    border-bottom: 2px solid var(--brand, var(--accent));
+    border-radius: 0;
     background: var(--paper);
+    /* 양각(raised) 입체감: 윗면 하이라이트 + 바닥 그림자 — chip과 동일 */
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 1px 2px rgba(20, 20, 20, 0.07);
     transition: border-color 0.22s var(--ease), background-color 0.22s var(--ease),
       box-shadow 0.22s var(--ease), transform 0.35s var(--spring);
   }
-  .pe-learn__badge:hover {
+  .premium-learn__badge:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 18px -10px var(--brand, var(--accent));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      0 6px 18px -10px var(--brand, var(--accent));
   }
 
   /* ── contact ── */
-  .pe-contact__grid {
+  .premium-contact__grid {
     display: grid;
     gap: 0.8rem 2rem;
     grid-template-columns: 1fr;
   }
   @media (min-width: 860px) {
-    .pe-contact__grid {
+    .premium-contact__grid {
       grid-template-columns: 11rem 1fr;
     }
   }
-  .pe-contact__title {
+  .premium-contact__title {
     font-family: var(--font-grotesk);
     font-weight: 500;
     letter-spacing: -0.025em;
@@ -1062,13 +1064,13 @@ const marquee = stack.flatMap((g) => g.items);
     margin: 0 0 2rem;
     color: var(--ink);
   }
-  .pe-mailrow {
+  .premium-mailrow {
     display: flex;
     flex-wrap: wrap;
     gap: 0.8rem;
     align-items: center;
   }
-  .pe-mail {
+  .premium-mail {
     display: inline-flex;
     align-items: center;
     gap: 0.9rem;
@@ -1080,20 +1082,20 @@ const marquee = stack.flatMap((g) => g.items);
     cursor: pointer;
     transition: border-color 0.3s var(--ease), background-color 0.3s var(--ease);
   }
-  .pe-mail:hover {
+  .premium-mail:hover {
     border-color: var(--accent);
   }
-  .pe-mail__addr {
+  .premium-mail__addr {
     text-transform: none;
     letter-spacing: 0;
     font-size: 0.82rem;
   }
-  .pe-mail__hint {
+  .premium-mail__hint {
     color: var(--accent);
     border-left: 1px solid var(--line);
     padding-left: 0.9rem;
   }
-  .pe-social {
+  .premium-social {
     list-style: none;
     margin: 2.4rem 0 0;
     padding: 1.6rem 0 0;
@@ -1102,14 +1104,14 @@ const marquee = stack.flatMap((g) => g.items);
     flex-wrap: wrap;
     gap: 1.8rem;
   }
-  .pe-ulink {
+  .premium-ulink {
     color: var(--ink-soft);
     text-decoration: none;
     font-size: 0.9rem;
     position: relative;
     transition: color 0.25s var(--ease);
   }
-  .pe-ulink::after {
+  .premium-ulink::after {
     content: '';
     position: absolute;
     left: 0;
@@ -1121,49 +1123,49 @@ const marquee = stack.flatMap((g) => g.items);
     transform-origin: 0 50%;
     transition: transform 0.35s var(--spring);
   }
-  .pe-ulink:hover {
+  .premium-ulink:hover {
     color: var(--accent);
   }
-  .pe-ulink:hover::after {
+  .premium-ulink:hover::after {
     transform: scaleX(1);
   }
 
   /* ── footer ── */
-  .pe-footer {
+  .premium-footer {
     border-top: 1px solid var(--line);
     padding: 2.2rem 0;
   }
-  .pe-footer__inner {
+  .premium-footer__inner {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 0.8rem;
     color: var(--faint);
   }
-  .pe-footer__dim {
+  .premium-footer__dim {
     color: var(--faint);
   }
 
   /* ── focus visibility ── */
-  .pe a:focus-visible,
-  .pe button:focus-visible {
+  .premium a:focus-visible,
+  .premium button:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 3px;
     border-radius: 3px;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .pe-marquee__track,
-    .pe-scrollcue__line::after {
+    .premium-marquee__track,
+    .premium-scrollcue__line::after {
       animation: none !important;
     }
     /* freeze scroll-driven background */
-    .pe-bg__orb--a,
-    .pe-bg__orb--b,
-    .pe-bg__grid {
+    .premium-bg__orb--a,
+    .premium-bg__orb--b,
+    .premium-bg__grid {
       transform: none !important;
     }
-    .pe-bg__grid {
+    .premium-bg__grid {
       opacity: 0.35 !important;
     }
   }
@@ -1171,83 +1173,90 @@ const marquee = stack.flatMap((g) => g.items);
 
 <script>
   (() => {
-    const root = document.querySelector<HTMLElement>('[data-pe]');
+    const root = document.querySelector<HTMLElement>('[data-premium]');
     if (!root) return;
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     // ── graceful fallback: drop any tech logo that fails to load ──
     root.querySelectorAll<HTMLImageElement>('img[data-techlogo]').forEach((i) =>
       i.addEventListener('error', () => i.remove())
     );
 
-    // ── sticky header condense ──
+    // ── scroll-driven UI (one rAF-gated listener: header + progress + parallax + bg) ──
     const header = root.querySelector<HTMLElement>('[data-header]');
-    if (header) {
-      let ticking = false;
-      const update = () => {
-        header.classList.toggle('is-scrolled', window.scrollY > 12);
-        ticking = false;
-      };
-      window.addEventListener(
-        'scroll',
-        () => {
-          if (!ticking) {
-            window.requestAnimationFrame(update);
-            ticking = true;
-          }
-        },
-        { passive: true }
-      );
-      update();
-    }
-
-    // ── scroll progress + hero parallax + scroll-driven background ──
     const bar = root.querySelector<HTMLElement>('[data-progress]');
-    const heroTitle = root.querySelector<HTMLElement>('.pe-hero__title');
-    if ((bar || heroTitle) && !reduce) {
+    const heroTitle = root.querySelector<HTMLElement>('.premium-hero__title');
+    const animateScroll = !prefersReducedMotion && !!(bar || heroTitle);
+    if (header || animateScroll) {
+      // cached scroll range — recomputed on resize, not on every scroll frame
+      let maxScroll = 0;
+      const measureMaxScroll = () => {
+        maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      };
       let ticking = false;
       const update = () => {
-        const max = document.documentElement.scrollHeight - window.innerHeight;
-        const p = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
-        // drive the editorial background via a CSS variable
-        root.style.setProperty('--scroll', p.toFixed(4));
-        if (bar) {
-          bar.style.transform = `scaleX(${p})`;
-        }
-        if (heroTitle) {
-          const y = Math.min(window.scrollY, 600);
-          heroTitle.style.transform = `translateY(${y * 0.08}px)`;
-        }
         ticking = false;
-      };
-      window.addEventListener(
-        'scroll',
-        () => {
-          if (!ticking) {
-            window.requestAnimationFrame(update);
-            ticking = true;
+        const y = window.scrollY;
+        if (header) header.classList.toggle('is-scrolled', y > 12);
+        if (animateScroll) {
+          const p = maxScroll > 0 ? Math.min(y / maxScroll, 1) : 0;
+          // drive the editorial background via a CSS variable
+          root.style.setProperty('--scroll', p.toFixed(4));
+          if (bar) bar.style.transform = `scaleX(${p})`;
+          if (heroTitle) {
+            const offset = Math.min(y, 600);
+            heroTitle.style.transform = `translateY(${offset * 0.08}px)`;
           }
+        }
+      };
+      const requestUpdate = () => {
+        if (!ticking) {
+          ticking = true;
+          window.requestAnimationFrame(update);
+        }
+      };
+      window.addEventListener('scroll', requestUpdate, { passive: true });
+      window.addEventListener(
+        'resize',
+        () => {
+          measureMaxScroll();
+          requestUpdate();
         },
         { passive: true }
       );
+      measureMaxScroll();
       update();
     }
 
     // ── magnetic CTAs ──
-    if (!reduce) {
+    if (!prefersReducedMotion) {
       const mags = root.querySelectorAll<HTMLElement>('[data-magnetic]');
       mags.forEach((el) => {
         const inner = el.querySelector<HTMLElement>('[data-magnetic-inner]');
         const strength = 0.3;
-        el.addEventListener('pointermove', (e) => {
+        // rAF-gate pointer tracking: one layout read + style write per frame
+        let frame = 0;
+        let pointerX = 0;
+        let pointerY = 0;
+        const apply = () => {
+          frame = 0;
           const r = el.getBoundingClientRect();
-          const x = e.clientX - r.left - r.width / 2;
-          const y = e.clientY - r.top - r.height / 2;
+          const x = pointerX - r.left - r.width / 2;
+          const y = pointerY - r.top - r.height / 2;
           el.style.transform = `translate(${x * strength}px, ${y * strength}px)`;
           if (inner)
             inner.style.transform = `translate(${x * strength * 0.4}px, ${y * strength * 0.4}px)`;
+        };
+        el.addEventListener('pointermove', (e) => {
+          pointerX = e.clientX;
+          pointerY = e.clientY;
+          if (!frame) frame = requestAnimationFrame(apply);
         });
         const reset = () => {
+          if (frame) {
+            cancelAnimationFrame(frame);
+            frame = 0;
+          }
           el.style.transform = '';
           if (inner) inner.style.transform = '';
         };
@@ -1261,8 +1270,7 @@ const marquee = stack.flatMap((g) => g.items);
     if (counters.length) {
       const run = (el: HTMLElement) => {
         const target = Number(el.getAttribute('data-count')) || 0;
-        const raw = el.getAttribute('data-raw') === '1';
-        if (reduce) {
+        if (prefersReducedMotion) {
           el.textContent = String(target);
           return;
         }
@@ -1272,7 +1280,7 @@ const marquee = stack.flatMap((g) => g.items);
           const t = Math.min((now - start) / dur, 1);
           const eased = 1 - Math.pow(1 - t, 3);
           const val = Math.round(target * eased);
-          el.textContent = raw ? String(val) : String(val);
+          el.textContent = String(val);
           if (t < 1) requestAnimationFrame(tick);
         };
         requestAnimationFrame(tick);
@@ -1292,7 +1300,7 @@ const marquee = stack.flatMap((g) => g.items);
     }
 
     // ── email copy ──
-    const EMAIL = 'sihoon.cho.business@gmail.com';
+    const email = 'sihoon.cho.business@gmail.com';
     const copyBtn = root.querySelector<HTMLButtonElement>('[data-copy]');
     const feedback = root.querySelector<HTMLElement>('[data-copy-feedback]');
     const copyLabel = root.querySelector<HTMLElement>('[data-copy-label]');
@@ -1307,10 +1315,10 @@ const marquee = stack.flatMap((g) => g.items);
           if (feedback) feedback.textContent = '';
         }, 2000);
       };
-      const fallback = () => {
+      const fallbackCopy = () => {
         try {
           const ta = document.createElement('textarea');
-          ta.value = EMAIL;
+          ta.value = email;
           ta.setAttribute('readonly', '');
           ta.style.position = 'absolute';
           ta.style.left = '-9999px';
@@ -1326,13 +1334,13 @@ const marquee = stack.flatMap((g) => g.items);
       copyBtn.addEventListener('click', async () => {
         try {
           if (navigator.clipboard && window.isSecureContext) {
-            await navigator.clipboard.writeText(EMAIL);
+            await navigator.clipboard.writeText(email);
             show('복사되었습니다!');
           } else {
-            fallback();
+            fallbackCopy();
           }
         } catch {
-          fallback();
+          fallbackCopy();
         }
       });
     }

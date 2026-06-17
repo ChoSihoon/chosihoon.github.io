@@ -10,105 +10,105 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
 ---
 
 <Base title="Sihoon Cho — Deep Space">
-  <div class="ds" data-ds>
+  <div class="deepspace" data-deepspace>
     <!-- ── Fixed header / navbar ───────────────────────────────── -->
-    <header class="ds-header" data-header>
-      <a class="ds-brand" href="#top" data-nav data-station-target="0" aria-label={`${site.name} — top`}>
-        <span class="ds-brand__mark" aria-hidden="true">
+    <header class="deepspace-header" data-header>
+      <a class="deepspace-brand" href="#top" data-nav data-station-target="0" aria-label={`${site.name} — top`}>
+        <span class="deepspace-brand__mark" aria-hidden="true">
           <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
             <!-- outer orbital ring -->
-            <circle class="ds-mark__ring" cx="22" cy="22" r="19" />
+            <circle class="deepspace-mark__ring" cx="22" cy="22" r="19" />
             <!-- inner reticle ring -->
-            <circle class="ds-mark__inner" cx="22" cy="22" r="11.5" />
+            <circle class="deepspace-mark__inner" cx="22" cy="22" r="11.5" />
             <!-- orbiting node + faint orbit path -->
-            <ellipse class="ds-mark__orbit" cx="22" cy="22" rx="19" ry="7.4" />
-            <circle class="ds-mark__node" cx="41" cy="22" r="2.1" />
+            <ellipse class="deepspace-mark__orbit" cx="22" cy="22" rx="19" ry="7.4" />
+            <circle class="deepspace-mark__node" cx="41" cy="22" r="2.1" />
             <!-- reticle ticks -->
-            <path class="ds-mark__tick" d="M22 1.5V7 M22 37V42.5 M1.5 22H7 M37 22H42.5" />
+            <path class="deepspace-mark__tick" d="M22 1.5V7 M22 37V42.5 M1.5 22H7 M37 22H42.5" />
             <!-- hex sigil core -->
-            <path class="ds-mark__hex" d="M22 14.5l6.5 3.75v7.5L22 29.5l-6.5-3.75v-7.5L22 14.5z" />
-            <circle class="ds-mark__core" cx="22" cy="22" r="2.4" />
+            <path class="deepspace-mark__hex" d="M22 14.5l6.5 3.75v7.5L22 29.5l-6.5-3.75v-7.5L22 14.5z" />
+            <circle class="deepspace-mark__core" cx="22" cy="22" r="2.4" />
           </svg>
         </span>
-        <span class="ds-brand__word">
-          <span class="ds-brand__name">{site.name}</span>
-          <span class="ds-brand__tag" aria-hidden="true">CSH&middot;01 // v2.6</span>
+        <span class="deepspace-brand__word">
+          <span class="deepspace-brand__name">{site.name}</span>
+          <span class="deepspace-brand__tag" aria-hidden="true">CSH&middot;01 // v2.6</span>
         </span>
       </a>
-      <nav class="ds-nav" aria-label="Sections">
-        <a class="ds-nav__link" href="#about" data-nav data-station-target="1">About</a>
-        <a class="ds-nav__link" href="#stack" data-nav data-station-target="2">Stack</a>
-        <a class="ds-nav__link" href="#learning" data-nav data-station-target="3">Learning</a>
-        <a class="ds-nav__link" href="#contact" data-nav data-station-target="4">Contact</a>
+      <nav class="deepspace-nav" aria-label="Sections">
+        <a class="deepspace-nav__link" href="#about" data-nav data-station-target="1">About</a>
+        <a class="deepspace-nav__link" href="#stack" data-nav data-station-target="2">Stack</a>
+        <a class="deepspace-nav__link" href="#learning" data-nav data-station-target="3">Learning</a>
+        <a class="deepspace-nav__link" href="#contact" data-nav data-station-target="4">Contact</a>
       </nav>
-      <span class="ds-header__spacer" aria-hidden="true"></span>
+      <span class="deepspace-header__spacer" aria-hidden="true"></span>
     </header>
 
     <!-- ── Fixed cosmic background ─────────────────────────────── -->
-    <div class="ds-cosmos" aria-hidden="true">
-      <div class="ds-nebula ds-nebula--a"></div>
-      <div class="ds-nebula ds-nebula--b"></div>
-      <div class="ds-nebula ds-nebula--c"></div>
-      <canvas class="ds-canvas" data-canvas></canvas>
-      <div class="ds-vignette"></div>
-      <div class="ds-aberration" data-aberration></div>
+    <div class="deepspace-cosmos" aria-hidden="true">
+      <div class="deepspace-nebula deepspace-nebula--a"></div>
+      <div class="deepspace-nebula deepspace-nebula--b"></div>
+      <div class="deepspace-nebula deepspace-nebula--c"></div>
+      <canvas class="deepspace-canvas" data-canvas></canvas>
+      <div class="deepspace-vignette"></div>
+      <div class="deepspace-aberration" data-aberration></div>
     </div>
 
     <!-- ── Telemetry: SpaceX-webcast-style bottom full-width bar ─── -->
-    <aside class="ds-tel" data-hud aria-hidden="true">
+    <aside class="deepspace-tel" data-hud aria-hidden="true">
       <!-- thin progress line pinned to the very top edge of the bar -->
-      <div class="ds-tel__line" aria-hidden="true">
-        <span class="ds-tel__line-fill" data-progress></span>
+      <div class="deepspace-tel__line" aria-hidden="true">
+        <span class="deepspace-tel__line-fill" data-progress></span>
       </div>
 
-      <div class="ds-tel__row">
+      <div class="deepspace-tel__row">
         <!-- status (far left) -->
-        <div class="ds-tel__group ds-tel__group--status">
-          <span class="ds-tel__val ds-tel__val--status">
-            <span class="ds-tel__led" data-hud-status></span>
+        <div class="deepspace-tel__group deepspace-tel__group--status">
+          <span class="deepspace-tel__val deepspace-tel__val--status">
+            <span class="deepspace-tel__led" data-hud-status></span>
             <b data-hud-state>NOMINAL</b>
           </span>
-          <span class="ds-tel__lab">Status</span>
+          <span class="deepspace-tel__lab">Status</span>
         </div>
 
-        <span class="ds-tel__div ds-tel__div--status" aria-hidden="true"></span>
+        <span class="deepspace-tel__div deepspace-tel__div--status" aria-hidden="true"></span>
 
         <!-- PRIMARY: speed -->
-        <div class="ds-tel__group ds-tel__group--primary">
-          <span class="ds-tel__val"><b data-hud-speed>0</b><i>km/h</i></span>
-          <span class="ds-tel__lab">Speed</span>
+        <div class="deepspace-tel__group deepspace-tel__group--primary">
+          <span class="deepspace-tel__val"><b data-hud-speed>0</b><i>km/h</i></span>
+          <span class="deepspace-tel__lab">Speed</span>
         </div>
 
-        <span class="ds-tel__div" aria-hidden="true"></span>
+        <span class="deepspace-tel__div" aria-hidden="true"></span>
 
         <!-- PRIMARY: distance traveled (우주에는 고도 개념이 없음) -->
-        <div class="ds-tel__group ds-tel__group--primary">
-          <span class="ds-tel__val"><b data-hud-dist>0</b><i>km</i></span>
-          <span class="ds-tel__lab">Distance</span>
+        <div class="deepspace-tel__group deepspace-tel__group--primary">
+          <span class="deepspace-tel__val"><b data-hud-dist>0</b><i>km</i></span>
+          <span class="deepspace-tel__lab">Distance</span>
         </div>
 
-        <span class="ds-tel__div" aria-hidden="true"></span>
+        <span class="deepspace-tel__div" aria-hidden="true"></span>
 
         <!-- secondary: mission elapsed time -->
-        <div class="ds-tel__group">
-          <span class="ds-tel__val"><b data-hud-time>T+00:00</b></span>
-          <span class="ds-tel__lab">Time</span>
+        <div class="deepspace-tel__group">
+          <span class="deepspace-tel__val"><b data-hud-time>T+00:00</b></span>
+          <span class="deepspace-tel__lab">Time</span>
         </div>
 
-        <span class="ds-tel__div ds-tel__div--opt" aria-hidden="true"></span>
+        <span class="deepspace-tel__div deepspace-tel__div--opt" aria-hidden="true"></span>
 
         <!-- secondary: progress % -->
-        <div class="ds-tel__group ds-tel__group--opt">
-          <span class="ds-tel__val"><b data-hud-prog>0.0</b><i>%</i></span>
-          <span class="ds-tel__lab">Progress</span>
+        <div class="deepspace-tel__group deepspace-tel__group--opt">
+          <span class="deepspace-tel__val"><b data-hud-prog>0.0</b><i>%</i></span>
+          <span class="deepspace-tel__lab">Progress</span>
         </div>
 
-        <span class="ds-tel__div ds-tel__div--opt" aria-hidden="true"></span>
+        <span class="deepspace-tel__div deepspace-tel__div--opt" aria-hidden="true"></span>
 
         <!-- secondary: coordinates -->
-        <div class="ds-tel__group ds-tel__group--opt ds-tel__group--coord">
-          <span class="ds-tel__val"><b data-hud-coords>X+000 Y+000 Z+000</b></span>
-          <span class="ds-tel__lab">Coord</span>
+        <div class="deepspace-tel__group deepspace-tel__group--opt deepspace-tel__group--coord">
+          <span class="deepspace-tel__val"><b data-hud-coords>X+000 Y+000 Z+000</b></span>
+          <span class="deepspace-tel__lab">Coord</span>
         </div>
       </div>
     </aside>
@@ -118,82 +118,82 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
     <!-- LEFT: free-floating 3-axis gyro / orientation sphere (no card).
          Deep-space appropriate — a free 3D attitude ball with NO horizon line.
          Matches the right radar's card-less treatment, glow, stroke + labels. -->
-    <div class="ds-gyro" data-instr-left aria-hidden="true">
-      <span class="ds-gyro__label">3-AXIS ATT</span>
-      <div class="ds-gyro__scope">
+    <div class="deepspace-gyro" data-instr-left aria-hidden="true">
+      <span class="deepspace-gyro__label">3-AXIS ATT</span>
+      <div class="deepspace-gyro__scope">
         <!-- fixed outer bezel + bearing ticks (same language as radar rim) -->
-        <span class="ds-gyro__rim"></span>
-        <span class="ds-gyro__ticks"></span>
+        <span class="deepspace-gyro__rim"></span>
+        <span class="deepspace-gyro__ticks"></span>
         <!-- the free-tumbling orientation sphere: yaw spins the meridians,
              pitch tilts the parallels, roll banks the whole gimbal. -->
-        <div class="ds-gyro__sphere" data-gyro-sphere>
-          <span class="ds-gyro__meridians" data-gyro-yaw>
-            <span class="ds-gyro__merid ds-gyro__merid--1"></span>
-            <span class="ds-gyro__merid ds-gyro__merid--2"></span>
-            <span class="ds-gyro__merid ds-gyro__merid--3"></span>
+        <div class="deepspace-gyro__sphere" data-gyro-sphere>
+          <span class="deepspace-gyro__meridians" data-gyro-yaw>
+            <span class="deepspace-gyro__merid deepspace-gyro__merid--1"></span>
+            <span class="deepspace-gyro__merid deepspace-gyro__merid--2"></span>
+            <span class="deepspace-gyro__merid deepspace-gyro__merid--3"></span>
           </span>
-          <span class="ds-gyro__parallels" data-gyro-pitch>
-            <span class="ds-gyro__par ds-gyro__par--eq"></span>
-            <span class="ds-gyro__par ds-gyro__par--n"></span>
-            <span class="ds-gyro__par ds-gyro__par--s"></span>
+          <span class="deepspace-gyro__parallels" data-gyro-pitch>
+            <span class="deepspace-gyro__par deepspace-gyro__par--eq"></span>
+            <span class="deepspace-gyro__par deepspace-gyro__par--n"></span>
+            <span class="deepspace-gyro__par deepspace-gyro__par--s"></span>
           </span>
-          <span class="ds-gyro__pole" data-gyro-pole></span>
+          <span class="deepspace-gyro__pole" data-gyro-pole></span>
         </div>
         <!-- fixed crosshair reticle locked to the airframe -->
-        <span class="ds-gyro__cross ds-gyro__cross--x"></span>
-        <span class="ds-gyro__cross ds-gyro__cross--y"></span>
-        <span class="ds-gyro__fix"></span>
-        <span class="ds-gyro__core"></span>
+        <span class="deepspace-gyro__cross deepspace-gyro__cross--x"></span>
+        <span class="deepspace-gyro__cross deepspace-gyro__cross--y"></span>
+        <span class="deepspace-gyro__fix"></span>
+        <span class="deepspace-gyro__core"></span>
       </div>
-      <span class="ds-gyro__tag">GYRO&middot;STBL // <b data-gyro-r>R+00</b> <b data-gyro-p>P+00</b></span>
+      <span class="deepspace-gyro__tag">GYRO&middot;STBL // <b data-gyro-r>R+00</b> <b data-gyro-p>P+00</b></span>
     </div>
 
     <!-- RIGHT: free-floating cinematic radar (no card) -->
-    <div class="ds-radar" data-instr-right aria-hidden="true">
-      <span class="ds-radar__label ds-radar__label--n">N</span>
-      <div class="ds-radar__scope">
-        <span class="ds-radar__ring ds-radar__ring--1"></span>
-        <span class="ds-radar__ring ds-radar__ring--2"></span>
-        <span class="ds-radar__ring ds-radar__ring--3"></span>
-        <span class="ds-radar__grid"></span>
-        <span class="ds-radar__cross ds-radar__cross--x"></span>
-        <span class="ds-radar__cross ds-radar__cross--y"></span>
-        <span class="ds-radar__ticks"></span>
-        <span class="ds-radar__sweep" data-radar-sweep></span>
-        <span class="ds-radar__blip ds-radar__blip--a"></span>
-        <span class="ds-radar__blip ds-radar__blip--b"></span>
-        <span class="ds-radar__blip ds-radar__blip--c"></span>
-        <span class="ds-radar__core"></span>
+    <div class="deepspace-radar" data-instr-right aria-hidden="true">
+      <span class="deepspace-radar__label deepspace-radar__label--n">N</span>
+      <div class="deepspace-radar__scope">
+        <span class="deepspace-radar__ring deepspace-radar__ring--1"></span>
+        <span class="deepspace-radar__ring deepspace-radar__ring--2"></span>
+        <span class="deepspace-radar__ring deepspace-radar__ring--3"></span>
+        <span class="deepspace-radar__grid"></span>
+        <span class="deepspace-radar__cross deepspace-radar__cross--x"></span>
+        <span class="deepspace-radar__cross deepspace-radar__cross--y"></span>
+        <span class="deepspace-radar__ticks"></span>
+        <span class="deepspace-radar__sweep" data-radar-sweep></span>
+        <span class="deepspace-radar__blip deepspace-radar__blip--a"></span>
+        <span class="deepspace-radar__blip deepspace-radar__blip--b"></span>
+        <span class="deepspace-radar__blip deepspace-radar__blip--c"></span>
+        <span class="deepspace-radar__core"></span>
       </div>
-      <span class="ds-radar__tag">SCAN&middot;RDR // 360&deg;</span>
+      <span class="deepspace-radar__tag">SCAN&middot;RDR // 360&deg;</span>
     </div>
 
     <!-- screen-reader-only copy feedback -->
-    <p class="ds-sr" role="status" aria-live="polite" data-copy-feedback></p>
+    <p class="deepspace-sr" role="status" aria-live="polite" data-copy-feedback></p>
 
     <!-- ── STAGE: fixed viewport that the stations live inside ─── -->
-    <div class="ds-stage" data-stage>
-      <main class="ds-stations" id="top">
+    <div class="deepspace-stage" data-stage>
+      <main class="deepspace-stations" id="top">
         <!-- HERO ───────────────────────────────────────────────── -->
         <section
-          class="ds-station ds-station--hero"
+          class="deepspace-station deepspace-station--hero"
           data-station
           data-index="0"
           aria-label="Intro"
         >
-          <div class="ds-warp" data-warp>
-            <p class="ds-kicker">{site.role}</p>
-            <h1 class="ds-name">
-              <span class="ds-name__en">Software<br />Engineer</span>
+          <div class="deepspace-warp" data-warp>
+            <p class="deepspace-kicker">{site.role}</p>
+            <h1 class="deepspace-name">
+              <span class="deepspace-name__en">Software<br />Engineer</span>
             </h1>
-            <p class="ds-byline">
-              <span class="ds-byline__name">{site.name}</span>
-              <span class="ds-byline__sep" aria-hidden="true">·</span>
-              <span class="ds-byline__ko">{site.nameKo}</span>
+            <p class="deepspace-byline">
+              <span class="deepspace-byline__name">{site.name}</span>
+              <span class="deepspace-byline__sep" aria-hidden="true">·</span>
+              <span class="deepspace-byline__ko">{site.nameKo}</span>
             </p>
-            <p class="ds-tagline" lang="ko">{site.tagline}</p>
-            <p class="ds-tagline ds-tagline--en">{site.taglineEn}</p>
-            <p class="ds-scrollcue" aria-hidden="true">
+            <p class="deepspace-tagline" lang="ko">{site.tagline}</p>
+            <p class="deepspace-tagline deepspace-tagline--en">{site.taglineEn}</p>
+            <p class="deepspace-scrollcue" aria-hidden="true">
               <span>스크롤하여 심우주로</span>
               <em></em>
             </p>
@@ -202,23 +202,23 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
 
         <!-- ABOUT ──────────────────────────────────────────────── -->
         <section
-          class="ds-station"
+          class="deepspace-station"
           id="about"
           data-station
           data-index="1"
           aria-label="About"
         >
-          <div class="ds-warp ds-panel" data-warp>
-            <div class="ds-strip" aria-hidden="true">
-              <span class="ds-strip__led"></span>
-              <span class="ds-strip__chan">// SYS: ABOUT</span>
-              <span class="ds-strip__id">0x2A &middot; CH-02</span>
+          <div class="deepspace-warp deepspace-panel" data-warp>
+            <div class="deepspace-strip" aria-hidden="true">
+              <span class="deepspace-strip__led"></span>
+              <span class="deepspace-strip__chan">// SYS: ABOUT</span>
+              <span class="deepspace-strip__id">0x2A &middot; CH-02</span>
             </div>
-            <p class="ds-label">About</p>
-            <p class="ds-lead" lang="ko">{about.lead}</p>
-            <ul class="ds-highlights">
+            <p class="deepspace-label">About</p>
+            <p class="deepspace-lead" lang="ko">{about.lead}</p>
+            <ul class="deepspace-highlights">
               {about.highlights.map((h) => (
-                <li><span class="ds-dot" aria-hidden="true"></span>{h}</li>
+                <li><span class="deepspace-dot" aria-hidden="true"></span>{h}</li>
               ))}
             </ul>
           </div>
@@ -226,25 +226,25 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
 
         <!-- TECH STACK ─────────────────────────────────────────── -->
         <section
-          class="ds-station"
+          class="deepspace-station"
           id="stack"
           data-station
           data-index="2"
           aria-label="Tech Stack"
         >
-          <div class="ds-warp ds-panel ds-panel--wide" data-warp>
-            <div class="ds-strip" aria-hidden="true">
-              <span class="ds-strip__led"></span>
-              <span class="ds-strip__chan">// SYS: STACK</span>
-              <span class="ds-strip__id">0x3B &middot; CH-03</span>
+          <div class="deepspace-warp deepspace-panel deepspace-panel--wide" data-warp>
+            <div class="deepspace-strip" aria-hidden="true">
+              <span class="deepspace-strip__led"></span>
+              <span class="deepspace-strip__chan">// SYS: STACK</span>
+              <span class="deepspace-strip__id">0x3B &middot; CH-03</span>
             </div>
-            <p class="ds-label">Tech Stack</p>
-            <div class="ds-grid">
+            <p class="deepspace-label">Tech Stack</p>
+            <div class="deepspace-grid">
               {stack.map((g) => (
-                <div class="ds-group">
-                  <h3 class="ds-group__title">{g.category}</h3>
-                  <ul class="ds-tags">
-                    {g.items.map((it) => <li class="ds-tag">{it}</li>)}
+                <div class="deepspace-group">
+                  <h3 class="deepspace-group__title">{g.category}</h3>
+                  <ul class="deepspace-tags">
+                    {g.items.map((it) => <li class="deepspace-tag">{it}</li>)}
                   </ul>
                 </div>
               ))}
@@ -254,25 +254,25 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
 
         <!-- LEARNING ───────────────────────────────────────────── -->
         <section
-          class="ds-station"
+          class="deepspace-station"
           id="learning"
           data-station
           data-index="3"
           aria-label="Learning"
         >
-          <div class="ds-warp ds-panel ds-panel--wide" data-warp>
-            <div class="ds-strip ds-strip--amber" aria-hidden="true">
-              <span class="ds-strip__led"></span>
-              <span class="ds-strip__chan">// SYS: LEARNING</span>
-              <span class="ds-strip__id">0x4C &middot; CH-04</span>
+          <div class="deepspace-warp deepspace-panel deepspace-panel--wide" data-warp>
+            <div class="deepspace-strip deepspace-strip--amber" aria-hidden="true">
+              <span class="deepspace-strip__led"></span>
+              <span class="deepspace-strip__chan">// SYS: LEARNING</span>
+              <span class="deepspace-strip__id">0x4C &middot; CH-04</span>
             </div>
-            <p class="ds-label">Currently Exploring</p>
-            <div class="ds-grid ds-grid--learn">
+            <p class="deepspace-label">Currently Exploring</p>
+            <div class="deepspace-grid deepspace-grid--learn">
               {learning.map((g) => (
-                <div class="ds-group">
-                  <h3 class="ds-group__title">{g.category}</h3>
-                  <ul class="ds-tags">
-                    {g.items.map((it) => <li class="ds-tag ds-tag--ghost">{it}</li>)}
+                <div class="deepspace-group">
+                  <h3 class="deepspace-group__title">{g.category}</h3>
+                  <ul class="deepspace-tags">
+                    {g.items.map((it) => <li class="deepspace-tag deepspace-tag--ghost">{it}</li>)}
                   </ul>
                 </div>
               ))}
@@ -282,35 +282,35 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
 
         <!-- CONTACT ────────────────────────────────────────────── -->
         <section
-          class="ds-station"
+          class="deepspace-station"
           id="contact"
           data-station
           data-index="4"
           aria-label="Contact"
         >
-          <div class="ds-warp ds-panel" data-warp>
-            <div class="ds-strip" aria-hidden="true">
-              <span class="ds-strip__led"></span>
-              <span class="ds-strip__chan">// SYS: CONTACT</span>
-              <span class="ds-strip__id">0x5D &middot; CH-05</span>
+          <div class="deepspace-warp deepspace-panel" data-warp>
+            <div class="deepspace-strip" aria-hidden="true">
+              <span class="deepspace-strip__led"></span>
+              <span class="deepspace-strip__chan">// SYS: CONTACT</span>
+              <span class="deepspace-strip__id">0x5D &middot; CH-05</span>
             </div>
-            <p class="ds-label">Contact</p>
-            <p class="ds-contact-lead" lang="ko">함께 만들 무언가가 있다면 언제든지.</p>
-            <div class="ds-actions">
+            <p class="deepspace-label">Contact</p>
+            <p class="deepspace-contact-lead" lang="ko">함께 만들 무언가가 있다면 언제든지.</p>
+            <div class="deepspace-actions">
               <a
-                class="ds-btn ds-btn--primary"
+                class="deepspace-btn deepspace-btn--primary"
                 href={gmailHref}
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 Gmail로 보내기
               </a>
-              <button class="ds-btn" type="button" data-copy={site.email}>
+              <button class="deepspace-btn" type="button" data-copy={site.email}>
                 <span data-copy-label>이메일 복사</span>
               </button>
             </div>
-            <p class="ds-email" aria-hidden="true">{site.email}</p>
-            <nav class="ds-social" aria-label="Social links">
+            <p class="deepspace-email" aria-hidden="true">{site.email}</p>
+            <nav class="deepspace-social" aria-label="Social links">
               <a href={site.links.github} target="_blank" rel="noopener noreferrer">GitHub</a>
               <a href={site.links.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
               <a href={site.links.velog} target="_blank" rel="noopener noreferrer">Velog</a>
@@ -321,18 +321,18 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
     </div>
 
     <!-- ── Tall scroll track drives everything ─────────────────── -->
-    <div class="ds-track" data-track aria-hidden="true">
-      {stations.map(() => <div class="ds-track__unit"></div>)}
+    <div class="deepspace-track" data-track aria-hidden="true">
+      {stations.map(() => <div class="deepspace-track__unit"></div>)}
     </div>
 
     <!-- ── Footer (static, normal flow at very bottom) ─────────── -->
-    <footer class="ds-footer">
+    <footer class="deepspace-footer">
       <p>© {year} {site.name} · {site.nameKo}</p>
     </footer>
   </div>
 
   <style>
-    .ds {
+    .deepspace {
       --bg: #03040a;
       --ink: #eef1ff;
       --muted: #9aa3c7;
@@ -347,7 +347,7 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
     }
 
     /* ── Cosmic background (fixed, behind all) ───────────────── */
-    .ds-cosmos {
+    .deepspace-cosmos {
       position: fixed;
       inset: 0;
       z-index: 0;
@@ -356,14 +356,14 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
         radial-gradient(120% 90% at 50% 50%, #05071a 0%, #03040a 55%, #010108 100%);
       pointer-events: none;
     }
-    .ds-canvas {
+    .deepspace-canvas {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       display: block;
     }
-    .ds-nebula {
+    .deepspace-nebula {
       position: absolute;
       border-radius: 50%;
       filter: blur(80px);
@@ -371,38 +371,38 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
       mix-blend-mode: screen;
       will-change: transform;
     }
-    .ds-nebula--a {
+    .deepspace-nebula--a {
       width: 60vmax; height: 60vmax;
       top: -18vmax; left: -10vmax;
       background: radial-gradient(circle, rgba(139,125,255,0.55), transparent 65%);
-      animation: ds-drift-a 38s ease-in-out infinite alternate;
+      animation: deepspace-drift-a 38s ease-in-out infinite alternate;
     }
-    .ds-nebula--b {
+    .deepspace-nebula--b {
       width: 55vmax; height: 55vmax;
       bottom: -20vmax; right: -12vmax;
       background: radial-gradient(circle, rgba(90,209,255,0.45), transparent 65%);
-      animation: ds-drift-b 44s ease-in-out infinite alternate;
+      animation: deepspace-drift-b 44s ease-in-out infinite alternate;
     }
-    .ds-nebula--c {
+    .deepspace-nebula--c {
       width: 40vmax; height: 40vmax;
       top: 35%; left: 55%;
       background: radial-gradient(circle, rgba(40,90,150,0.4), transparent 70%);
-      animation: ds-drift-a 52s ease-in-out infinite alternate-reverse;
+      animation: deepspace-drift-a 52s ease-in-out infinite alternate-reverse;
     }
-    @keyframes ds-drift-a {
+    @keyframes deepspace-drift-a {
       from { transform: translate3d(0,0,0) scale(1); }
       to   { transform: translate3d(6vmax,4vmax,0) scale(1.12); }
     }
-    @keyframes ds-drift-b {
+    @keyframes deepspace-drift-b {
       from { transform: translate3d(0,0,0) scale(1.05); }
       to   { transform: translate3d(-5vmax,-6vmax,0) scale(0.95); }
     }
-    .ds-vignette {
+    .deepspace-vignette {
       position: absolute;
       inset: 0;
       background: radial-gradient(120% 100% at 50% 50%, transparent 45%, rgba(0,0,0,0.55) 100%);
     }
-    .ds-aberration {
+    .deepspace-aberration {
       position: absolute;
       inset: 0;
       opacity: 0;
@@ -415,13 +415,13 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
     }
 
     /* ── Header / navbar ─────────────────────────────────────── */
-    .ds-header {
+    .deepspace-header {
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 20;
       /* 3-column grid: brand left · nav centred · spacer right.
          Equal 1fr flanks keep the auto nav column centred, AND the nav is
-         additionally absolute-centred to the viewport (see .ds-nav) so the
+         additionally absolute-centred to the viewport (see .deepspace-nav) so the
          menu is mathematically dead-centre even if brand/spacer widths differ. */
       display: grid;
       grid-template-columns: 1fr auto 1fr;
@@ -433,9 +433,9 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
       -webkit-backdrop-filter: blur(12px) saturate(120%);
       border-bottom: 1px solid rgba(139,125,255,0.16);
     }
-    .ds-brand { justify-self: start; grid-column: 1; }
-    .ds-header__spacer { justify-self: end; grid-column: 3; }
-    .ds-brand {
+    .deepspace-brand { justify-self: start; grid-column: 1; }
+    .deepspace-header__spacer { justify-self: end; grid-column: 3; }
+    .deepspace-brand {
       display: inline-flex;
       align-items: center;
       gap: 0.62rem;
@@ -447,43 +447,43 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
       letter-spacing: 0.01em;
     }
     /* ── Technical mission-insignia mark (orbital ring + hex sigil) ─── */
-    .ds-brand__mark {
+    .deepspace-brand__mark {
       width: 30px; height: 30px;
       flex: none;
       display: block;
       filter: drop-shadow(0 0 4px rgba(90,209,255,0.55))
               drop-shadow(0 0 8px rgba(139,125,255,0.30));
     }
-    .ds-brand__mark svg { width: 100%; height: 100%; display: block; overflow: visible; }
-    .ds-mark__ring,
-    .ds-mark__inner,
-    .ds-mark__hex,
-    .ds-mark__tick { stroke: var(--cyan); fill: none; }
-    .ds-mark__ring { stroke-width: 1; opacity: 0.85; }
-    .ds-mark__inner { stroke: var(--violet); stroke-width: 0.7; opacity: 0.55; }
-    .ds-mark__hex { stroke: var(--cyan); stroke-width: 0.9; opacity: 0.9; }
-    .ds-mark__tick { stroke: var(--cyan); stroke-width: 1; opacity: 0.7; stroke-linecap: round; }
-    .ds-mark__orbit {
+    .deepspace-brand__mark svg { width: 100%; height: 100%; display: block; overflow: visible; }
+    .deepspace-mark__ring,
+    .deepspace-mark__inner,
+    .deepspace-mark__hex,
+    .deepspace-mark__tick { stroke: var(--cyan); fill: none; }
+    .deepspace-mark__ring { stroke-width: 1; opacity: 0.85; }
+    .deepspace-mark__inner { stroke: var(--violet); stroke-width: 0.7; opacity: 0.55; }
+    .deepspace-mark__hex { stroke: var(--cyan); stroke-width: 0.9; opacity: 0.9; }
+    .deepspace-mark__tick { stroke: var(--cyan); stroke-width: 1; opacity: 0.7; stroke-linecap: round; }
+    .deepspace-mark__orbit {
       stroke: var(--violet); fill: none; stroke-width: 0.6;
       opacity: 0.4; transform-origin: 22px 22px;
-      animation: ds-mark-orbit 7s linear infinite;
+      animation: deepspace-mark-orbit 7s linear infinite;
     }
-    .ds-mark__node {
+    .deepspace-mark__node {
       fill: #eaf6ff; transform-origin: 22px 22px;
-      animation: ds-mark-orbit 7s linear infinite;
+      animation: deepspace-mark-orbit 7s linear infinite;
       filter: drop-shadow(0 0 3px var(--cyan));
     }
-    .ds-mark__core {
+    .deepspace-mark__core {
       fill: var(--cyan); opacity: 0.95;
-      animation: ds-mark-core 2.6s ease-in-out infinite;
+      animation: deepspace-mark-core 2.6s ease-in-out infinite;
     }
-    @keyframes ds-mark-orbit { to { transform: rotate(360deg); } }
-    @keyframes ds-mark-core { 0%,100% { opacity: 0.45; } 50% { opacity: 1; } }
-    .ds-brand:hover .ds-brand__mark { filter:
+    @keyframes deepspace-mark-orbit { to { transform: rotate(360deg); } }
+    @keyframes deepspace-mark-core { 0%,100% { opacity: 0.45; } 50% { opacity: 1; } }
+    .deepspace-brand:hover .deepspace-brand__mark { filter:
       drop-shadow(0 0 5px rgba(90,209,255,0.8)) drop-shadow(0 0 12px rgba(139,125,255,0.45)); }
     /* engineered monospace wordmark + callsign tag */
-    .ds-brand__word { display: inline-flex; flex-direction: column; gap: 0.06rem; line-height: 1; }
-    .ds-brand__name {
+    .deepspace-brand__word { display: inline-flex; flex-direction: column; gap: 0.06rem; line-height: 1; }
+    .deepspace-brand__name {
       white-space: nowrap;
       font-family: var(--font-mono);
       font-weight: 600;
@@ -492,7 +492,7 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
       text-transform: uppercase;
       color: #eaf1ff;
     }
-    .ds-brand__tag {
+    .deepspace-brand__tag {
       font-family: var(--font-mono);
       font-size: 0.5rem;
       letter-spacing: 0.2em;
@@ -500,7 +500,7 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
       color: rgba(120,200,245,0.7);
       white-space: nowrap;
     }
-    .ds-nav {
+    .deepspace-nav {
       /* Absolute-centre to the VIEWPORT so the menu is exactly dead-centre
          regardless of the brand's or right side's width. The grid column 2
          still reserves layout space; this lifts the nav onto an absolute
@@ -515,7 +515,7 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
       gap: clamp(0.4rem, 1.6vw, 1.4rem);
       white-space: nowrap;
     }
-    .ds-nav__link {
+    .deepspace-nav__link {
       position: relative;
       text-decoration: none;
       color: var(--muted);
@@ -528,7 +528,7 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
       border-radius: 6px;
       transition: color 0.2s ease;
     }
-    .ds-nav__link::after {
+    .deepspace-nav__link::after {
       content: '';
       position: absolute;
       left: 0.5rem; right: 0.5rem; bottom: 0.15rem;
@@ -538,29 +538,29 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
       transform-origin: left;
       transition: transform 0.25s ease;
     }
-    .ds-nav__link:hover,
-    .ds-nav__link.is-active { color: var(--ink); }
-    .ds-nav__link:hover::after,
-    .ds-nav__link.is-active::after { transform: scaleX(1); }
-    .ds-brand:focus-visible,
-    .ds-nav__link:focus-visible {
+    .deepspace-nav__link:hover,
+    .deepspace-nav__link.is-active { color: var(--ink); }
+    .deepspace-nav__link:hover::after,
+    .deepspace-nav__link.is-active::after { transform: scaleX(1); }
+    .deepspace-brand:focus-visible,
+    .deepspace-nav__link:focus-visible {
       outline: 2px solid var(--cyan);
       outline-offset: 2px;
       color: var(--ink);
     }
     @media (max-width: 560px) {
-      .ds-brand__word { display: none; }
-      .ds-nav__link { font-size: 0.66rem; letter-spacing: 0.08em; padding: 0.4rem 0.3rem; }
-      .ds-nav { gap: clamp(0.2rem, 2.4vw, 0.7rem); }
+      .deepspace-brand__word { display: none; }
+      .deepspace-nav__link { font-size: 0.66rem; letter-spacing: 0.08em; padding: 0.4rem 0.3rem; }
+      .deepspace-nav { gap: clamp(0.2rem, 2.4vw, 0.7rem); }
       /* Nav stays absolute-centred to the viewport; the brand collapses to
          just its mark so it never crowds the centred menu. */
     }
     @media (max-width: 360px) {
-      .ds-nav__link { font-size: 0.6rem; letter-spacing: 0.05em; padding: 0.35rem 0.22rem; }
+      .deepspace-nav__link { font-size: 0.6rem; letter-spacing: 0.05em; padding: 0.35rem 0.22rem; }
     }
 
     /* ── Telemetry: SpaceX-webcast-style bottom full-width bar ──── */
-    .ds-tel {
+    .deepspace-tel {
       --tel-cyan: #6fdcff;
       --tel-line: rgba(120,150,190,0.18);
       --tel-dim: rgba(154,176,210,0.62);
@@ -580,14 +580,14 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
       pointer-events: none;
     }
     /* thin progress line across the very top edge of the bar */
-    .ds-tel__line {
+    .deepspace-tel__line {
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 2px;
       background: rgba(255,255,255,0.06);
       overflow: hidden;
     }
-    .ds-tel__line-fill {
+    .deepspace-tel__line-fill {
       display: block;
       height: 100%;
       width: 0%;
@@ -595,7 +595,7 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
       box-shadow: 0 0 8px rgba(111,220,255,0.6);
       will-change: width;
     }
-    .ds-tel__row {
+    .deepspace-tel__row {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -605,77 +605,77 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
       max-width: 1600px;
       margin: 0 auto;
     }
-    .ds-tel__group {
+    .deepspace-tel__group {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 0.18rem;
       min-width: 0;
     }
-    .ds-tel__val {
+    .deepspace-tel__val {
       display: inline-flex;
       align-items: baseline;
       gap: 0.18rem;
       line-height: 1;
     }
-    .ds-tel__val b {
+    .deepspace-tel__val b {
       font-weight: 600;
       color: #eaf3ff;
       font-variant-numeric: tabular-nums;
       letter-spacing: 0.04em;
       font-size: clamp(0.82rem, 1.5vw, 1.05rem);
     }
-    .ds-tel__val i {
+    .deepspace-tel__val i {
       font-style: normal;
       font-size: 0.58rem;
       letter-spacing: 0.04em;
       color: var(--tel-cyan);
       opacity: 0.85;
     }
-    .ds-tel__lab {
+    .deepspace-tel__lab {
       font-size: 0.52rem;
       letter-spacing: 0.22em;
       text-transform: uppercase;
       color: rgba(154,176,210,0.6);
     }
-    .ds-tel__div {
+    .deepspace-tel__div {
       width: 1px;
       height: 2.1rem;
       flex: none;
       background: linear-gradient(180deg, transparent, var(--tel-line), transparent);
     }
-    .ds-tel__val--status { gap: 0.34rem; }
-    .ds-tel__val--status b {
+    .deepspace-tel__val--status { gap: 0.34rem; }
+    .deepspace-tel__val--status b {
       font-size: clamp(0.7rem, 1.3vw, 0.85rem);
       letter-spacing: 0.16em;
       color: #6fe0a0;
     }
-    .ds-tel__led {
+    .deepspace-tel__led {
       width: 7px; height: 7px;
       flex: none;
       border-radius: 50%;
       background: #54e08a;
       box-shadow: 0 0 8px rgba(84,224,138,0.9);
     }
-    .ds-tel__group--coord .ds-tel__val b { letter-spacing: 0.08em; }
+    .deepspace-tel__group--coord .deepspace-tel__val b { letter-spacing: 0.08em; }
 
     /* ── responsive: drop optional fields, then wrap cleanly ───── */
     @media (max-width: 900px) {
-      .ds-tel__group--opt,
-      .ds-tel__div--opt { display: none; }
+      .deepspace-tel__group--opt,
+      .deepspace-tel__div--opt { display: none; }
     }
     @media (max-width: 560px) {
-      .ds-tel__row { padding: 0 1rem; gap: 0.6rem; }
-      .ds-tel__group--coord,
-      .ds-tel__group--status,
-      .ds-tel__div--status { display: none; }
-      .ds-tel__div { height: 1.7rem; }
-      .ds-tel__lab { font-size: 0.48rem; letter-spacing: 0.16em; }
+      .deepspace-tel__row { padding: 0 1rem; gap: 0.6rem; }
+      .deepspace-tel__group--coord,
+      .deepspace-tel__group--status,
+      .deepspace-tel__div--status { display: none; }
+      .deepspace-tel__div { height: 1.7rem; }
+      .deepspace-tel__lab { font-size: 0.48rem; letter-spacing: 0.16em; }
     }
 
     /* ── Cockpit HUD instrument widgets (decorative ambiance) ───── */
     /* Shared instrument tokens */
-    .ds-gyro, .ds-radar {
+    .deepspace-gyro, .deepspace-radar {
       --instr-line: rgba(120,160,210,0.34);
       --instr-cyan: #6fdcff;
       --instr-amber: #ffc05a;
@@ -691,17 +691,17 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
        Card-less twin of the radar: same corner offset, glow, hairline
        strokes, mono label sizing. A free 3D attitude ball — NO horizon,
        NO ground/sky — so nothing implies altitude. */
-    .ds-gyro {
+    .deepspace-gyro {
       left: clamp(0.6rem, 2.2vw, 1.6rem);
       width: 150px;
       display: flex; flex-direction: column; align-items: center;
       /* NO box / no background — integrated free-floating element */
     }
-    .ds-gyro__label {
+    .deepspace-gyro__label {
       font-size: 0.46rem; letter-spacing: 0.2em; color: rgba(154,176,210,0.7);
       margin-bottom: 0.15rem;
     }
-    .ds-gyro__scope {
+    .deepspace-gyro__scope {
       position: relative;
       width: 150px; height: 150px;
       border-radius: 50%;
@@ -709,14 +709,14 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
       perspective: 320px;          /* gives the rings real 3D depth */
     }
     /* fixed outer bezel ring (matches radar ring--1) */
-    .ds-gyro__rim {
+    .deepspace-gyro__rim {
       position: absolute; inset: 0; border-radius: 50%;
       border: 1px solid rgba(120,160,210,0.26);
       box-shadow: 0 0 10px -2px rgba(90,209,255,0.25),
                   inset 0 0 18px -6px rgba(0,0,0,0.6);
     }
     /* bearing ticks around the rim — identical recipe to the radar's */
-    .ds-gyro__ticks {
+    .deepspace-gyro__ticks {
       position: absolute; inset: 0; border-radius: 50%;
       background:
         repeating-conic-gradient(from 0deg,
@@ -726,100 +726,100 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
     }
     /* the tumbling sphere lives inside the bezel. No mask here — a CSS mask
        would flatten preserve-3d; the rings are kept inside the rim by inset. */
-    .ds-gyro__sphere {
+    .deepspace-gyro__sphere {
       position: absolute; inset: 14%;
       transform-style: preserve-3d;
       transform-origin: 50% 50%;
       will-change: transform;     /* JS banks (roll) the whole gimbal here */
     }
     /* longitude rings — spun by yaw (JS) */
-    .ds-gyro__meridians,
-    .ds-gyro__parallels {
+    .deepspace-gyro__meridians,
+    .deepspace-gyro__parallels {
       position: absolute; inset: 0;
       transform-style: preserve-3d;
       will-change: transform;
     }
     /* base pitch tilt so parallels read as latitude rings (JS overrides) */
-    .ds-gyro__parallels { transform: rotateX(90deg); }
-    .ds-gyro__merid, .ds-gyro__par {
+    .deepspace-gyro__parallels { transform: rotateX(90deg); }
+    .deepspace-gyro__merid, .deepspace-gyro__par {
       position: absolute; inset: 0; border-radius: 50%;
       border: 1px solid rgba(111,220,255,0.34);
       transform-style: preserve-3d;
     }
     /* three longitude rings rotated about Y → a wireframe globe of meridians */
-    .ds-gyro__merid--1 { transform: rotateY(0deg); }
-    .ds-gyro__merid--2 { transform: rotateY(60deg); border-color: rgba(111,220,255,0.22); }
-    .ds-gyro__merid--3 { transform: rotateY(120deg); border-color: rgba(111,220,255,0.22); }
-    /* equator + two parallels. The PARENT (.ds-gyro__parallels) carries the
+    .deepspace-gyro__merid--1 { transform: rotateY(0deg); }
+    .deepspace-gyro__merid--2 { transform: rotateY(60deg); border-color: rgba(111,220,255,0.22); }
+    .deepspace-gyro__merid--3 { transform: rotateY(120deg); border-color: rgba(111,220,255,0.22); }
+    /* equator + two parallels. The PARENT (.deepspace-gyro__parallels) carries the
        rotateX pitch tilt (set by JS); each ring just sits at a different
        latitude (translateZ + scale) within that tilted plane. NO horizon. */
-    .ds-gyro__par--eq {
+    .deepspace-gyro__par--eq {
       border-color: rgba(139,125,255,0.55);
       box-shadow: 0 0 8px -2px rgba(139,125,255,0.5);
     }
-    .ds-gyro__par--n { transform: translateZ(20px) scale(0.7); border-color: rgba(139,125,255,0.28); }
-    .ds-gyro__par--s { transform: translateZ(-20px) scale(0.7); border-color: rgba(139,125,255,0.20); }
+    .deepspace-gyro__par--n { transform: translateZ(20px) scale(0.7); border-color: rgba(139,125,255,0.28); }
+    .deepspace-gyro__par--s { transform: translateZ(-20px) scale(0.7); border-color: rgba(139,125,255,0.20); }
     /* the spin-axis pole marker (free attitude reference, not a horizon) */
-    .ds-gyro__pole {
+    .deepspace-gyro__pole {
       position: absolute; top: 50%; left: 50%; width: 2px; height: 70%;
       transform: translate(-50%, -50%);
       background: linear-gradient(180deg, transparent, var(--instr-cyan), transparent);
       box-shadow: 0 0 6px rgba(111,220,255,0.7);
     }
     /* fixed airframe reticle locked over the tumbling sphere */
-    .ds-gyro__cross { position: absolute; background: rgba(120,160,210,0.30); }
-    .ds-gyro__cross--x { left: 16%; right: 16%; top: 50%; height: 1px; transform: translateY(-50%); }
-    .ds-gyro__cross--y { top: 16%; bottom: 16%; left: 50%; width: 1px; transform: translateX(-50%); }
-    .ds-gyro__fix {
+    .deepspace-gyro__cross { position: absolute; background: rgba(120,160,210,0.30); }
+    .deepspace-gyro__cross--x { left: 16%; right: 16%; top: 50%; height: 1px; transform: translateY(-50%); }
+    .deepspace-gyro__cross--y { top: 16%; bottom: 16%; left: 50%; width: 1px; transform: translateX(-50%); }
+    .deepspace-gyro__fix {
       position: absolute; top: 50%; left: 50%; width: 18px; height: 18px;
       transform: translate(-50%, -50%); border-radius: 50%;
       border: 1px solid rgba(255,192,90,0.65);
       box-shadow: 0 0 7px -1px rgba(255,192,90,0.5);
     }
-    .ds-gyro__core {
+    .deepspace-gyro__core {
       position: absolute; top: 50%; left: 50%; width: 5px; height: 5px;
       transform: translate(-50%, -50%); border-radius: 50%;
       background: var(--instr-amber);
       box-shadow: 0 0 8px rgba(255,192,90,0.9);
     }
-    .ds-gyro__tag {
+    .deepspace-gyro__tag {
       margin-top: 0.3rem; font-size: 0.46rem; letter-spacing: 0.14em;
       color: rgba(120,200,245,0.65); white-space: nowrap;
     }
-    .ds-gyro__tag b {
+    .deepspace-gyro__tag b {
       color: #eaf3ff; font-weight: 600; letter-spacing: 0.04em;
       font-variant-numeric: tabular-nums;
     }
     /* slow idle tumble so the sphere lives even when the user isn't scrolling */
-    .ds-gyro__meridians { animation: ds-gyro-yaw 14s linear infinite; }
-    @keyframes ds-gyro-yaw { to { transform: rotateY(360deg); } }
+    .deepspace-gyro__meridians { animation: deepspace-gyro-yaw 14s linear infinite; }
+    @keyframes deepspace-gyro-yaw { to { transform: rotateY(360deg); } }
 
     /* ── RIGHT: free-floating cinematic radar (no card) ──────────── */
-    .ds-radar {
+    .deepspace-radar {
       right: clamp(0.6rem, 2.2vw, 1.6rem);
       width: 150px;
       display: flex; flex-direction: column; align-items: center;
       /* NO box / no background — integrated free-floating element */
     }
-    .ds-radar__label {
+    .deepspace-radar__label {
       font-size: 0.46rem; letter-spacing: 0.2em; color: rgba(154,176,210,0.7);
       margin-bottom: 0.15rem;
     }
-    .ds-radar__scope {
+    .deepspace-radar__scope {
       position: relative;
       width: 150px; height: 150px;
       border-radius: 50%;
       filter: drop-shadow(0 0 10px rgba(90,209,255,0.22));
     }
-    .ds-radar__ring {
+    .deepspace-radar__ring {
       position: absolute; top: 50%; left: 50%;
       transform: translate(-50%, -50%); border-radius: 50%;
       border: 1px solid rgba(120,160,210,0.26);
     }
-    .ds-radar__ring--1 { width: 100%; height: 100%; box-shadow: 0 0 10px -2px rgba(90,209,255,0.25); }
-    .ds-radar__ring--2 { width: 66%; height: 66%; }
-    .ds-radar__ring--3 { width: 33%; height: 33%; }
-    .ds-radar__grid {
+    .deepspace-radar__ring--1 { width: 100%; height: 100%; box-shadow: 0 0 10px -2px rgba(90,209,255,0.25); }
+    .deepspace-radar__ring--2 { width: 66%; height: 66%; }
+    .deepspace-radar__ring--3 { width: 33%; height: 33%; }
+    .deepspace-radar__grid {
       position: absolute; inset: 0; border-radius: 50%;
       background:
         repeating-conic-gradient(from 0deg, rgba(120,160,210,0.10) 0deg 1deg, transparent 1deg 30deg);
@@ -827,11 +827,11 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
       mask: radial-gradient(closest-side, transparent 30%, #000 32%, #000 100%);
       opacity: 0.6;
     }
-    .ds-radar__cross { position: absolute; background: rgba(120,160,210,0.22); }
-    .ds-radar__cross--x { left: 0; right: 0; top: 50%; height: 1px; transform: translateY(-50%); }
-    .ds-radar__cross--y { top: 0; bottom: 0; left: 50%; width: 1px; transform: translateX(-50%); }
+    .deepspace-radar__cross { position: absolute; background: rgba(120,160,210,0.22); }
+    .deepspace-radar__cross--x { left: 0; right: 0; top: 50%; height: 1px; transform: translateY(-50%); }
+    .deepspace-radar__cross--y { top: 0; bottom: 0; left: 50%; width: 1px; transform: translateX(-50%); }
     /* bearing ticks around the rim */
-    .ds-radar__ticks {
+    .deepspace-radar__ticks {
       position: absolute; inset: 0; border-radius: 50%;
       background:
         repeating-conic-gradient(from 0deg,
@@ -839,7 +839,7 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
       -webkit-mask: radial-gradient(closest-side, transparent 88%, #000 90%, #000 100%);
       mask: radial-gradient(closest-side, transparent 88%, #000 90%, #000 100%);
     }
-    .ds-radar__sweep {
+    .deepspace-radar__sweep {
       position: absolute; inset: 0; border-radius: 50%;
       background: conic-gradient(
         from 0deg,
@@ -850,42 +850,42 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
         transparent 360deg
       );
       transform-origin: 50% 50%;
-      animation: ds-radar-spin 3.6s linear infinite;
+      animation: deepspace-radar-spin 3.6s linear infinite;
       will-change: transform;
       -webkit-mask: radial-gradient(closest-side, #000 0%, #000 100%);
       mask: radial-gradient(closest-side, #000 0%, #000 100%);
     }
-    .ds-radar__core {
+    .deepspace-radar__core {
       position: absolute; top: 50%; left: 50%; width: 5px; height: 5px;
       transform: translate(-50%, -50%); border-radius: 50%;
       background: var(--instr-cyan);
       box-shadow: 0 0 8px rgba(111,220,255,0.9);
     }
-    .ds-radar__blip {
+    .deepspace-radar__blip {
       position: absolute; width: 5px; height: 5px; border-radius: 50%;
       background: var(--instr-cyan);
       box-shadow: 0 0 7px rgba(111,220,255,0.95);
-      animation: ds-radar-blip 3.6s ease-in-out infinite;
+      animation: deepspace-radar-blip 3.6s ease-in-out infinite;
     }
-    .ds-radar__blip--a { top: 28%; left: 64%; animation-delay: -0.5s; }
-    .ds-radar__blip--b { top: 62%; left: 40%; animation-delay: -1.9s; }
-    .ds-radar__blip--c { top: 48%; left: 72%; animation-delay: -3.0s; }
-    .ds-radar__tag {
+    .deepspace-radar__blip--a { top: 28%; left: 64%; animation-delay: -0.5s; }
+    .deepspace-radar__blip--b { top: 62%; left: 40%; animation-delay: -1.9s; }
+    .deepspace-radar__blip--c { top: 48%; left: 72%; animation-delay: -3.0s; }
+    .deepspace-radar__tag {
       margin-top: 0.3rem; font-size: 0.46rem; letter-spacing: 0.16em;
       color: rgba(120,200,245,0.65); white-space: nowrap;
     }
-    @keyframes ds-radar-spin { to { transform: rotate(360deg); } }
-    @keyframes ds-radar-blip {
+    @keyframes deepspace-radar-spin { to { transform: rotate(360deg); } }
+    @keyframes deepspace-radar-blip {
       0%, 20%, 100% { opacity: 0; }
       6% { opacity: 1; }
     }
 
     /* ambiance only → hide on small screens so they never crowd content */
     @media (max-width: 900px) {
-      .ds-gyro, .ds-radar { display: none; }
+      .deepspace-gyro, .deepspace-radar { display: none; }
     }
 
-    .ds-sr {
+    .deepspace-sr {
       position: fixed;
       width: 1px; height: 1px;
       padding: 0; margin: -1px;
@@ -894,7 +894,7 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
     }
 
     /* ── Stage / stations ────────────────────────────────────── */
-    .ds-stage {
+    .deepspace-stage {
       position: fixed;
       /* reserve the bottom telemetry bar height (+ small gap) and the fixed
          header height so centred station content never sits under either. */
@@ -907,8 +907,8 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
       perspective-origin: 50% 50%;
       pointer-events: none;
     }
-    .ds-stations { position: absolute; inset: 0; transform-style: preserve-3d; }
-    .ds-station {
+    .deepspace-stations { position: absolute; inset: 0; transform-style: preserve-3d; }
+    .deepspace-station {
       position: absolute;
       inset: 0;
       display: grid;
@@ -918,7 +918,7 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
       will-change: transform, opacity, filter;
     }
     /* JS hides non-active stations to save paint; default visible for no-JS */
-    .ds-warp {
+    .deepspace-warp {
       width: 100%;
       max-width: 70ch;
       text-align: center;
@@ -928,7 +928,7 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
     }
 
     /* ── Hero typography ─────────────────────────────────────── */
-    .ds-kicker {
+    .deepspace-kicker {
       font-family: var(--font-mono);
       font-size: 0.8rem;
       letter-spacing: 0.32em;
@@ -936,13 +936,13 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
       color: var(--cyan);
       margin-bottom: 1.2rem;
     }
-    .ds-name {
+    .deepspace-name {
       line-height: 0.92;
       margin: 0;
       font-family: var(--font-grotesk);
       font-weight: 600;
     }
-    .ds-name__en {
+    .deepspace-name__en {
       display: block;
       font-size: clamp(2.6rem, 10.5vw, 8rem);
       letter-spacing: -0.02em;
@@ -954,7 +954,7 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
       text-shadow: 0 0 60px rgba(139,125,255,0.25);
     }
     /* identity demoted to a small supporting eyebrow/subline under the title */
-    .ds-byline {
+    .deepspace-byline {
       display: inline-flex;
       align-items: baseline;
       justify-content: center;
@@ -967,27 +967,27 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
       text-transform: uppercase;
       color: var(--muted);
     }
-    .ds-byline__name { color: #d6e2ff; font-weight: 600; }
-    .ds-byline__sep { color: var(--cyan); opacity: 0.7; }
-    .ds-byline__ko {
+    .deepspace-byline__name { color: #d6e2ff; font-weight: 600; }
+    .deepspace-byline__sep { color: var(--cyan); opacity: 0.7; }
+    .deepspace-byline__ko {
       font-family: var(--font-sans);
       letter-spacing: 0.3em;
       padding-left: 0.1em;
     }
-    .ds-tagline {
+    .deepspace-tagline {
       color: var(--ink);
       font-size: clamp(1rem, 2.4vw, 1.35rem);
       margin: 1.8rem auto 0;
       max-width: 46ch;
       line-height: 1.55;
     }
-    .ds-tagline--en {
+    .deepspace-tagline--en {
       color: var(--muted);
       font-size: clamp(0.85rem, 1.6vw, 1rem);
       font-family: var(--font-grotesk);
       margin-top: 0.6rem;
     }
-    .ds-scrollcue {
+    .deepspace-scrollcue {
       margin-top: 2.6rem;
       font-family: var(--font-mono);
       font-size: 0.72rem;
@@ -999,13 +999,13 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
       align-items: center;
       gap: 0.7rem;
     }
-    .ds-scrollcue em {
+    .deepspace-scrollcue em {
       width: 1px;
       height: 38px;
       background: linear-gradient(180deg, var(--cyan), transparent);
-      animation: ds-cue 1.8s ease-in-out infinite;
+      animation: deepspace-cue 1.8s ease-in-out infinite;
     }
-    @keyframes ds-cue {
+    @keyframes deepspace-cue {
       0%, 100% { transform: scaleY(0.3); opacity: 0.4; transform-origin: top; }
       50%      { transform: scaleY(1); opacity: 1; transform-origin: top; }
     }
@@ -1016,7 +1016,7 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
        pseudo-elements + a small SVG-free ::before/::after pair per corner
        via gradients. Background stays extremely subtle so the starfield
        reads through; readability is preserved with comfortable padding. */
-    .ds-panel {
+    .deepspace-panel {
       --alert: var(--cyan);
       position: relative;
       background: linear-gradient(160deg, rgba(22,28,52,0.40), rgba(8,11,24,0.28));
@@ -1030,26 +1030,26 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
       box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.16);
       /* neon border glow — drop-shadow applies AFTER clip-path so it hugs the keyed edge */
       filter: drop-shadow(0 0 3px rgba(120,224,255,0.85)) drop-shadow(0 0 10px rgba(90,209,255,0.5));
-      /* keyed/notched corners — same design language as .ds-btn (longer key) */
+      /* keyed/notched corners — same design language as .deepspace-btn (longer key) */
       clip-path: polygon(28px 0, 100% 0, 100% calc(100% - 28px), calc(100% - 28px) 100%, 0 100%, 0 28px);
     }
     /* incoming-alert "decode/boot" reveal flourish when station activates */
-    .ds-station[style*="visible"] .ds-panel { animation: ds-decode 0.55s ease-out both; }
-    @keyframes ds-decode {
+    .deepspace-station[style*="visible"] .deepspace-panel { animation: deepspace-decode 0.55s ease-out both; }
+    @keyframes deepspace-decode {
       0%   { opacity: 0; }
       100% { opacity: 1; }
     }
     /* thin sweeping border "scan" line across the top edge of the panel */
-    .ds-panel .ds-strip::after {
+    .deepspace-panel .deepspace-strip::after {
       content: '';
       position: absolute;
       left: 0; bottom: -1px; height: 1px;
       width: 38%;
       background: linear-gradient(90deg, transparent, var(--alert), transparent);
       box-shadow: 0 0 6px var(--alert);
-      animation: ds-strip-scan 3.4s ease-in-out infinite;
+      animation: deepspace-strip-scan 3.4s ease-in-out infinite;
     }
-    @keyframes ds-strip-scan {
+    @keyframes deepspace-strip-scan {
       0%   { left: -38%; opacity: 0; }
       20%  { opacity: 1; }
       80%  { opacity: 1; }
@@ -1057,7 +1057,7 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
     }
 
     /* ── System-alert header strip on each station panel ─────────── */
-    .ds-strip {
+    .deepspace-strip {
       --alert: var(--cyan);
       position: relative;
       display: flex;
@@ -1074,70 +1074,30 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
       box-shadow: inset 0 0 0 1px rgba(120,160,210,0.26);
       clip-path: polygon(0 0, 100% 0, 100% 100%, 7px 100%, 0 calc(100% - 7px));
     }
-    .ds-strip--amber { --alert: var(--instr-amber, #ffc05a); }
-    .ds-strip--amber {
+    .deepspace-strip--amber {
+      --alert: var(--instr-amber, #ffc05a);
       color: rgba(255,224,170,0.92);
       background: linear-gradient(90deg, rgba(255,192,90,0.12), rgba(255,192,90,0.02));
     }
-    .ds-strip__led {
+    .deepspace-strip__led {
       width: 7px; height: 7px; flex: none; border-radius: 50%;
       background: var(--alert);
       box-shadow: 0 0 8px var(--alert);
-      animation: ds-strip-led 1.5s ease-in-out infinite;
+      animation: deepspace-strip-led 1.5s ease-in-out infinite;
     }
-    @keyframes ds-strip-led { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
-    .ds-strip__chan { font-weight: 600; color: #eaf3ff; }
-    .ds-strip--amber .ds-strip__chan { color: #fff0d6; }
-    .ds-strip__id {
+    @keyframes deepspace-strip-led { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+    .deepspace-strip__chan { font-weight: 600; color: #eaf3ff; }
+    .deepspace-strip--amber .deepspace-strip__chan { color: #fff0d6; }
+    .deepspace-strip__id {
       margin-left: auto;
       color: rgba(150,180,215,0.7);
       letter-spacing: 0.1em;
     }
     /* pass the alert accent down so the panel glow tints to match the strip */
-    .ds-panel:has(.ds-strip--amber) { --alert: #ffc05a; }
-    /* Corner brackets: two layered conic/linear "ticks" per corner via
-       a single ::before (top corners) and ::after (bottom corners) using
-       repeating frame strokes. Implemented as four absolutely-positioned
-       L marks generated from a shared utility element set below. */
-    .ds-panel::before,
-    .ds-panel::after {
-      content: none;
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      left: 0;
-      top: 0;
-      pointer-events: none;
-      /* draw L-brackets with sharp gradients at each corner */
-      background:
-        /* top-left */
-        linear-gradient(90deg, var(--cyan), var(--cyan)) left 0 top 0 / 18px 1.5px no-repeat,
-        linear-gradient(180deg, var(--cyan), var(--cyan)) left 0 top 0 / 1.5px 18px no-repeat,
-        /* top-right */
-        linear-gradient(90deg, var(--cyan), var(--cyan)) right 0 top 0 / 18px 1.5px no-repeat,
-        linear-gradient(180deg, var(--cyan), var(--cyan)) right 0 top 0 / 1.5px 18px no-repeat,
-        /* bottom-left */
-        linear-gradient(90deg, var(--violet), var(--violet)) left 0 bottom 0 / 18px 1.5px no-repeat,
-        linear-gradient(180deg, var(--violet), var(--violet)) left 0 bottom 0 / 1.5px 18px no-repeat,
-        /* bottom-right */
-        linear-gradient(90deg, var(--violet), var(--violet)) right 0 bottom 0 / 18px 1.5px no-repeat,
-        linear-gradient(180deg, var(--violet), var(--violet)) right 0 bottom 0 / 1.5px 18px no-repeat;
-      opacity: 0.72;
-      filter: drop-shadow(0 0 3px rgba(90,209,255,0.4));
-    }
-    /* ::after carries fine crosshair measurement ticks at top & bottom mid */
-    .ds-panel::after {
-      background:
-        linear-gradient(90deg, transparent, var(--hud-line), transparent)
-          center top 0 / 60px 1px no-repeat,
-        linear-gradient(90deg, transparent, var(--hud-line), transparent)
-          center bottom 0 / 60px 1px no-repeat;
-      opacity: 0.6;
-      filter: none;
-    }
-    .ds-panel--wide { max-width: min(92vw, 1100px); }
+    .deepspace-panel:has(.deepspace-strip--amber) { --alert: #ffc05a; }
+    .deepspace-panel--wide { max-width: min(92vw, 1100px); }
 
-    .ds-label {
+    .deepspace-label {
       font-family: var(--font-mono);
       font-size: clamp(0.85rem, 1.6vw, 1.05rem);
       letter-spacing: 0.28em;
@@ -1145,21 +1105,21 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
       color: var(--cyan);
       margin: 0 0 0.7rem;
     }
-    .ds-lead {
+    .deepspace-lead {
       font-size: clamp(1.15rem, 2.6vw, 1.7rem);
       line-height: 1.5;
       margin: 0 0 1.6rem;
       letter-spacing: -0.01em;
     }
-    .ds-highlights { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.9rem; }
-    .ds-highlights li {
+    .deepspace-highlights { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.9rem; }
+    .deepspace-highlights li {
       display: flex;
       gap: 0.7rem;
       color: var(--muted);
       font-size: clamp(0.92rem, 1.6vw, 1.05rem);
       line-height: 1.5;
     }
-    .ds-dot {
+    .deepspace-dot {
       flex: none;
       width: 7px; height: 7px;
       margin-top: 0.55em;
@@ -1168,12 +1128,12 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
       box-shadow: 0 0 10px var(--cyan);
     }
 
-    .ds-grid {
+    .deepspace-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
       gap: clamp(1rem, 2.5vw, 1.8rem);
     }
-    .ds-group__title {
+    .deepspace-group__title {
       font-family: var(--font-grotesk);
       font-size: 0.95rem;
       font-weight: 600;
@@ -1183,9 +1143,9 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
       padding-bottom: 0.5rem;
       border-bottom: 1px solid rgba(255,255,255,0.08);
     }
-    .ds-tags { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .deepspace-tags { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0.4rem; }
     /* squared / hairline technical chips — notched corner, no rounded pill */
-    .ds-tag {
+    .deepspace-tag {
       font-family: var(--font-mono);
       font-size: 0.74rem;
       letter-spacing: 0.02em;
@@ -1194,24 +1154,40 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
       color: #c8cef0;
       background: rgba(139,125,255,0.08);
       border: 1px solid rgba(139,125,255,0.26);
+      border-bottom: 2px solid var(--violet);
       white-space: nowrap;
+      /* 양각 입체감 — premium과 동일 효과. clip-path가 외부 그림자를 자르므로
+         inset 그림자로 깊이 표현 (윗면 하이라이트 + 바닥 음영) */
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08),
+        inset 0 -3px 6px -2px rgba(0,0,0,0.35);
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
       /* clip one corner for an engineered, keyed look */
       clip-path: polygon(0 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%);
     }
-    .ds-tag--ghost {
+    .deepspace-tag:hover {
+      transform: translateY(-2px);
+      background: rgba(139,125,255,0.14);
+      border-bottom-color: var(--violet);
+    }
+    .deepspace-tag--ghost {
       color: var(--muted);
       background: rgba(90,209,255,0.05);
       border-color: rgba(90,209,255,0.22);
+      border-bottom-color: var(--cyan);
+    }
+    .deepspace-tag--ghost:hover {
+      background: rgba(90,209,255,0.1);
+      border-bottom-color: var(--cyan);
     }
 
     /* ── Contact ─────────────────────────────────────────────── */
-    .ds-contact-lead {
+    .deepspace-contact-lead {
       font-size: clamp(1.2rem, 3vw, 1.8rem);
       margin: 0 0 1.8rem;
       letter-spacing: -0.01em;
     }
-    .ds-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-bottom: 1.2rem; }
-    .ds-btn {
+    .deepspace-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-bottom: 1.2rem; }
+    .deepspace-btn {
       font-family: var(--font-grotesk);
       font-size: 0.95rem;
       font-weight: 500;
@@ -1225,27 +1201,27 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
       clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
       transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
     }
-    .ds-btn:hover { transform: translateY(-2px); background: rgba(255,255,255,0.09); }
-    .ds-btn--primary {
+    .deepspace-btn:hover { transform: translateY(-2px); background: rgba(255,255,255,0.09); }
+    .deepspace-btn--primary {
       border-color: transparent;
       background: linear-gradient(120deg, var(--violet), var(--cyan));
       color: #060814;
       font-weight: 600;
       box-shadow: 0 10px 30px -8px rgba(90,209,255,0.5);
     }
-    .ds-btn--primary:hover { box-shadow: 0 14px 38px -8px rgba(90,209,255,0.7); }
-    .ds-btn.is-copied {
+    .deepspace-btn--primary:hover { box-shadow: 0 14px 38px -8px rgba(90,209,255,0.7); }
+    .deepspace-btn.is-copied {
       border-color: var(--cyan);
       color: var(--cyan);
     }
-    .ds-email {
+    .deepspace-email {
       font-family: var(--font-mono);
       font-size: 0.85rem;
       color: var(--muted);
       margin: 0 0 1.5rem;
     }
-    .ds-social { display: flex; gap: 1.4rem; flex-wrap: wrap; }
-    .ds-social a {
+    .deepspace-social { display: flex; gap: 1.4rem; flex-wrap: wrap; }
+    .deepspace-social a {
       color: var(--muted);
       text-decoration: none;
       font-family: var(--font-grotesk);
@@ -1253,7 +1229,7 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
       position: relative;
       transition: color 0.2s ease;
     }
-    .ds-social a::after {
+    .deepspace-social a::after {
       content: '';
       position: absolute;
       left: 0; bottom: -3px;
@@ -1263,16 +1239,16 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
       transform-origin: left;
       transition: transform 0.25s ease;
     }
-    .ds-social a:hover { color: var(--ink); }
-    .ds-social a:hover::after { transform: scaleX(1); }
+    .deepspace-social a:hover { color: var(--ink); }
+    .deepspace-social a:hover::after { transform: scaleX(1); }
 
     /* ── Track + footer ──────────────────────────────────────── */
-    .ds-track { position: relative; z-index: 1; pointer-events: none; }
+    .deepspace-track { position: relative; z-index: 1; pointer-events: none; }
     /* Taller units → more scroll distance per station so the sharp, readable
        focus band lingers comfortably in view while you read. */
-    .ds-track__unit { height: 150vh; }
+    .deepspace-track__unit { height: 150vh; }
 
-    .ds-footer {
+    .deepspace-footer {
       position: relative;
       z-index: 3;
       text-align: center;
@@ -1285,72 +1261,71 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
     }
 
     /* ── No-JS / reduced-motion fallback: clean stacked page ──── */
-    /* When JS runs, it adds .ds-enhanced to the root and takes over. */
-    :global(.ds:not(.ds-enhanced)) .ds-stage,
-    :global(.ds:not(.ds-enhanced)) .ds-station {
+    /* When JS runs, it adds .deepspace-enhanced to the root and takes over. */
+    :global(.deepspace:not(.deepspace-enhanced)) .deepspace-stage,
+    :global(.deepspace:not(.deepspace-enhanced)) .deepspace-station {
       position: static;
       inset: auto;
       perspective: none;
       pointer-events: auto;
     }
-    :global(.ds:not(.ds-enhanced)) .ds-track,
-    :global(.ds:not(.ds-enhanced)) .ds-tel,
-    :global(.ds:not(.ds-enhanced)) .ds-gyro,
-    :global(.ds:not(.ds-enhanced)) .ds-radar,
-    :global(.ds:not(.ds-enhanced)) .ds-scrollcue { display: none; }
+    :global(.deepspace:not(.deepspace-enhanced)) .deepspace-track,
+    :global(.deepspace:not(.deepspace-enhanced)) .deepspace-tel,
+    :global(.deepspace:not(.deepspace-enhanced)) .deepspace-gyro,
+    :global(.deepspace:not(.deepspace-enhanced)) .deepspace-radar,
+    :global(.deepspace:not(.deepspace-enhanced)) .deepspace-scrollcue { display: none; }
     /* In fallback, anchors do normal scrolling — offset for the fixed header */
-    :global(.ds:not(.ds-enhanced)) .ds-station { scroll-margin-top: 5rem; }
-    :global(.ds:not(.ds-enhanced)) { scroll-behavior: smooth; }
-    :global(.ds:not(.ds-enhanced)) .ds-stations {
+    :global(.deepspace:not(.deepspace-enhanced)) .deepspace-station { scroll-margin-top: 5rem; }
+    :global(.deepspace:not(.deepspace-enhanced)) { scroll-behavior: smooth; }
+    :global(.deepspace:not(.deepspace-enhanced)) .deepspace-stations {
       position: static;
       max-width: 1100px;
       margin: 0 auto;
     }
-    :global(.ds:not(.ds-enhanced)) .ds-station {
+    :global(.deepspace:not(.deepspace-enhanced)) .deepspace-station {
       min-height: auto;
       padding: clamp(3rem, 9vw, 6rem) clamp(1.25rem, 5vw, 3rem);
     }
-    :global(.ds:not(.ds-enhanced)) .ds-station--hero { padding-top: clamp(5rem, 14vw, 9rem); }
+    :global(.deepspace:not(.deepspace-enhanced)) .deepspace-station--hero { padding-top: clamp(5rem, 14vw, 9rem); }
 
     @media (prefers-reduced-motion: reduce) {
-      .ds-nebula { animation: none; }
-      .ds-scrollcue em { animation: none; }
+      .deepspace-nebula { animation: none; }
+      .deepspace-scrollcue em { animation: none; }
       /* Reduced motion → JS bails out, leaving the clean stacked fallback.
          The telemetry bar is part of the enhanced view, so it stays hidden
-         via the .ds:not(.ds-enhanced) rule above. */
-      .ds-nav__link::after,
-      .ds-social a::after { transition: none; }
+         via the .deepspace:not(.deepspace-enhanced) rule above. */
+      .deepspace-nav__link::after,
+      .deepspace-social a::after { transition: none; }
       /* instruments are hidden in the non-enhanced view, but disable their
          idle animations defensively for reduced-motion users. */
-      .ds-radar__sweep,
-      .ds-radar__blip,
-      .ds-gyro__meridians,
-      .ds-strip__led,
-      .ds-strip::after,
-      .ds-mark__orbit,
-      .ds-mark__node,
-      .ds-mark__core { animation: none; }
+      .deepspace-radar__sweep,
+      .deepspace-radar__blip,
+      .deepspace-gyro__meridians,
+      .deepspace-strip__led,
+      .deepspace-strip::after,
+      .deepspace-mark__orbit,
+      .deepspace-mark__node,
+      .deepspace-mark__core { animation: none; }
       /* alert reveal flourish off under reduced motion */
-      .ds-station[style*="visible"] .ds-panel { animation: none; }
-      :global(.ds:not(.ds-enhanced)) { scroll-behavior: auto; }
+      .deepspace-station[style*="visible"] .deepspace-panel { animation: none; }
+      :global(.deepspace:not(.deepspace-enhanced)) { scroll-behavior: auto; }
     }
   </style>
 
   <script>
     (() => {
-      const root = document.querySelector<HTMLElement>('[data-ds]');
+      const root = document.querySelector<HTMLElement>('[data-deepspace]');
       if (!root) return;
 
-      const reduceMotion =
+      const prefersReducedMotion =
         window.matchMedia &&
         window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
       // Reduced motion / no enhancement → keep clean stacked fallback.
-      if (reduceMotion) return;
+      if (prefersReducedMotion) return;
 
-      root.classList.add('ds-enhanced');
+      root.classList.add('deepspace-enhanced');
 
-      const stage = root.querySelector<HTMLElement>('[data-stage]');
       const stationEls = Array.from(
         root.querySelectorAll<HTMLElement>('[data-station]')
       );
@@ -1401,7 +1376,7 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
 
       // ── Per-station scroll windows ────────────────────────────
       // Station i owns the journey slice [i/N, (i+1)/N]. updateStations()
-      // remaps raw scroll progress p → pe so that p=0 puts station 0 in its
+      // remaps raw scroll progress p → mappedProgress so that p=0 puts station 0 in its
       // READ phase and p=1 puts the last station in its READ phase. focusFor()
       // returns the RAW p at which station i is dead-centre/readable, so nav
       // scrolling and active-link detection stay perfectly in sync with the
@@ -1412,8 +1387,8 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
         const readMid = (ENTER + EXIT) / 2;
         const lo = readMid * W;
         const hi = (N - 1) * W + readMid * W;
-        const peTarget = i * W + readMid * W;
-        return clamp((peTarget - lo) / (hi - lo), 0, 1);
+        const targetProgress = i * W + readMid * W;
+        return clamp((targetProgress - lo) / (hi - lo), 0, 1);
       };
 
       // ── Readability-first sequential windowing ───────────────────
@@ -1452,12 +1427,12 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
         const W = 1 / N;
         const readMid = (ENTER + EXIT) / 2; // local-t centre of the READ phase
         // Desired: at p=0, station0 local t = readMid; at p=1, lastStation
-        // local t = readMid. Solve linear remap pe = a*p + b on global axis.
+        // local t = readMid. Solve linear remap mappedProgress = a*p + b on global axis.
         // station0 centre target (global) = 0*W + readMid*W = readMid*W
         // lastStation centre target (global) = (N-1)*W + readMid*W
         const lo = readMid * W;
         const hi = (N - 1) * W + readMid * W;
-        const pe = N > 1 ? lo + p * (hi - lo) : 0.5;
+        const mappedProgress = N > 1 ? lo + p * (hi - lo) : 0.5;
         for (let i = 0; i < N; i++) {
           const el = stationEls[i];
           const warp = warps[i];
@@ -1465,7 +1440,7 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
 
           const start = i * W;
           // local progress 0..1 within this station's window
-          let t = (pe - start) / W;
+          let t = (mappedProgress - start) / W;
 
           // Outside this station's window → not active. Hide hard so it can
           // neither be read nor overlap the active one.
@@ -1643,13 +1618,14 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
       };
 
       // velocity decay loop (independent of scroll events for smooth idle)
+      let velRafId = 0;
       const velTick = () => {
         const inst = scrollY - lastScrollY;
         lastScrollY = scrollY;
         // smooth toward instantaneous velocity, decay toward 0
         velocity += (inst - velocity) * 0.2;
         if (Math.abs(velocity) < 0.05) velocity = 0;
-        requestAnimationFrame(velTick);
+        velRafId = requestAnimationFrame(velTick);
       };
 
       // ── Nav: scroll to a station's focus point (plays the warp) ──
@@ -1675,17 +1651,17 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
         requestRender();
       });
       measure();
-      requestAnimationFrame(velTick);
+      velRafId = requestAnimationFrame(velTick);
       requestRender();
 
       // ───────────────────────────────────────────────────────────
       // STARFIELD CANVAS — radial warp
       // ───────────────────────────────────────────────────────────
       let ctx: CanvasRenderingContext2D | null = null;
-      let cw = 0;
-      let ch = 0;
-      let cx = 0;
-      let cy = 0;
+      let canvasWidth = 0;
+      let canvasHeight = 0;
+      let centerX = 0;
+      let centerY = 0;
       let dpr = 1;
       type Star = { x: number; y: number; z: number; px: number; py: number };
       let stars: Star[] = [];
@@ -1695,18 +1671,18 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
       const resizeCanvas = () => {
         if (!canvas) return;
         dpr = Math.min(window.devicePixelRatio || 1, 2);
-        cw = window.innerWidth;
-        ch = window.innerHeight;
-        cx = cw / 2;
-        cy = ch / 2;
-        canvas.width = Math.floor(cw * dpr);
-        canvas.height = Math.floor(ch * dpr);
+        canvasWidth = window.innerWidth;
+        canvasHeight = window.innerHeight;
+        centerX = canvasWidth / 2;
+        centerY = canvasHeight / 2;
+        canvas.width = Math.floor(canvasWidth * dpr);
+        canvas.height = Math.floor(canvasHeight * dpr);
         ctx = canvas.getContext('2d');
         if (ctx) ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
         // cap star count by area for perf
         const target = Math.round(
-          clamp((cw * ch) / 2400, 220, 520)
+          clamp((canvasWidth * canvasHeight) / 2400, 220, 520)
         );
         if (target !== STAR_COUNT) {
           STAR_COUNT = target;
@@ -1716,8 +1692,8 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
 
       const rand = (a: number, b: number) => a + Math.random() * (b - a);
       const newStar = (z?: number): Star => {
-        const x = rand(-cw, cw);
-        const y = rand(-ch, ch);
+        const x = rand(-canvasWidth, canvasWidth);
+        const y = rand(-canvasHeight, canvasHeight);
         const zz = z ?? rand(0.1, 1);
         return { x, y, z: zz, px: 0, py: 0 };
       };
@@ -1730,7 +1706,7 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
         if (!ctx || !canvas) return;
         // motion trail fade (darken slightly each frame)
         ctx.fillStyle = 'rgba(3,4,10,0.32)';
-        ctx.fillRect(0, 0, cw, ch);
+        ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
         // base + scroll-driven warp speed
         const warpBoost = Math.min(7, Math.abs(velocity) / 9);
@@ -1747,15 +1723,15 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
           }
 
           // perspective projection from 3D-ish depth z
-          const px = cx + s.x / s.z;
-          const py = cy + s.y / s.z;
+          const px = centerX + s.x / s.z;
+          const py = centerY + s.y / s.z;
 
           // previous position (for streak) using slightly larger z
           const pz = prevZ + speed * streakK;
-          const ox = cx + s.x / pz;
-          const oy = cy + s.y / pz;
+          const ox = centerX + s.x / pz;
+          const oy = centerY + s.y / pz;
 
-          if (px < -50 || px > cw + 50 || py < -50 || py > ch + 50) continue;
+          if (px < -50 || px > canvasWidth + 50 || py < -50 || py > canvasHeight + 50) continue;
 
           const depth = 1 - s.z; // 0..~1 closeness
           const size = Math.max(0.4, depth * 2.4);
@@ -1787,7 +1763,7 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
         resizeCanvas();
         if (!ctx) return;
         ctx.fillStyle = '#03040a';
-        ctx.fillRect(0, 0, cw, ch);
+        ctx.fillRect(0, 0, canvasWidth, canvasHeight);
         cancelAnimationFrame(rafId);
         rafId = requestAnimationFrame(draw);
       };
@@ -1796,8 +1772,10 @@ const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`;
       document.addEventListener('visibilitychange', () => {
         if (document.hidden) {
           cancelAnimationFrame(rafId);
-        } else if (canvas && ctx) {
-          rafId = requestAnimationFrame(draw);
+          cancelAnimationFrame(velRafId);
+        } else {
+          velRafId = requestAnimationFrame(velTick);
+          if (canvas && ctx) rafId = requestAnimationFrame(draw);
         }
       });
 

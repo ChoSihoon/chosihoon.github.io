@@ -1,58 +1,58 @@
 ---
 import Base from '../layouts/Base.astro';
 
-const designs = [
+const themes = [
   {
     href: '/designs/swiss',
     name: 'Swiss Grid',
-    desc: '국제 타이포그래피 양식 — 디자인 바이블. 12컬럼 모듈 그리드 · 흑백+레드. 라이트.',
+    desc: '국제 타이포그래피 양식 기반의 디자인 바이블. 12컬럼 모듈 그리드와 흑백+레드 조합. 라이트 테마.',
     tags: ['모듈 그리드', '타이포 인덱스', '그리드 오버레이(G)'],
   },
   {
     href: '/designs/kinetic',
     name: 'Kinetic Minimal',
-    desc: 'Linear/Vercel급 다크 제품 미니멀 + 최상급 마이크로 인터랙션. 2026 IT 표준.',
+    desc: 'Linear·Vercel급 다크 제품 미니멀에 최상급 마이크로 인터랙션을 더한 2026 IT 표준 테마.',
     tags: ['스프링 인터랙션', '커서 글로우', '카운트업'],
   },
   {
     href: '/designs/premium',
     name: 'Premium Editorial',
-    desc: '고급 브랜딩 × 기술감 있는 프리미엄 에디토리얼. 라이트. (Stripe·Locomotive 계열)',
+    desc: '고급 브랜딩과 기술감을 결합한 프리미엄 에디토리얼. Stripe·Locomotive 계열의 라이트 테마.',
     tags: ['에디토리얼 그리드', '매그네틱 CTA', '기술 마퀴'],
   },
   {
     href: '/designs/terminal',
     name: 'Terminal / Dev',
-    desc: '코드 에디터 워크벤치 — 파일트리·⌘K 팔레트·타이프라이터·상태바. 고도화. 다크.',
+    desc: '코드 에디터 워크벤치 컨셉. 파일트리·⌘K 팔레트·타이프라이터·상태바를 갖춘 다크 테마.',
     tags: ['VS Code UI', '⌘K 팔레트', 'stack.json'],
   },
   {
     href: '/designs/deepspace',
     name: 'Deep Space Warp',
-    desc: '심우주 여행 — 스크롤하면 워프하듯 빨려 들어가는 몰입형 비행 연출. 별이 흐르고 섹션이 다가왔다 지나감. 다크.',
+    desc: '심우주 여행 컨셉. 스크롤하면 워프하듯 빨려 들어가는 몰입형 비행 연출의 다크 테마.',
     tags: ['워프 스크롤', '3D 스타필드', '캔버스'],
   },
 ];
 ---
 
-<Base title="Sihoon Cho — 디자인 비교">
+<Base title="Sihoon Cho — 테마 선택">
   <main class="mx-auto max-w-6xl px-6 py-16 sm:py-24">
     <header class="reveal max-w-2xl">
       <p class="font-mono text-xs tracking-widest text-neutral-500 uppercase">
-        Design Comparison · 2026
+        Theme Selector · 2026
       </p>
       <h1 class="mt-4 text-4xl font-bold tracking-tight text-neutral-900 sm:text-5xl">
-        4가지 디자인 시안
+        원하는 테마를 선택하세요
       </h1>
       <p class="mt-4 text-lg leading-relaxed text-neutral-600">
-        아래에서 실제 동작하는 미리보기를 비교하세요. 카드를 클릭하면 전체 화면으로 열립니다.
-        마음에 드는 시안을 알려주시면 그것을 최종 사이트로 확정합니다. (조합·수정도 가능)
+        5가지 테마로 감상할 수 있습니다. 각 카드는 실제로 동작하는 미리보기이며,
+        클릭하면 전체 화면으로 열립니다. 마음에 드는 테마를 골라 들어가 보세요.
       </p>
     </header>
 
     <div class="mt-14 grid gap-8 sm:grid-cols-2">
       {
-        designs.map((d) => (
+        themes.map((d) => (
           <article class="reveal group">
             <a
               href={d.href}
@@ -75,7 +75,7 @@ const designs = [
               <div class="flex items-start justify-between gap-4 p-5">
                 <div>
                   <h2 class="text-xl font-semibold tracking-tight text-neutral-900">
-                    {d.name}
+                    {d.name} Theme
                   </h2>
                   <p class="mt-2 text-sm leading-relaxed text-neutral-600">{d.desc}</p>
                   <ul class="mt-3 flex flex-wrap gap-1.5">
@@ -98,8 +98,7 @@ const designs = [
 
     <footer class="reveal mt-20 border-t border-neutral-200 pt-8 text-sm text-neutral-500">
       <p>
-        © 2026 Sihoon Cho · 조시훈 — 시안 비교용 페이지입니다. 확정 후 이 페이지는
-        최종 디자인으로 교체됩니다.
+        © 2026 Sihoon Cho · 조시훈 — 언제든 이 페이지로 돌아와 다른 테마를 선택할 수 있습니다.
       </p>
     </footer>
   </main>
@@ -109,5 +108,15 @@ const designs = [
   main {
     background: #ffffff;
     min-height: 100vh;
+  }
+
+  /* 한글 줄바꿈 정리: 단어(어절) 중간에서 끊지 않고 공백 단위로만 줄바꿈,
+     마지막 줄에 단어 하나만 남는 어색한 끊김(고아 단어)을 방지 */
+  main :where(h1, h2, p, li) {
+    word-break: keep-all;
+    text-wrap: pretty;
+  }
+  main h1 {
+    text-wrap: balance;
   }
 </style>

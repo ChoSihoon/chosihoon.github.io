@@ -18,9 +18,9 @@ const tree = [
 ---
 
 <Base title="Sihoon Cho — Terminal">
-  <div class="term-root">
+  <div class="terminal-root">
     <!-- ambient background -->
-    <div class="term-bg" aria-hidden="true"></div>
+    <div class="terminal-bg" aria-hidden="true"></div>
 
     <!-- ░░░ command-palette nav ░░░ -->
     <header class="palette" role="banner">
@@ -187,7 +187,7 @@ const tree = [
                 {site.name} ({site.nameKo}) — {site.role}
               </h1>
 
-              <div class="term" data-typewriter>
+              <div class="terminal" data-typewriter>
                 <p class="line">
                   <span class="prompt">sihoon@cloud</span><span class="punc">:</span><span
                     class="path">~</span
@@ -258,13 +258,13 @@ const tree = [
               <span class="win__title">UTF-8 · Markdown</span>
             </div>
             <div class="win__body code">
-              <p class="line cl">
+              <p class="line console-line">
                 <span class="prompt">$</span> cat about.md
               </p>
-              <h2 id="about-title" class="md-h"># whoami, in prose</h2>
-              <p class="md-p">{about.lead}</p>
+              <h2 id="about-title" class="markdown-h"># whoami, in prose</h2>
+              <p class="markdown-p">{about.lead}</p>
 
-              <p class="line cl cl--mt">
+              <p class="line console-line console-line--mt">
                 <span class="comment">// highlights[]</span>
               </p>
               <ul class="hl">
@@ -297,31 +297,31 @@ const tree = [
             </div>
             <div class="win__body code code--gutter">
               <h2 id="stack-title" class="sr-only">Tech Stack</h2>
-              <p class="line cl cl--head no-num">
+              <p class="line console-line console-line--head no-num">
                 <span class="comment">// production dependencies — what I ship with</span>
               </p>
               <div class="json">
-                <p class="line jl"><span class="punc">{'{'}</span></p>
+                <p class="line json-line"><span class="punc">{'{'}</span></p>
                 {
                   stack.map((g, gi) => (
                     <details class="grp reveal" open={gi < 3} style={`--d:${gi * 50}ms`}>
-                      <summary class="line jl grp__sum">
+                      <summary class="line json-line grp__sum">
                         <span class="tw" aria-hidden="true">▾</span>
                         <span class="key">"{g.category}"</span><span class="punc">: [</span>
                         <span class="grp__count">{g.items.length}</span>
                       </summary>
                       <div class="grp__items">
                         {g.items.map((it) => (
-                          <span class="line jl jl--item">
+                          <span class="line json-line json-line--item">
                             <span class="str">"{it}"</span><span class="punc">,</span>
                           </span>
                         ))}
                       </div>
-                      <p class="line jl"><span class="punc">],</span></p>
+                      <p class="line json-line"><span class="punc">],</span></p>
                     </details>
                   ))
                 }
-                <p class="line jl"><span class="punc">{'}'}</span></p>
+                <p class="line json-line"><span class="punc">{'}'}</span></p>
               </div>
             </div>
           </div>
@@ -342,10 +342,10 @@ const tree = [
             </div>
             <div class="win__body code">
               <h2 id="learning-title" class="sr-only">Currently Learning</h2>
-              <p class="line cl">
+              <p class="line console-line">
                 <span class="prompt">$</span> git branch --list 'learning/*'
               </p>
-              <p class="line cl cl--mt">
+              <p class="line console-line console-line--mt">
                 <span class="comment">// currently exploring — TODO before merge to main</span>
               </p>
               <div class="branches">
@@ -390,23 +390,23 @@ const tree = [
             </div>
             <div class="win__body code">
               <h2 id="github-title" class="sr-only">GitHub</h2>
-              <p class="line cl">
+              <p class="line console-line">
                 <span class="comment">// github</span>
               </p>
-              <p class="line gh-line">
+              <p class="line github-line">
                 <span class="prompt">$</span> gh profile open
                 <span class="op"> → </span>
                 <a
-                  class="ghost gh-link"
+                  class="ghost github-link"
                   href={site.links.github}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   {site.links.github.replace('https://', '')}
-                  <span class="gh-ext" aria-hidden="true">↗</span>
+                  <span class="github-ext" aria-hidden="true">↗</span>
                 </a>
               </p>
-              <p class="line cl cl--mt">
+              <p class="line console-line console-line--mt">
                 <span class="comment"
                   >// pinned repos, contribution graph &amp; languages live on the profile</span
                 >
@@ -430,10 +430,10 @@ const tree = [
             </div>
             <div class="win__body code">
               <h2 id="contact-title" class="sr-only">Contact</h2>
-              <p class="line cl">
+              <p class="line console-line">
                 <span class="prompt">$</span> ./contact.sh --all
               </p>
-              <p class="line cl cl--mt">
+              <p class="line console-line console-line--mt">
                 <span class="comment">// let's build something reliable together</span>
               </p>
 
@@ -452,7 +452,7 @@ const tree = [
                   >
                     <span class="btn__ic" aria-hidden="true">✉</span>
                     <span class="btn__label">Gmail</span>
-                    <span class="gh-ext" aria-hidden="true">↗</span>
+                    <span class="github-ext" aria-hidden="true">↗</span>
                   </a>
                   <button class="btn btn--copy" type="button" data-copy={email}>
                     <span class="btn__ic" aria-hidden="true">⧉</span>
@@ -472,7 +472,7 @@ const tree = [
                   >
                     <span class="contact__flag">--github</span>
                     <span class="str">@{site.githubUsername}</span>
-                    <span class="gh-ext" aria-hidden="true">↗</span>
+                    <span class="github-ext" aria-hidden="true">↗</span>
                   </a>
                 </li>
                 <li class="contact__row reveal" style="--d:60ms">
@@ -484,7 +484,7 @@ const tree = [
                   >
                     <span class="contact__flag">--linkedin</span>
                     <span class="str">in/sihoon-cho</span>
-                    <span class="gh-ext" aria-hidden="true">↗</span>
+                    <span class="github-ext" aria-hidden="true">↗</span>
                   </a>
                 </li>
                 <li class="contact__row reveal" style="--d:120ms">
@@ -496,11 +496,11 @@ const tree = [
                   >
                     <span class="contact__flag">--velog</span>
                     <span class="str">@sihoon_cho</span>
-                    <span class="gh-ext" aria-hidden="true">↗</span>
+                    <span class="github-ext" aria-hidden="true">↗</span>
                   </a>
                 </li>
               </ul>
-              <p class="line cl cl--mt">
+              <p class="line console-line console-line--mt">
                 <span class="prompt">$</span>
                 <span class="caret caret--idle" aria-hidden="true"></span>
               </p>
@@ -513,7 +513,7 @@ const tree = [
     <!-- ░░░ VS Code-style status bar ░░░ -->
     <footer class="statusbar" role="contentinfo">
       <div class="statusbar__left">
-        <span class="sb sb--branch" title="git branch">
+        <span class="statusbar statusbar--branch" title="git branch">
           <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true">
             <path
               fill="currentColor"
@@ -522,16 +522,16 @@ const tree = [
           </svg>
           main
         </span>
-        <span class="sb sb--file" id="sb-file" title="active section">whoami.sh</span>
-        <span class="sb sb--hide">© {year} Sihoon Cho · 조시훈</span>
+        <span class="statusbar statusbar--file" id="statusbar-file" title="active section">whoami.sh</span>
+        <span class="statusbar statusbar--hide">© {year} Sihoon Cho · 조시훈</span>
       </div>
       <div class="statusbar__right">
-        <span class="sb sb--hide">spaces: 2</span>
-        <span class="sb">UTF-8</span>
-        <span class="sb sb--hide">LF</span>
-        <span class="sb" id="sb-pos">Ln 1, Col 1</span>
-        <span class="sb sb--lang">Astro</span>
-        <span class="sb sb--ok"><span class="sb-led" aria-hidden="true"></span> ready</span>
+        <span class="statusbar statusbar--hide">spaces: 2</span>
+        <span class="statusbar">UTF-8</span>
+        <span class="statusbar statusbar--hide">LF</span>
+        <span class="statusbar" id="statusbar-pos">Ln 1, Col 1</span>
+        <span class="statusbar statusbar--lang">Astro</span>
+        <span class="statusbar statusbar--ok"><span class="statusbar-led" aria-hidden="true"></span> ready</span>
       </div>
     </footer>
   </div>
@@ -539,7 +539,7 @@ const tree = [
 
 <style>
   /* ───────────── tokens ───────────── */
-  .term-root {
+  .terminal-root {
     --bg: #0b0e14;
     --bg-2: #0d1117;
     --panel: #11151f;
@@ -570,7 +570,7 @@ const tree = [
     overflow-x: clip;
   }
 
-  .term-bg {
+  .terminal-bg {
     position: fixed;
     inset: 0;
     z-index: 0;
@@ -580,7 +580,7 @@ const tree = [
       radial-gradient(720px 480px at 6% 14%, rgba(188, 140, 255, 0.085), transparent 60%),
       radial-gradient(820px 620px at 50% 112%, rgba(63, 185, 80, 0.06), transparent 60%);
   }
-  .term-bg::after {
+  .terminal-bg::after {
     content: '';
     position: absolute;
     inset: 0;
@@ -1022,7 +1022,7 @@ const tree = [
     color: var(--text);
     border-color: var(--blue);
   }
-  .term[data-done] ~ * .win__skip,
+  .terminal[data-done] ~ * .win__skip,
   .win--hero[data-done] .win__skip {
     opacity: 0;
     pointer-events: none;
@@ -1120,13 +1120,13 @@ const tree = [
       opacity: 0;
     }
   }
-  .term[data-done] .caret--cmd {
+  .terminal[data-done] .caret--cmd {
     display: none;
   }
   .ghost-comp {
     color: #4d586e;
   }
-  .term[data-done] .ghost-comp {
+  .terminal[data-done] .ghost-comp {
     display: none;
   }
 
@@ -1143,7 +1143,7 @@ const tree = [
   .win--hero {
     width: 100%;
   }
-  .term .out {
+  .terminal .out {
     margin: 0.6rem 0 1rem;
   }
   .out__line {
@@ -1151,7 +1151,7 @@ const tree = [
     transform: translateY(4px);
     transition: opacity 0.4s ease, transform 0.4s ease;
   }
-  .term[data-done] .out__line,
+  .terminal[data-done] .out__line,
   .out__line.is-on {
     opacity: 1;
     transform: none;
@@ -1220,28 +1220,28 @@ const tree = [
   .sec--last {
     padding-bottom: clamp(3.5rem, 9vw, 6rem);
   }
-  .code .cl {
+  .code .console-line {
     color: var(--comment);
   }
-  .cl .prompt {
+  .console-line .prompt {
     margin-right: 0.4rem;
   }
-  .cl--mt {
+  .console-line--mt {
     margin-top: 1.4rem;
   }
-  .cl--head {
+  .console-line--head {
     margin-bottom: 0.7rem;
   }
 
   /* about */
-  .md-h {
+  .markdown-h {
     color: var(--purple);
     font-size: clamp(1.2rem, 3vw, 1.55rem);
     font-weight: 700;
     margin: 0.9rem 0 0.7rem;
     line-height: 1.4;
   }
-  .md-p {
+  .markdown-p {
     color: var(--text);
     max-width: 70ch;
     margin: 0;
@@ -1283,11 +1283,11 @@ const tree = [
   .code--gutter .json {
     counter-reset: ln;
   }
-  .jl {
+  .json-line {
     position: relative;
     padding-left: 3.4rem;
   }
-  .code--gutter .jl::before {
+  .code--gutter .json-line::before {
     counter-increment: ln;
     content: counter(ln);
     position: absolute;
@@ -1338,20 +1338,20 @@ const tree = [
     gap: 0.1rem 0.2rem;
     padding-left: 1.4rem;
   }
-  .jl--item {
+  .json-line--item {
     padding-left: 0;
     border-radius: 5px;
     padding-inline: 0.32rem;
     transition: background 0.15s, color 0.15s;
   }
-  .code--gutter .jl--item::before {
+  .code--gutter .json-line--item::before {
     content: none;
     counter-increment: none;
   }
-  .jl--item:hover {
+  .json-line--item:hover {
     background: rgba(63, 185, 80, 0.12);
   }
-  .jl--item:hover .str {
+  .json-line--item:hover .str {
     color: #7ee787;
   }
 
@@ -1403,19 +1403,19 @@ const tree = [
   }
 
   /* github */
-  .gh-line {
+  .github-line {
     margin-top: 0.4rem;
   }
-  .gh-link {
+  .github-link {
     color: var(--amber);
     font-weight: 600;
   }
-  .gh-link:hover {
+  .github-link:hover {
     color: #e3b341;
     border-bottom-color: rgba(210, 153, 34, 0.5);
     text-shadow: 0 0 16px rgba(210, 153, 34, 0.35);
   }
-  .gh-ext {
+  .github-ext {
     font-size: 0.78em;
     opacity: 0.75;
     margin-left: 0.15em;
@@ -1527,7 +1527,7 @@ const tree = [
   .contact__flag {
     color: var(--amber);
   }
-  .contact__link .gh-ext {
+  .contact__link .github-ext {
     color: var(--comment);
   }
   .contact__link:hover .str {
@@ -1569,7 +1569,7 @@ const tree = [
     gap: 0.2rem;
     min-width: 0;
   }
-  .sb {
+  .statusbar {
     display: inline-flex;
     align-items: center;
     gap: 0.3rem;
@@ -1577,21 +1577,21 @@ const tree = [
     height: 30px;
     white-space: nowrap;
   }
-  .sb--branch {
+  .statusbar--branch {
     background: var(--blue);
     color: #06121f;
     font-weight: 600;
   }
-  .sb--file {
+  .statusbar--file {
     color: var(--text-dim);
   }
-  .sb--lang {
+  .statusbar--lang {
     color: var(--comment);
   }
-  .sb--ok {
+  .statusbar--ok {
     color: var(--green-br);
   }
-  .sb-led {
+  .statusbar-led {
     width: 7px;
     height: 7px;
     border-radius: 50%;
@@ -1604,14 +1604,14 @@ const tree = [
       opacity: 0.35;
     }
   }
-  .statusbar__left .sb--hide {
+  .statusbar__left .statusbar--hide {
     overflow: hidden;
     text-overflow: ellipsis;
   }
   @media (max-width: 720px) {
-    .sb--hide,
-    .sb--lang,
-    #sb-pos {
+    .statusbar--hide,
+    .statusbar--lang,
+    #statusbar-pos {
       display: none;
     }
   }
@@ -1620,7 +1620,7 @@ const tree = [
   @media (prefers-reduced-motion: reduce) {
     .caret,
     .scroll-hint__bar,
-    .sb-led,
+    .statusbar-led,
     .cmdk__scrim,
     .cmdk__panel {
       animation: none;
@@ -1632,9 +1632,9 @@ const tree = [
   }
 
   /* ───────────── focus ───────────── */
-  .term-root a:focus-visible,
-  .term-root button:focus-visible,
-  .term-root summary:focus-visible,
+  .terminal-root a:focus-visible,
+  .terminal-root button:focus-visible,
+  .terminal-root summary:focus-visible,
   .cmdk__input:focus-visible {
     outline: 2px solid var(--blue);
     outline-offset: 2px;
@@ -1644,12 +1644,12 @@ const tree = [
 
 <script>
   (() => {
-    const reduce =
+    const prefersReducedMotion =
       typeof window.matchMedia === 'function' &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     /* ───────── typewriter (smoother + skippable) ───────── */
-    const term = document.querySelector<HTMLElement>('.term[data-typewriter]');
+    const term = document.querySelector<HTMLElement>('.terminal[data-typewriter]');
     const heroWin = term?.closest<HTMLElement>('.win--hero') ?? null;
     if (term) {
       const cmdEl = term.querySelector<HTMLElement>('[data-type]');
@@ -1658,10 +1658,13 @@ const tree = [
       const text = cmdEl?.dataset.text ?? '';
       let done = false;
       const timers: number[] = [];
+      // removes the global keydown skip-listener once typing finishes (assigned below)
+      let detachKey = () => {};
 
       const finish = () => {
         if (done) return;
         done = true;
+        detachKey();
         timers.forEach((t) => window.clearTimeout(t));
         if (cmdEl) cmdEl.textContent = text;
         if (ghostEl) ghostEl.textContent = '';
@@ -1670,7 +1673,7 @@ const tree = [
         heroWin?.setAttribute('data-done', '');
       };
 
-      if (reduce || !cmdEl) {
+      if (prefersReducedMotion || !cmdEl) {
         finish();
       } else {
         // ghost autocomplete preview, then type over it
@@ -1694,6 +1697,7 @@ const tree = [
                 term.setAttribute('data-done', '');
                 heroWin?.setAttribute('data-done', '');
                 done = true;
+                detachKey();
               }, 130 + outLines.length * 150)
             );
           }
@@ -1709,6 +1713,7 @@ const tree = [
           }
         };
         window.addEventListener('keydown', onKey);
+        detachKey = () => window.removeEventListener('keydown', onKey);
         term.addEventListener('click', finish, { once: true });
         const skipBtn = heroWin?.querySelector<HTMLElement>('[data-typewriter-skip]');
         skipBtn?.addEventListener('click', finish);
@@ -1726,14 +1731,42 @@ const tree = [
       let active = 0;
       let lastFocus: HTMLElement | null = null;
 
+      // listbox/combobox semantics so screen readers announce the active option
+      items.forEach((it, idx) => {
+        if (!it.id) it.id = `cmdk-option-${idx}`;
+      });
+      const list = cmdk.querySelector<HTMLElement>('[data-cmdk-list]');
+      if (list && !list.id) list.id = 'cmdk-listbox';
+      if (input) {
+        input.setAttribute('role', 'combobox');
+        input.setAttribute('aria-autocomplete', 'list');
+        input.setAttribute('aria-expanded', 'false');
+        if (list) input.setAttribute('aria-controls', list.id);
+      }
+
       const visible = () => items.filter((it) => !it.hidden);
+
+      // single source of truth for the highlighted option (visual class + ARIA)
+      const applyActive = (el: HTMLElement | null) => {
+        items.forEach((it) => {
+          const on = it === el;
+          it.classList.toggle('is-active', on);
+          it.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+        if (input) {
+          if (el) input.setAttribute('aria-activedescendant', el.id);
+          else input.removeAttribute('aria-activedescendant');
+        }
+      };
 
       const setActive = (n: number) => {
         const vis = visible();
-        if (!vis.length) return;
+        if (!vis.length) {
+          applyActive(null);
+          return;
+        }
         active = (n + vis.length) % vis.length;
-        items.forEach((it) => it.classList.remove('is-active'));
-        vis[active].classList.add('is-active');
+        applyActive(vis[active]);
         vis[active].scrollIntoView({ block: 'nearest' });
       };
 
@@ -1742,23 +1775,26 @@ const tree = [
         items.forEach((it) => {
           const hay = (it.dataset.keys ?? '') + ' ' + (it.textContent ?? '');
           it.hidden = q !== '' && !hay.toLowerCase().includes(q);
-          it.classList.remove('is-active');
         });
         const vis = visible();
         if (empty) empty.hidden = vis.length > 0;
         active = 0;
-        if (vis.length) vis[0].classList.add('is-active');
+        applyActive(vis.length ? vis[0] : null);
       };
 
       const open = () => {
         lastFocus = document.activeElement as HTMLElement | null;
         cmdk.hidden = false;
+        input?.setAttribute('aria-expanded', 'true');
+        openBtn?.setAttribute('aria-expanded', 'true');
         if (input) input.value = '';
         filter();
         input?.focus();
       };
       const close = () => {
         cmdk.hidden = true;
+        input?.setAttribute('aria-expanded', 'false');
+        openBtn?.setAttribute('aria-expanded', 'false');
         lastFocus?.focus();
       };
 
@@ -1770,7 +1806,7 @@ const tree = [
           window.open(href, '_blank', 'noopener,noreferrer');
         } else if (go) {
           const target = document.querySelector(go);
-          target?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
+          target?.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
           (target as HTMLElement | null)?.setAttribute('tabindex', '-1');
           (target as HTMLElement | null)?.focus({ preventScroll: true });
         }
@@ -1789,7 +1825,25 @@ const tree = [
           return;
         }
         if (cmdk.hidden) return;
-        if (e.key === 'Escape') {
+        if (e.key === 'Tab') {
+          // focus trap: an aria-modal dialog must keep focus inside
+          const focusables = Array.from(
+            cmdk.querySelectorAll<HTMLElement>(
+              'a[href], button:not([disabled]), input, [tabindex]:not([tabindex="-1"])'
+            )
+          ).filter((el) => !el.hidden && el.offsetParent !== null);
+          if (focusables.length) {
+            const first = focusables[0];
+            const last = focusables[focusables.length - 1];
+            if (e.shiftKey && document.activeElement === first) {
+              e.preventDefault();
+              last.focus();
+            } else if (!e.shiftKey && document.activeElement === last) {
+              e.preventDefault();
+              first.focus();
+            }
+          }
+        } else if (e.key === 'Escape') {
           e.preventDefault();
           close();
         } else if (e.key === 'ArrowDown') {
@@ -1848,8 +1902,8 @@ const tree = [
     }
 
     /* ───────── status bar: live Ln/Col + active file ───────── */
-    const pos = document.getElementById('sb-pos');
-    const sbFile = document.getElementById('sb-file');
+    const pos = document.getElementById('statusbar-pos');
+    const statusbarFile = document.getElementById('statusbar-file');
     const sideLinks = Array.from(
       document.querySelectorAll<HTMLElement>('.sidebar__file[data-nav]')
     );
@@ -1883,7 +1937,7 @@ const tree = [
       if (current) {
         const id = current.id;
         sideLinks.forEach((l) => l.classList.toggle('is-active', l.dataset.nav === id));
-        if (sbFile && fileFor[id]) sbFile.textContent = fileFor[id];
+        if (statusbarFile && fileFor[id]) statusbarFile.textContent = fileFor[id];
       }
     };
 
